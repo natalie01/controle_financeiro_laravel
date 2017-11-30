@@ -1,0 +1,51 @@
+  <form id="form1" class="form-horizontal"  method="post">
+ 		<div class="form-group">
+		
+		    <label>CEP (Somente números):</label><br />
+		    <div class="col-md-6">
+		    <input type="text" name="cep" id="cep" maxlength="8" />
+	 	    </div>
+        	</div>
+	 
+		    <br /><br />
+	 	<div class="form-group">
+		    <label>Rua:</label><br />
+		    <input type="text" name="rua" id="rua" size="45" />
+	 	    </div>
+        	</div>	 
+		    <br /><br />
+	 	<div class="form-group">
+		    <label>Número:</label><br />
+			<div class="col-md-6">
+		    <input type="text" name="numero" id="numero" size="5" />
+	 	    </div>
+        	</div>
+	 
+		    <br /><br />
+	 	<div class="form-group">
+		    <label>Bairro:</label><br />
+		    <div class="col-md-6">
+		    <input type="text" name="bairro" id="bairro" size="25" />
+	 	    </div>
+        	</div>
+	 
+		    <br /><br />
+	 	<div class="form-group">
+		    <label>Cidade:</label><br />
+		    <div class="col-md-6">
+		    <input type="text" name="cidade" id="cidade" size="25" />
+	 	    </div>
+        	</div>
+	 
+		    <br /><br />
+	 	<div class="form-group">
+		    <label>Estado:</label><br />
+		    <div class="col-md-6">
+		    <input type="text" name="estado" id="estado" size="2" />
+	 	    </div>
+        	</div>
+		    <br /><br />
+	 		
+		    <input type="submit" value="Salvar Dados" />
+	 
+		</form>
