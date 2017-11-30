@@ -93,8 +93,8 @@
 												 <ul class="collapse list-unstyled" id="movimentacoesSubmenu">
                             <li><a href="{{route('contapagar.create')}}" >Novo Lancamentos a Pagar</a></li>
                             <li><a href="{{route('contareceber.create')}}" >Novo Lancamentos Receber</a></li>
-           									<li><a href="#" >Nova Receita</a></li>
-                            <li><a href="#" >Nova Despesa</a></li>
+           									<li><a href="/novareceita" >Nova Receita</a></li>
+                            <li><a href="/novadespesa" >Nova Despesa</a></li>
                         </ul>
 	  
                     </li>
@@ -106,7 +106,7 @@
                         </a>
 												 <ul class="collapse list-unstyled" id="relatoriosSubmenu">
                             <li><a href="/fluxocaixadatas" >Fluxo de Caixa</a></li>
-                            <li><a href="#" >Contas Receber</a></li>
+                            <li><a href="{{route('contareceber.index')}}" >Contas Receber</a></li>
                             <li><a href="#" >Contas Pagar</a></li>
                         </ul>
 	  

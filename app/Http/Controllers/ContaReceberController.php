@@ -19,7 +19,7 @@ class ContaReceberController extends Controller
     public function index()
     {
         //
-					$contas_receber = ContaReceber::all();
+					$contas_receber= ContaReceber::all();
 					return view('contareceber.contas_receber_index')->with('contas_receber',$contas_receber);
     }
 
@@ -36,7 +36,7 @@ class ContaReceberController extends Controller
 				$hoje= Carbon::now();
 				$datahoje= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
 				return view('contareceber.nova_contareceber')->with('datahoje',$datahoje);
-//->with('clientes',$clientes);;
+
     }
 
     /**
@@ -46,8 +46,6 @@ class ContaReceberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ContaReceberRequest $request){
-			$params = $request->except('n_pagtos','intervalo_pagtos');
-
 			 $n_pagtos = $request->n_pagtos;
 
 			if(!$n_pagtos){
@@ -71,13 +69,8 @@ class ContaReceberController extends Controller
 
 			$dv = Carbon::parse($request->datavencimento);
 
-			$dataV = $dv->addDays(30);
-			$dataVString = $dataV->year.'-'.$dataV->month.'-'.$dataV->day;
-			$dataVtype =  gettype($dataVString );
 
 			$valor = $request->valor;
-			$valorT = gettype($valor);
-			$teste = '12345,22';
 			//$valorFloat = (float) $teste;
 			
 
@@ -100,7 +93,6 @@ class ContaReceberController extends Controller
 
 			
 			$valorFloat = getFloat($valor);
-			$valorFloatType = gettype($valorFloat);
 
 				for($i = 0; $i < $n_pagtos;++$i ){
 					$dataVenc =  $dv->addDays($intervalo_pagtos*$i);
@@ -124,7 +116,8 @@ class ContaReceberController extends Controller
 														));
 		*/
 			$mensagem = 'nova conta adicionada';
-			return view('contareceber.contas_receber_index')->with('mensagem', $mensagem);
+			$contas_receber = ContaReceber::all();
+			return view('contareceber.contas_receber_index',compact('mensagem', 'contas_receber'));
 		}
 
     /**
@@ -169,9 +162,15 @@ class ContaReceberController extends Controller
      */
     public function destroy($id)
     {
-      	$contareceber = ContaReceber::find($id);
-			$contareceber->delete();
-			return view('contareceber.contas_receber_index')->with('c_removida', $id);;
+		
+			$contareceber = ContaReceber::find($id);
+			if(isset($contareceber)){
+				$contareceber->delete();
+				}
+				$c_removida= $id;
+				$contas_receber = ContaReceber::all();
+			
+			return view('contareceber.contas_receber_index',compact('c_removida','contas_receber'));
     }
 
 

@@ -36,3 +36,8 @@ Route::post('/fluxocaixa/resultado', 'FluxoCaixaController@resultado');
 //Route::get('autocomplete',array('as'=>'autocomplete','uses'=>'ContaReceberController@autocomplete'));
 
 Route::get('autocomplete/{term?}','ContaReceberController@autocomplete');
+
+Route::get('/novareceita','CaixaController@novareceita');
+Route::get('/incluir_novareceita','CaixaController@incluir_novareceita');
+Route::get('/novadespesa','CaixaController@novadespesa');
+Route::get('/incluir_novadespesa','CaixaController@incluir_novadespesa');

@@ -3,12 +3,21 @@
 
 <div class="container">
 	<h1>Contas a Receber</h1>
-@if( $mensagem)
-	<p>{{ $mensagem }}</p>
+@if(isset($c_removida))
+	<div class="alert alert-info">
+	<p>O registro n<span>&deg;</span> {{ $c_removida}} foi removido</p>
+	</div>
+</div>
 @endif
-@if($c_removida)
-	<p>O registro n<span>&deg;</span>{{ $c_removida }} foi removido</p>
+
+@if(isset($mensagem))
+	<div class="alert alert-success">
+	<p>O registro foi adicionado</p>
+	</div>
+</div>
 @endif
+
+
 
 	<table class="table table-striped table-bordered table-hover">
 	@if(empty($contas_receber))
@@ -16,6 +25,9 @@
 		nenhum registro encontrado
 		</div>
 	@else
+		<div class="alert alert-default">
+		<p>{{ count($contas_receber)}}registros encontrados</p>
+		</div>
 	<tr>
 		<td>N<span>&deg;</span>documento</td>
 		<td>Devedor</td>
@@ -60,9 +72,4 @@
 	@endforeach
 @endif
 </table>
-</div>
-
-
-
 @endsection
-
