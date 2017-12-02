@@ -12,51 +12,26 @@
 	@endif
 
   <div class="container" id ="panel">
-     <form action="/incluir_novareceita" id="form1" class="form-horizontal"  method="post">
+     <form action="/incluir_novo_movim_caixa" id="form1" class="form-horizontal"  method="post">
 	<input type="hidden"
 name="_token" value="{{{ csrf_token() }}}" />
       
 	<div class="row">
-	<input type="hidden" name="caixa" value="receita" />
+	<input type="hidden" name="tipo" value="receita" />
 		  <div class="col-md-6">
 		     <div class="form-group">
 		       <label>Descri<span> &ccedil; </span><span>&atilde;</span>o:</label><br />
-		      <input type="text" name="descricao" required id="searchname" value="{{ old('devedor') }}" />  
+		      <input type="text" name="descricao" required list="sugestoes"/>  
+					<datalist id="sugestoes">
+						<option value="vendas/serviços prestados">
+						<option value="baixa de conta a receber">
+						<option value="outro">
+					</datalist>
 		    </div>
-                  </div>
-   	
-		
-           <div class="col-md-3">
-            <div class="form-group">
-               <label>Tipo pessoa:</label><br />
-              <label>Física
-              <input type="radio" name="tipoPessoa" value="fis" id="tipoPessoa1" />
-              </label>
-              <label>Jurídica
-              <input type="radio" name="tipoPessoa"  value="jur" id="tipoPessoa2"/>
-              </label>
-	 	    </div>
-        	</div>
-
-    	  <div class="col-md-6">
-             <div class="form-group">
-               <label>CPF / CNPJ:</label><br />
-              <input type="text" name="documento" value="{{ old('documento') }}" />
-	 	    </div>
-          </div>
+      </div>
      </div>
       
-    <div class="row">
 
-    	  <div class="col-md-6">
-             <div class="form-group">
-               <label>Telefone:</label><br />
-              <input type="text" name="telefone" value="{{ old('telefone') }}" />
-	 	    		</div>
-          </div>
-         
-     </div>
-        
    <div class="row">
      			<div class="col-md-6">
              <div class="form-group">

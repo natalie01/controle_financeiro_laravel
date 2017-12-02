@@ -105,7 +105,7 @@
                             Relatórios
                         </a>
 												 <ul class="collapse list-unstyled" id="relatoriosSubmenu">
-                            <li><a href="/fluxocaixadatas" >Fluxo de Caixa</a></li>
+                            <li><a href="/relatorio_caixa" >Fluxo de Caixa</a></li>
                             <li><a href="{{route('contareceber.index')}}" >Contas Receber</a></li>
                             <li><a href="#" >Contas Pagar</a></li>
                         </ul>

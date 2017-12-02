@@ -4,7 +4,7 @@ namespace projeto_laravel\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContaReceberRequest extends FormRequest
+class CaixaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,12 +21,10 @@ class ContaReceberRequest extends FormRequest
      *
      * @return array
      */
-
      public function rules()
     {
         return [
-		'devedor' => 'required|max:100',
-		'datavencimento' => 'required',
+		'descricao' => 'required|max:100',
 		'valor' => 'required'
 		];
 

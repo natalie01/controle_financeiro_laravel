@@ -283,3 +283,127 @@ a.article, a.article:hover {
 	background-color: transparent;
 	border:none;
 }
+
+/*TABELAS RESPONSIVAS */
+
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+th { 
+  background: #333; 
+  color: white; 
+  font-weight: bold; 
+}
+td, th { 
+  padding: 18px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+}
+
+/*última coluna da tabela */
+.list-icones-tabela{
+text-align:center;
+padding: 3px;
+}
+
+/* 
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Esconde o cabecalho da tabela*/
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+
+
+	/*
+	Label the data
+	*/
+	.table1 td:nth-of-type(1):before { 
+    content: "N°"; 
+    font-weight: bold;
+    }
+	.table1 td:nth-of-type(2):before { 
+    	content: "Data"; 
+     font-weight: bold;
+     }
+	.table1 td:nth-of-type(3):before { 
+    content: "Valor"; 
+     font-weight: bold;
+     }
+	.table1 td:nth-of-type(4):before {
+    content: "Descricao"; 
+     font-weight: bold;
+     }
+	.table1 td:nth-of-type(5):before {
+    content: "Tipo"; 
+     font-weight: bold;
+     }
+	.table1 td:nth-of-type(6):before {
+    content: "ref_titulo"; 
+     font-weight: bold;
+     }
+    
+    .table2 td:nth-of-type(1):before { 
+    content: "N° documento";  font-weight: bold;}
+	.table2 td:nth-of-type(2):before { content: "Devedor"; font-weight: bold;}
+	.table2 td:nth-of-type(3):before { content: "data Emissão"; font-weight: bold; }
+	.table2 td:nth-of-type(4):before { content: "data Vencimento"; font-weight: bold; }
+	.table3 td:nth-of-type(5):before { content: "Valor";  font-weight: bold;}
+
+
+.list-icones{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display:flex;
+		text-align:left;
+}
+
+.flex-item-icone{
+  flex: 0 0 33%;
+  }
+
+.flex-item-icone-tabela{
+    padding: 5px;
+    margin-right: 25px;
+    margin-left: -25px;
+}
+}
