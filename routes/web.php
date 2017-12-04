@@ -45,3 +45,6 @@ Route::get('/novadespesa','CaixaController@novadespesa');
 Route::post('/incluir_novo_movim_caixa','CaixaController@incluir_novo_movim_caixa');
 
 Route::get('/relatorio_caixa','CaixaController@index');
+
+Route::get('selecionar_datas/{dt?}','CaixaController@selecionar_datas');//selecionar datas para filtar resultados
+Route::post('selecionar_datas_post','CaixaController@selecionar_datas_post');

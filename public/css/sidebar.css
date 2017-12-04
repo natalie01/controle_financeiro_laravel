@@ -14,7 +14,6 @@ p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-    color: #999;
 }
 
 a, a:hover, a:focus {
@@ -407,3 +406,14 @@ only screen and (max-width: 760px),
     margin-left: -25px;
 }
 }
+
+/*CALENDARIOS */
+
+#cal-1, #cal-2{
+display:none;
+}
+
+#mostra-cal-1, #mostra-cal-2{
+color:white;
+}
+
