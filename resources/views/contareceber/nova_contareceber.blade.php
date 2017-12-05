@@ -23,7 +23,7 @@ name="_token" value="{{{ csrf_token() }}}" />
 		       <label>Devedor:</label><br />
 		      <input type="text" name="devedor" required id="searchname" value="{{ old('devedor') }}" />  
 		    </div>
-                  </div>
+      </div>
    	
 		
            <div class="col-md-3">
@@ -35,7 +35,7 @@ name="_token" value="{{{ csrf_token() }}}" />
               <label>Jurídica
               <input type="radio" name="tipoPessoa"  value="jur" id="tipoPessoa2"/>
               </label>
-	 	    </div>
+	 	    		</div>
         	</div>
 
     	  <div class="col-md-6">

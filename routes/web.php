@@ -26,6 +26,9 @@ Route::resource('fornecedor','FornecedorController');
 Route::resource('contapagar','ContaPagarController');
 Route::resource('contareceber','ContaReceberController');
 
+Route::get('/baixa_conta_receber/{id?}','BaixaContaReceberController@baixa_receber');
+Route::post('/baixa_receber_salvar/{id?}','BaixaContaReceberController@baixa_receber_salvar');
+
 Route::get('/redirect', 'FacebookAuthController@redirect');
 Route::get('/callback', 'FacebookAuthController@callback');
 

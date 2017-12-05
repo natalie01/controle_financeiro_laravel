@@ -48,17 +48,27 @@
 
         <td>  
          <ul class ="list-icones list-icones-tabela list-unstyled">
-         <li class = "flex-item-icone flex-item-icone-tabela"  id = "mostra"><a href="{{route('contareceber.show',$c->id)}}">
-          <span><i class="fa fa-search fa-2x" aria-hidden="true"></i></span>
-          </a>  </li>
-         <li  class = "flex-item-icone flex-item-icone-tabela" ><a href="{{route('contareceber.edit',$c->id)}}">
-          <span><i class="fa fa-pencil fa-2x" aria-hidden="true"></i></span>
-          </a>  </li>
+         <li class = "flex-item-icone flex-item-icone-tabela"  id = "mostra">
+						<a href="/baixa_conta_receber/{{$c->id}}"  aria-label="registrar recebimento" title="registrar recebimento">
+          <span>
+					<i class="fa fa-sign-in fa-2x"></i>
+					<i class="fa fa-money fa-2x" aria-hidden="true"></i></span>
+	        </a>  
+					</li>
+
+         <li  class = "flex-item-icone flex-item-icone-tabela" >
+					<a href="{{route('contareceber.edit',$c->id)}}" aria-label="editar">
+          <span><i class="fa fa-pencil fa-2x" aria-hidden="true" title="editar"></i></span>
+				 </a>
+			  </li>
+
           <li class = "flex-item-icone flex-item-icone-tabela" >
 								<form action="{{route('contareceber.destroy',$c->id)}}" method="POST">
 								{{ method_field('DELETE') }}
 								{{ csrf_field() }}
-								<button type ="submit" class= "btn-delete" onclick="return confirm('deletar o registro?')"><span><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></span></button>
+								<button type ="submit" class="btn-excluir"  onclick="return confirm('deletar o registro?')">
+								<span><i class="fa fa-trash-o fa-2x" aria-hidden="true" title="excluir"></i></span></button>
+								 <span class="sr-only">excluir</span>
 								</form>
 				 </li> 
           </ul> 
