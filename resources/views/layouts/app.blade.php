@@ -88,7 +88,7 @@
 										<li>
                         <a href="#movimentacoesSubmenu" data-toggle="collapse" aria-expanded="false">
                              <i class="fa fa-usd" aria-hidden="true"></i>
-                            Movimentacoes
+                            Movimentac<span>&otilde;</span>es
                         </a>
 												 <ul class="collapse list-unstyled" id="movimentacoesSubmenu">
                             <li><a href="{{route('contapagar.create')}}" >Novo Lancamentos a Pagar</a></li>

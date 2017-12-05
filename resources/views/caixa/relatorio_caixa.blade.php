@@ -4,37 +4,32 @@
 <div class="container" >
 
 <h2>Fluxo de Caixa</h2>
-@if(empty($registros))
-	<div class="alert alert-danger">
-	<p>Nenhum registro encontrado</p>
-	</div>
-@else
-	<p>{{count($registros)}} registros encontrados</p>
-
-		<!--<p id = "periodo">entre as datas  {{$inicio_format}} e {{$fim_format}} </p>-->
-		@if(isset($teste))
-		<p id = "periodo">data enviada:  {{$teste}}</p>
+		@if(isset($data))
+		<div class="alert alert-success">
+		<p id = "periodo">Data:  {{$data}}</p>
+		</div>
 		@endif
-		<p id = "aviso"></p>
 
+		@if(isset($mensagem_sem_data))
+		<div class="alert alert-danger">
+		<p >{{$mensagem_sem_data}}</p>
+		</div>
+		@endif
 
-		 <form  action = "/selecionar_datas_post" class="form-horizontal"  method="post">
-				<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-				<div class="form-group col-md-6">
-				 <label>Data Início:</label><br />
-					<input type="date"  name ="teste" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
-				</div>
-				<button type="submit" class ="btn btn-primary">OK</button>
-			</form>
-
+		@if(isset($mensagem_uma_data))
+		<div class="alert alert-warning">
+		<p >{{$mensagem_uma_data}}</p>
+		</div>
+		@endif
 
 		<button class ="btn btn-primary" id="mostra-cal-1">
 					<p>Selecione outro período:</p>
 		</button><br>
 
 		<div id ="cal-1">
-			<form  id="form-datas-1" class="form-horizontal"  method="post">
+			<form  action="/selecionar_datas_post" id="form-datas-1" class="form-horizontal"  method="post">
 				<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+				<input type="hidden" name="periodo" value="duasdatas" />
 				<div class="form-group col-md-6">
 				 <label>Data Início:</label><br />
 					<input type="date" id="data-inicio" name="data1" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
@@ -55,11 +50,12 @@
 			<p>Selecione uma data específica para ver o resultado diário:</p>
 		</button><br>
 		<div id ="cal-2">
-		 <form  id="form-datas-2" class="form-horizontal"  method="post">
+		 <form  action="/selecionar_datas_post" id="form-datas-2" class="form-horizontal"  method="post">
 				<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+					<input type="hidden" name="periodo" value="umadata" />
 				<div class="form-group col-md-6">
 				 <label>Data Início:</label><br />
-					<input type="date" id="data-unica"  pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
+					<input type="date" id="data-unica"  name ="data" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
 				</div>
 				<button type="submit" class ="btn btn-primary">OK</button>
 			</form>
@@ -68,7 +64,13 @@
 			</div>
 		<br>
 
-
+@if(empty($registros))
+	<div class="alert alert-danger">
+	<p>Nenhum registro encontrado</p>
+	</div>
+@else
+	<p>{{count($registros)}} registros encontrados</p>
+		<p id = "aviso"></p>
 			<table class= "table1">
 				<thead>
 				<tr>

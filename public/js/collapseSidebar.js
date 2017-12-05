@@ -84,28 +84,49 @@ $(document).ready(function () {
         $("#cal-2").hide();
     });
 
+	$("#form-datas-1").submit(function(){
+					
+					var dt1 = $("#data1").val();
+					var dt2 = $("#data2").val();
+
+					console.log(dt1 + ',' +dt2);
+					$("#cal-1").hide();
+		});
+
+	$("#form-datas-2").submit(function(){
+					
+					var dtu = $("#data-unica").val();
+					console.log(dtu);
+					$("#cal-2").hide();
+		});
+
+
+
+
+/*
 $("#form-datas-2").submit(function(){
-		  	event.preventDefault();
+		  	
 		  	var dtu = $("#data-unica").val();
 
-      	if(dtu=== '' ){
+      	if(dtu!== '' ){
+					var dt = '&' + dtu;
+					var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+						
+				$.ajax({url: "/selecionar_datas/"+dt,data: { _token: CSRF_TOKEN},
+								dataType: 'JSON',
+								success: function (data) {
+						  		console.log(data);
+									$("#cal-2").hide();
+									$('#aviso').text("");
+								}
+		  			});
+
+		    }else{
+						event.preventDefault();
 		         $('#aviso').text('você não selecionou nenhuma data.').css("color","red");
-		    }
+				}
 				
 
-				var dt = '&' + dtu;
-
-				var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-			  $.ajax({url: "/selecionar_datas/"+dt,data: { _token: CSRF_TOKEN},
-    				dataType: 'JSON',
-    				success: function (data) {
-		      		console.log(data);
-							$("#cal-2").hide();
-							$('#aviso').text("");
-					}
-		  });
-
-	
 	});
 
 
@@ -134,9 +155,10 @@ $("#form-datas-2").submit(function(){
 				    		console.log(data);
 								$("#cal-1").hide();
 								 $('#aviso').text("");
-						}
+							}
 				});
 			}
-	});
+		});
+*/
 
  });

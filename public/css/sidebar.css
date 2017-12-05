@@ -386,7 +386,7 @@ only screen and (max-width: 760px),
 	.table2 td:nth-of-type(2):before { content: "Devedor"; font-weight: bold;}
 	.table2 td:nth-of-type(3):before { content: "data Emissão"; font-weight: bold; }
 	.table2 td:nth-of-type(4):before { content: "data Vencimento"; font-weight: bold; }
-	.table3 td:nth-of-type(5):before { content: "Valor";  font-weight: bold;}
+	.table2 td:nth-of-type(5):before { content: "Valor";  font-weight: bold;}
 
 
 .list-icones{

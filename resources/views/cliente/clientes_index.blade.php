@@ -32,7 +32,7 @@
 <form action="{{route('cliente.destroy',$c->id)}}" method="POST">
     {{ method_field('DELETE') }}
     {{ csrf_field() }}
-		<button type ="submit" class= "btn-delete" ><span><i class="fa fa-trash-o" aria-hidden="true"></i></span></button>
+		<button type ="submit" class= "btn-delete" onclick="return confirm('tem certeza que deseja excluir?')" ><span><i class="fa fa-trash-o" aria-hidden="true"></i></span></button>
 		</form>
 		</td>
 

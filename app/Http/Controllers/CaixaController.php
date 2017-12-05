@@ -17,13 +17,13 @@ class CaixaController extends Controller
 			$data_hoje = Carbon::today();
 			$inicio = $data_hoje->subDays(15);
 
-			$fim_format = $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
-			$inicio_format = $inicio->year.'-'.$inicio->month.'-'.$inicio ->day;
-
+			$dt1 = $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
+			$dt2 = $inicio->year.'-'.$inicio->month.'-'.$inicio ->day;
+			$data = 'entre '.$dt1.' e '.$dt2;
 			//$registros= Caixa::all();
-    $registros= Caixa::whereBetween('data',[$inicio_format ,$fim_format])->orderBy('data', 'desc')->get();
+    $registros= Caixa::whereBetween('data',[$dt1 ,$dt2])->orderBy('data', 'desc')->get();
 		
-		return view('caixa.relatorio_caixa',compact('registros','fim_format','inicio_format'));
+		return view('caixa.relatorio_caixa',compact('registros','data'));
 /*
 $teste = $request->teste;
 return view('caixa.relatorio_caixa',compact('teste'));
@@ -135,14 +135,75 @@ return redirect()->route('profile', ['id' => 1]);
 			              ));
 	}
 
-public function selecionar_datas_post(Request $request)
-{
+	public function selecionar_datas_post(Request $request)
+	{
 
-/*$teste = $request->teste;
-return view('caixa.relatorio_caixa',compact(''));
-*/
+	/*$teste = $request->teste;
+	return view('caixa.relatorio_caixa',compact(''));
+	*/
+	$params = Request::all();
+	//$params = $request;	
+//	dd($params);
+	//dd($params['data']);
 
-	return response()->json(array($request));
-}
+	$periodo= $params['periodo'];
+
+	if($periodo == 'umadata'){
+
+		$data = $params['data'];
+		//dd($data);
+		if($data && $data!== ''){
+
+			 $registros= Caixa::whereDate('data',$data)->orderBy('id', 'desc')->get();
+
+			return view('caixa.relatorio_caixa',compact('data','registros'));
+
+		}else{
+			$mensagem_sem_data= 'você não selecionou nenhuma data.';
+			return view('caixa.relatorio_caixa')->with('mensagem_sem_data', $mensagem_sem_data);
+		}
+
+	}elseif($periodo == 'duasdatas'){
+			$dt1 = $params['data1'];
+			$dt2= $params['data2'];
+
+				
+      	if($dt1 == '' && $dt2 == ''){
+		         $mensagem_sem_data= 'você não selecionou nenhuma data.';
+							return view('caixa.relatorio_caixa')->with('mensagem_sem_data',$mensagem_sem_data);
+		    }
+
+ 				if(($dt1 == '' && $dt2 != '') || ($dt1 != '' && $dt2 == '') ){
+					$data = ($dt1 != '') ? $dt1 : $dt2;
+					$registros= Caixa::whereDate('data',$data)->orderBy('id', 'desc')->get();
+					 $mensagem_uma_data  = 'você selecionou apenas uma data.O resultado mostrado é o resultado para essa data.';
+						return view('caixa.relatorio_caixa',compact('data','mensagem_uma_data','registros'));
+        
+				}
+
+				if($dt1  != '' && $dt2 != ''){
+						if($dt1 ==  $dt2){
+						$data = $dt1;
+		        $mensagem_uma_data  = 'você selecionou datas iguais.O resultado mostrado é o resultado para essa data.';
+						$registros= Caixa::whereDate('data',$dt1)->orderBy('id', 'desc')->get();
+						return view('caixa.relatorio_caixa',compact('data','mensagem_uma_data','registros'));
+						}elseif($dt2 > $dt1){
+						$registros= Caixa::whereBetween('data',[$dt1 ,$dt2])->orderBy('data', 'desc')->get();
+						$data = 'entre '.$dt1.' e '.$dt2;
+						return view('caixa.relatorio_caixa',compact('registros','data'));
+						}else{
+						$registros= Caixa::whereBetween('data',[$dt2 ,$dt1])->orderBy('data', 'desc')->get();
+						$data = 'entre '.$dt2.' e '.$dt1;
+						return view('caixa.relatorio_caixa',compact('registros','data'));
+						}
+        }
+       
+		
+	}else{
+		return response()->json('outro');
+	}
+
+	}
+	
 
 }

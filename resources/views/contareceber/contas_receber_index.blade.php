@@ -58,7 +58,7 @@
 								<form action="{{route('contareceber.destroy',$c->id)}}" method="POST">
 								{{ method_field('DELETE') }}
 								{{ csrf_field() }}
-								<button type ="submit" class= "btn-delete" ><span><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></span></button>
+								<button type ="submit" class= "btn-delete" onclick="return confirm('deletar o registro?')"><span><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></span></button>
 								</form>
 				 </li> 
           </ul> 
