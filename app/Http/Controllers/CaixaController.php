@@ -66,20 +66,7 @@ return view('caixa.relatorio_caixa',compact('teste'));
 			$str= $request->valor;
 			$tipo = $request->tipo;
 
-			function getfloat($str) { 
-				if(strstr($str, ",")) { 
-					$str = str_replace(",", ".", $str); // substitui ',' por '.' 
-				} 
-		
-				if(preg_match("#([0-9\.]+)#", $str, $match)) { // procura por  '.' 
-					return floatval($match[0]); 
-				} else { 
-					return floatval($str); 
-				} 
-			} 
-
-			
-			$valor= getFloat($str);
+			$valor = $this->strToFloat($str);
 
 			$dataemissao = $request->dataemissao;
 
@@ -98,12 +85,15 @@ return view('caixa.relatorio_caixa',compact('teste'));
 		}
 
 //selecionar datas para filtrar os dados a serem mostrados
-	public function selecionar_datas($dt)
+	
+/*public function selecionar_datas($dt)
 	{
 		//$dt é uma string no formato &YYYY-MM-DD&YYYY-MM-DD onde a data inicial é a que vem no inicio 
 	if($dt && $dt!== ''){
 		$string = $dt;
 	}
+
+
 
 
 	$dt1 = substr($dt,1,10); //extrai a primeira data da string $dt
@@ -128,12 +118,14 @@ return redirect()->route('profile', ['id' => 1]);
 											'data_inicio'=>$data_inicio,'data_fim'=>$data_fim,
 											'inicio_format'=>$inicio_format,'fim_format'=>$fim_format
 			              ));
-*/
+
  	return response()->json(array(
 											'$dt1' => $dt1 ,'$dt2' => $dt2,
 											'data_inicio'=>$data_inicio
 			              ));
 	}
+
+*/
 
 	public function selecionar_datas_post(Request $request)
 	{

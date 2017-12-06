@@ -47,7 +47,7 @@ name="_token" value="{{{ csrf_token() }}}" />
              <div class="form-group">
               <label>Valor:</label><br />
 		    			<input type="text" name="valor" placeholder = "0,00" required 
-								pattern="^\d*(,?\d{1,2})?$" value="{{ old('valor') }}"/>
+								pattern="^(\d)*(\,\d{2}){0,1}$" value="{{ old('valor') }}"/>
 	 	    		</div>
      		 </div>
    

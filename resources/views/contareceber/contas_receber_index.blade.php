@@ -11,9 +11,15 @@
 
 	@if(isset($mensagem))
 		<div class="alert alert-success">
-			<p>O registro foi adicionado</p>
+			<p>{{ $mensagem }}</p>
 		</div>
 	@endif
+
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
 
 	@if(empty($contas_receber))
 		<div class="alert alert-danger">

@@ -9,6 +9,8 @@ use projeto_laravel\Cliente;
 use projeto_laravel\ContaReceber;
 use projeto_laravel\Http\Requests\ContaReceberRequest;
 
+//use projeto_laravel\Http\Controllers\StrToFloat;
+
 class ContaReceberController extends Controller
 {
     /**
@@ -71,15 +73,12 @@ class ContaReceberController extends Controller
 
 
 			$valor = $request->valor;
-			//$valorFloat = (float) $teste;
-			
 
-			//ContaReceber::create($params);
 
 		//	return response()->json($n_pagtos);
 
-			//funcao para converter a string para float
-			function getfloat($str) { 
+			/*
+			function getFloat($str) { 
 				if(strstr($str, ",")) { 
 					$str = str_replace(",", ".", $str); // substitui ',' por '.' 
 				} 
@@ -93,6 +92,10 @@ class ContaReceberController extends Controller
 
 			
 			$valorFloat = getFloat($valor);
+*/
+
+				//converte a string para float com a funcao strToFloat()  herdada da classe Controller
+				$valorFloat= $this->strToFloat($valor);
 
 				for($i = 0; $i < $n_pagtos;++$i ){
 					$dataVenc =  $dv->addDays($intervalo_pagtos*$i);
@@ -103,6 +106,9 @@ class ContaReceberController extends Controller
 																'valor'=>$valorFloat
 																]);
 				}
+
+				
+
 		
 				//return response()->json(array('a'=>$n_pagtos,'b' => $data));	
 				/*return response()->json(array('intervalo_pagtos' => $intervalo_pagtos,

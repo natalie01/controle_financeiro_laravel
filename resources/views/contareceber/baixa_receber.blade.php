@@ -39,10 +39,10 @@
 		       <label>Valor Recebido:</label><br />
 					@if(isset($valor))
 		      <input type="text" name="valor_recebido" required id="valor_recebido" 
-							 placeholder = "{{$valor}}" pattern="^\d*(,?\d{1,2})?$"/>
+							 placeholder = "{{$valor}}" value = "{{$valor}}" pattern="^\d*(,?\d{1,2})?$"/>
 					@else  
 		      	<input type="text" name="valor_recebido" required id="valor_recebido"
-						 pattern="^\d*(,?\d{1,2})?$" />
+						 pattern="^(\d)*(\,\d{2}){0,1}$" />
 					@endif  
 		    </div>
       </div>
