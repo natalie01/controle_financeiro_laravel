@@ -1,0 +1,55 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+     </script>
+</head>
+<body>
+<form>
+<input type="text" name="valor_residual" id="valor_recebido" 
+		pattern="^\d*(,?\d{1,2})?$" value ='100,56'/>  
+ <input type="text" name="valor_residual" id="valor_residual" 
+		pattern="^\d*(,?\d{1,2})?$"> 
+<input  type="submit" value="salvar">
+</form>
+<p id ="p1"></p>
+<p id ="p2"></p>
+
+</body>
+</html>
+
+
+
+$(document).ready(function(){
+  var v_inicial = $("#valor_recebido").val();
+  var v_inicial_num = Number((v_inicial.replace(/\,/,'.')).trim());
+  console.log('valor inicial: ' +v_inicial_num);
+   var v_inicial_r = $("#valor_residual").val();
+   var v_inicial_r_num = Number((v_inicial_r.replace(/\,/,'.')).trim());
+  console.log('valor inicial: ' +v_inicial_r_num); 
+  
+    $("#valor_recebido").keyup(function(){
+    	var v_receb = $("#valor_recebido").val();
+        var v_receb2 = v_receb.replace(/\./,',');
+       $("#valor_recebido").val(v_receb2);
+      
+      console.log(v_receb);
+        //var v_receb_number = Number(v_receb.replace(/\,/,'.'));
+        var v_receb_num = Number((v_receb.replace(/\,/,'.')).trim());
+      console.log(v_receb_num);
+      
+      var diff = (v_inicial_num - v_receb_num).toFixed(2);
+      console.log(diff);
+      console.log(typeof(diff));
+      
+        $("#p1").text(v_receb_num);
+       $("#p2").text(diff);
+       $("#valor_residual").val(diff);
+      console.log(typeof($("#valor_residual").val()));
+    });
+});

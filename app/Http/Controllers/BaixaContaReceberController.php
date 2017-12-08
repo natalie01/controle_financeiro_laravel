@@ -53,10 +53,19 @@ class BaixaContaReceberController extends Controller
 		if($valor_residual == null){
 			$valor_residual =0;
 		}
+				//converte a string para float com a funcao strToFloat()  herdada da classe Controller
+				$valor_recebido_float= $this->strToFloat($valor_recebido);
+				$valor_residual_float= $this->strToFloat($valor_residual);
+
+		if($valor_recebido_float <  $valor_devido){
+			$conta->status = "recebimento parcial";
+			$conta->save();
+		}
+
 
 			BaixaContaReceber::create(['data'=>$data,
-																'valor_recebido'=>$valor_recebido,
-																'valor_residual'=>$valor_residual,
+																'valor_recebido'=>$valor_recebido_float,
+																'valor_residual'=>$valor_residual_float,
 																'fk_conta_receber'=>$ref_conta_receber,																
 																]);
 

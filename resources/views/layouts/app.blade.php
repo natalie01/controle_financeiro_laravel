@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-<link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
+<link href="{{ asset('css/index.css') }}" rel="stylesheet">
 <link href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"rel="stylesheet">
    <script src="{{ asset('js/app.js') }}"></script>
 </head>

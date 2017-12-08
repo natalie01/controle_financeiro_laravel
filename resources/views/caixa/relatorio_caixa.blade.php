@@ -27,64 +27,78 @@
 		</button><br>
 
 		<div id ="cal-1">
-			<form  action="/selecionar_datas_post" id="form-datas-1" class="form-horizontal"  method="post">
-				<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-				<input type="hidden" name="periodo" value="duasdatas" />
-				<div class="form-group col-md-6">
-				 <label>Data Início:</label><br />
-					<input type="date" id="data-inicio" name="data1" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
+				<form  action="/selecionar_datas_post" id="form-datas-1" class="form-horizontal"  method="post">
+					<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+					<input type="hidden" name="periodo" value="duasdatas" />
+					<div class="form-group col-md-6">
+					 	<label>Data Início:</label><br />
+						<input type="date" id="data-inicio" name="data1" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
+					</div>	
+					<div class="form-group col-md-6">
+						<label>Data Fim:</label><br />
+						<input type="date" id="data-fim" name="data2" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
+						<br>
+					</div>
+				<div class="form-group col-md-12">
+						<button type="submit" class ="btn btn-primary">OK</button>
 				</div>
-				<div class="form-group col-md-6">
-					<label>Data Fim:</label><br />
-					<input type="date" id="data-fim" name="data2" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
-					<br>
-				</div>
-				<button type="submit" class ="btn btn-primary">OK</button>
-			</form>
-		<br>
-		<button class ="btn btn-danger" id="esconde-cal-1">cancelar</button>
+				</form>
+				<br>
+			<div class="form-group col-md-12">
+				<button class ="btn btn-danger" id="esconde-cal-1">cancelar</button>
+			</div>
 		</div>
 		<br>
 
 		<button class ="btn btn-primary" id="mostra-cal-2">
-			<p>Selecione uma data específica para ver o resultado diário:</p>
+			<p>Selecione uma data específica </p>
+			<p>para ver o resultado diário:</p>
 		</button><br>
+
 		<div id ="cal-2">
-		 <form  action="/selecionar_datas_post" id="form-datas-2" class="form-horizontal"  method="post">
-				<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-					<input type="hidden" name="periodo" value="umadata" />
-				<div class="form-group col-md-6">
-				 <label>Data Início:</label><br />
-					<input type="date" id="data-unica"  name ="data" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
+			<form  action="/selecionar_datas_post" id="form-datas-2" class="form-horizontal"  method="post">
+				<div class="form-group col-md-12">
+					<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+						<input type="hidden" name="periodo" value="umadata" />
+					 <label>Data Início:</label><br />
+						<input type="date" id="data-unica"  name ="data" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"/>
+							<br />
+					</div>
+				<div class="form-group col-md-12">
+					<button type="submit" class ="btn btn-primary">OK</button>
 				</div>
-				<button type="submit" class ="btn btn-primary">OK</button>
-			</form>
-			<br>
-			<button class ="btn btn-danger" id="esconde-cal-2">cancelar</button>
+				</form>
+				<br/>
+				<div class="form-group col-md-12">
+					<button class ="btn btn-danger" id="esconde-cal-2">cancelar</button>	<br/>
+				</div>
 			</div>
 		<br>
 
-@if(empty($registros))
-	<div class="alert alert-danger">
+<div>
+@if(empty($registros)|| count($registros)==0)
+	<div class="alert alert-danger col-md-12">
 	<p>Nenhum registro encontrado</p>
 	</div>
 @else
+<div class="alert alert-default col-md-12">
 	<p>{{count($registros)}} registros encontrados</p>
 		<p id = "aviso"></p>
+</div>
 			<table class= "table1">
 				<thead>
 				<tr>
 					<th>N°</th>
 					<th>Data</th>
 					<th>Valor</th>
-						  <th>Descricao</th>
+						  <th>Descri<span>&ccedil;</span><span>&atilde;</span>o</th>
 						  <th>Tipo</th>
 						  <th>ref_titulo</th>
 				</tr>
 					</thead>
 				<tbody>
 			 @foreach ($registros as $r)
-				<tr>
+				<tr class = "td-{{$r->tipo}}">
 					<td>{{$r->id}}</td>
 					<td>{{$r->data}}</td>
 					<td>{{$r->valor}}</td>
@@ -95,7 +109,7 @@
 				@endforeach
 				</tbody>
 			</table>
-		
+	</div>	
 @endif
 </div><!--container-->
 @endsection

@@ -19,7 +19,7 @@ class CreateContaReceberTable extends Migration
 				 $table->date('datavencimento');
 				 $table->date('dataemissao');
 				 $table->float('valor');	    
-				 $table->boolean('recebido')->nullable();
+				 $table->string('recebido')->nullable();
         }); //
     }
 

@@ -369,7 +369,7 @@ only screen and (max-width: 760px),
      font-weight: bold;
      }
 	.table1 td:nth-of-type(4):before {
-    content: "Descricao"; 
+    content: "Descrição"; 
      font-weight: bold;
      }
 	.table1 td:nth-of-type(5):before {
@@ -407,6 +407,17 @@ only screen and (max-width: 760px),
 }
 }
 
+
+/*diferenciar as cores de receitas e despesas na tabela do relatorio de caixa*/
+.td-receita{
+color:blue;
+}
+
+.td-despesa{
+color:red;
+}
+
+
 /*CALENDARIOS */
 
 #cal-1, #cal-2{
@@ -415,5 +426,15 @@ display:none;
 
 #mostra-cal-1, #mostra-cal-2{
 color:white;
+text-align:left;
 }
+
+input[type="date"]{
+max-width:80%;
+}
+
+#esconde-cal-1 ,#esconde-cal-2{
+    margin-left: -15px;
+}
+
 

@@ -54,8 +54,8 @@
 		  <div class="col-md-6">
 		     <div class="form-group">
 		       <label>Valor Residual:</label><br />
-		      <input type="text" name="valor_residual" id="valor_residual" 
-						min="0" pattern="^\d*(,?\d{1,2})?$"step="0.01"/>  
+		      <input type="text" name="valor_residual" id="valor_residual" placeholder = "0,00" value = "0,00"
+					 pattern="^\d*(,?\d{1,2})?$"/>  
 		    </div>
       </div>
 		  <div class="col-md-6">

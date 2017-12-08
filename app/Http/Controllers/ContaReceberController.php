@@ -74,26 +74,6 @@ class ContaReceberController extends Controller
 
 			$valor = $request->valor;
 
-
-		//	return response()->json($n_pagtos);
-
-			/*
-			function getFloat($str) { 
-				if(strstr($str, ",")) { 
-					$str = str_replace(",", ".", $str); // substitui ',' por '.' 
-				} 
-		
-				if(preg_match("#([0-9\.]+)#", $str, $match)) { // procura por  '.' 
-					return floatval($match[0]); 
-				} else { 
-					return floatval($str); 
-				} 
-			} 
-
-			
-			$valorFloat = getFloat($valor);
-*/
-
 				//converte a string para float com a funcao strToFloat()  herdada da classe Controller
 				$valorFloat= $this->strToFloat($valor);
 

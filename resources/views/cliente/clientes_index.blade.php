@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-	<h1>Listagem</h1>
+	<h1>Clientes</h1>
 	<table class="table table-striped table-bordered table-hover">
 	@if(empty($clientes))
 		<div class="alert alert-danger">
