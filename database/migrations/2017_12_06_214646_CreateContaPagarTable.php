@@ -13,7 +13,14 @@ class CreateContaPagarTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('conta_pagar', function (Blueprint $table) {
+					$table->increments('id');
+					$table->string('credor');
+				 $table->date('datavencimento');
+				 $table->date('dataemissao');
+				 $table->float('valor');	    
+				 $table->string('recebido')->nullable();
+        }); //
     }
 
     /**
@@ -23,6 +30,6 @@ class CreateContaPagarTable extends Migration
      */
     public function down()
     {
-        //
+         Schema::dropIfExists('conta_pagar');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace projeto_laravel\Http\Controllers;
 use Carbon\Carbon;
+use PDF;
 //use Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
@@ -140,6 +141,10 @@ return redirect()->route('profile', ['id' => 1]);
 
 	$periodo= $params['periodo'];
 
+// $teste = $this->getData($params);
+
+//	dd($teste);
+
 	if($periodo == 'umadata'){
 
 		$data = $params['data'];
@@ -195,7 +200,54 @@ return redirect()->route('profile', ['id' => 1]);
 		return response()->json('outro');
 	}
 
+
 	}
 	
+	public function mostrarPdf(Request $request){
+	$request = Request::all();
+	$registros = $request['registros']; //os registros vem todos juntos numa string
 
+	//é preciso que os registros estejam no formato de array para gerar a tabela do pdf
+		$registros =ltrim($registros, '[');
+		$registros =rtrim($registros, ']');
+		$registros =  str_replace('},','};',$registros);
+		$registros_array = explode(";", $registros);
+
+	//dd($registros);
+	//dd($registros_array);
+	//dd(gettype($registros_array)); //array
+	//dd($registros_array[0]->valor); //nao funciona
+//dd(gettype($registros_array[0])); // string :(
+    
+	PDF::SetTitle('Relatório');
+	PDF::AddPage();
+ 
+	$html = '<table>';
+
+   foreach ($registros_array as $r)
+     {
+         $html.='<tr>';
+         $html.='<td  >'.$r.'</td>';
+ 
+         
+         $html.='</tr>';
+			
+     }
+
+	$html.='</table>';
+
+	PDF::writeHTML($html, false, false, true, false, '');
+	PDF::Output('Relatorio.pdf');
+
+
+          
+	}
+
+
+/*
+function getData($periodo)
+{
+return $periodo;
+}
+*/
 }

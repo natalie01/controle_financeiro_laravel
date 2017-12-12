@@ -13,14 +13,14 @@ class CreateBaixaContaPagarTable extends Migration
      */
     public function up()
     {
-        Schema::create('baixa_conta_receber', function (Blueprint $table) {
+        Schema::create('baixa_conta_pagar', function (Blueprint $table) {
 					$table->increments('id');
 				 $table->date('data');
-				 $table->float('valor_recebido');	    
+				 $table->float('valor_pago');	    
 				 $table->float('valor_residual');	
-				 $table->integer('fk_conta_receber')->unsigned();
+				 $table->integer('fk_conta_pagar')->unsigned();
 
-    $table->foreign('user_id')->references('id')->on('users');
+    //$table->foreign('user_id')->references('id')->on('users');
         }); //
     }
 
@@ -31,6 +31,6 @@ class CreateBaixaContaPagarTable extends Migration
      */
     public function down()
     {
-         Schema::dropIfExists('baixa_conta_receber');
+         Schema::dropIfExists('baixa_conta_pagar');
     }
 }

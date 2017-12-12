@@ -24,6 +24,7 @@
 
 		<button class ="btn btn-primary" id="mostra-cal-1">
 					<p>Selecione outro período:</p>
+					
 		</button><br>
 
 		<div id ="cal-1">
@@ -80,11 +81,23 @@
 	<div class="alert alert-danger col-md-12">
 	<p>Nenhum registro encontrado</p>
 	</div>
+
 @else
 <div class="alert alert-default col-md-12">
 	<p>{{count($registros)}} registros encontrados</p>
-		<p id = "aviso"></p>
 </div>
+
+	<div>
+<form action="/relatorio_caixa_pdf" name=s"pdfForm" method="POST">
+	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+<input name="registros" type="hidden" value="{{$registros}}">
+  <button type="submit" name="submit_registros" aria-label="gerar arquivo pdf">
+		<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" title="gerar arquivo pdf"  style="color:#a51c0b;"></i>
+		</button>
+</form>
+
+	</div>
+
 			<table class= "table1">
 				<thead>
 				<tr>
@@ -109,7 +122,8 @@
 				@endforeach
 				</tbody>
 			</table>
-	</div>	
+	</div>
+	
 @endif
 </div><!--container-->
 @endsection

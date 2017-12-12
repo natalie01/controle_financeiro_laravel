@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContaPagar extends Model
 {
-     protected $table = 'clientes';
+     protected $table = 'conta_pagar';
 	public $timestamps = false;
-	protected $fillable = array('credor');
+	protected $fillable = array('credor','datavencimento','dataemissao','valor'););
 	
 }
