@@ -12,6 +12,11 @@ use projeto_laravel\Http\Requests\BaixaContaReceberRequest;
 
 class BaixaContaReceberController extends Controller
 {
+
+public function __construct()
+{
+    $this->middleware('auth');
+}
 	public function baixa_receber($id)
 {
 	/*  $hoje= Carbon::now();

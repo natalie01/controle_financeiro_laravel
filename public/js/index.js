@@ -3,6 +3,7 @@ $(document).ready(function () {
 		     $('#sidebar').toggleClass('active');
 		 });
 
+
 		$('#searchname').keyup(function() {
 			 var term = $('#searchname').val();
 				console.log(term);

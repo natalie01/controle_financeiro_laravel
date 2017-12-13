@@ -23,7 +23,7 @@ name="_token" value="{{{ csrf_token() }}}" />
 		       <label>Nome:</label><br />
 		      <input type="text" name="nome" />  
 		    </div>
-                  </div>
+       </div>
    	
 		
            <div class="col-md-3">

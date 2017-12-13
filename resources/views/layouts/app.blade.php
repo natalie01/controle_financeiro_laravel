@@ -19,6 +19,8 @@
 <body>
     <div id="app" class=" wrapper">
             <!-- Sidebar Holder -->
+					@if(!Auth::guest())
+
             <nav id="sidebar">
                 <div class="sidebar-header">
                     <h3>Bootstrap Sidebar</h3>
@@ -27,15 +29,10 @@
 
                 <ul class="list-unstyled components">
                     <li class="active">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i class="glyphicon glyphicon-home"></i>
+                        <a href="/home">
+                            <i class="fa fa-dashboard" aria-hidden="true"></i>
                             Home
                         </a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Home 1</a></li>
-                            <li><a href="#">Home 2</a></li>
-                            <li><a href="#">Home 3</a></li>
-                        </ul>
                     </li>
 
                     <li>
@@ -61,29 +58,6 @@
 	  
                     </li>
 
-                    <li>				
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i class="glyphicon glyphicon-duplicate"></i>
-                            Pages
-                        </a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#">Page 1</a></li>
-                            <li><a href="#">Page 2</a></li>
-                            <li><a href="#">Page 3</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-link"></i>
-                            Portfolio
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-paperclip"></i>
-                            FAQ
-                        </a>
-                    </li>
 									
 										<li>
                         <a href="#movimentacoesSubmenu" data-toggle="collapse" aria-expanded="false">
@@ -116,6 +90,7 @@
 
             </nav>
 
+					@endif
 <!-- Page Content Holder -->
         <div id="content">
   	        <nav class="navbar navbar-default" style="background-color:rgb(34, 34, 34);">
@@ -124,33 +99,33 @@
                         <div class="navbar-header">
                             <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                                <i class="fa fa-bars" aria-hidden="true"></i>
-                                <span>Toggle Sidebar</span>
+                             
                             </button>
                         </div>
 
                         <div>
                             <ul class="nav navbar-nav navbar-right">
- 			 @guest
+ 			 									@guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
-                                <li>
-		                        <a >
+                           <li>
+		                        <a id = "username">
 		                            Hello ,{{ Auth::user()->name }}
 		                        </a>
-				</li>
+													</li>
 
-                                   <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
+                         <li>
+                              <a href="{{ route('logout') }}"
+                                  onclick="event.preventDefault();
+                                           document.getElementById('logout-form').submit();">
+                                  Logout
+                              </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
+                              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                  {{ csrf_field() }}
+                              </form>
+                          </li>
                         @endguest
                             </ul>
                         </div>
@@ -171,7 +146,7 @@
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	 
-<script src="{{ asset('js/collapseSidebar.js') }}"></script>
+<script src="{{ asset('js/index.js') }}"></script>
 
 
 </body>

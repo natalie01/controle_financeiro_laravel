@@ -11,6 +11,10 @@ use projeto_laravel\Http\Requests\CaixaRequest;
 
 class CaixaController extends Controller
 {
+public function __construct()
+{
+    $this->middleware('auth');
+}
 		public function index()
 		{
 
@@ -202,38 +206,62 @@ return redirect()->route('profile', ['id' => 1]);
 
 
 	}
-	
-	public function mostrarPdf(Request $request){
-	$request = Request::all();
-	$registros = $request['registros']; //os registros vem todos juntos numa string
 
-	//é preciso que os registros estejam no formato de array para gerar a tabela do pdf
-		$registros =ltrim($registros, '[');
-		$registros =rtrim($registros, ']');
-		$registros =  str_replace('},','};',$registros);
-		$registros_array = explode(";", $registros);
 
-	//dd($registros);
-	//dd($registros_array);
-	//dd(gettype($registros_array)); //array
-	//dd($registros_array[0]->valor); //nao funciona
-//dd(gettype($registros_array[0])); // string :(
+	public function mostrarPdf($dt){
+
+		//o parametro $dt é uma string que pode conter uma ou duas datas
+	if(strlen($dt)>0 && strlen($dt) <= 10 && $dt!=''  ){
+			$data = $dt;
+			$registros= Caixa::whereDate('data',$data)->orderBy('id', 'desc')->get();
+			//dd($registros);
+	}elseif(strlen($dt)>10 && strlen($dt) <= 29 && $dt!=''  ){
+			$datas = explode(" ", $dt);
+			$dt1 = $datas[1];
+			$dt2 =  $datas[3];
+			$registros= Caixa::whereBetween('data',[$dt1 ,$dt2])->orderBy('data', 'desc')->get();
+			//dd($datas);
+			//dd($registros[);
+	}else{
+			echo 'nenhuma data informada';
+	};
     
 	PDF::SetTitle('Relatório');
 	PDF::AddPage();
- 
-	$html = '<table>';
 
-   foreach ($registros_array as $r)
+
+	$html ='<h2>Relatório de Caixa</h2>';
+		$html .='<h3>'.$dt.'</h3>';
+	$html .= '<table style ="color:blue;">';
+	$html .= '<thead style="background-color:#FFFF00;">';
+	$html .= '<tr>';
+	$html .= '<th>N°</th>';
+	$html .= '<th>Data</th>';
+	$html .= '<th>Valor</th>';
+	$html .= '<th>Descri<span>&ccedil;</span><span>&atilde;</span>o</th>';
+	$html .= '<th>Tipo</th>';
+	$html .= '<th>ref_titulo</th>';
+	$html .= '</tr>';
+foreach ($registros as $r)
      {
+
          $html.='<tr>';
-         $html.='<td  >'.$r.'</td>';
- 
-         
+         $html.='<td  >'.$r->id.'</td>';
+ 					$html.='<td  >'.$r->data.'</td>';
+         $html.='<td  >'.$r->valor.'</td>';
+
+         $html.='<td  >'.$r->descricao.'</td>';
+ 					$html.='<td  >'.$r->tipo.'</td>';
+         $html.='<td  >'.$r->ref_titulo.'</td>';
          $html.='</tr>';
 			
      }
 
+	$html .= '</thead>';
+	$html .= '<tbody>';
+
+  
+	$html .= '</tbody>';
 	$html.='</table>';
 
 	PDF::writeHTML($html, false, false, true, false, '');
@@ -242,12 +270,4 @@ return redirect()->route('profile', ['id' => 1]);
 
           
 	}
-
-
-/*
-function getData($periodo)
-{
-return $periodo;
-}
-*/
 }

@@ -88,14 +88,12 @@
 </div>
 
 	<div>
-<form action="/relatorio_caixa_pdf" name=s"pdfForm" method="POST">
-	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-<input name="registros" type="hidden" value="{{$registros}}">
+
+<a href = "/relatorio_caixa_pdf/{{$data}}">
   <button type="submit" name="submit_registros" aria-label="gerar arquivo pdf">
 		<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" title="gerar arquivo pdf"  style="color:#a51c0b;"></i>
 		</button>
-</form>
-
+</a>
 	</div>
 
 			<table class= "table1">

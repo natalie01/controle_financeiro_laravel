@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 Route::get('home', 'HomeController@index');
 
+Route::get('empresa', 'HomeController@empresa');
+Route::post('empresa_salvar', 'HomeController@empresa_salvar');
+
 Auth::routes();
 
 
@@ -48,8 +51,8 @@ Route::get('/novadespesa','CaixaController@novadespesa');
 Route::post('/incluir_novo_movim_caixa','CaixaController@incluir_novo_movim_caixa');
 
 Route::get('/relatorio_caixa','CaixaController@index');
-Route::post('/relatorio_caixa_pdf','CaixaController@mostrarPdf');
 
+Route::get('/relatorio_caixa_pdf/{dt?}','CaixaController@mostrarPdf');
 
 
 Route::get('selecionar_datas/{dt?}','CaixaController@selecionar_datas');//selecionar datas para filtar resultados
