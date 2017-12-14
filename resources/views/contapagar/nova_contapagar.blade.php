@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<h2>Novo Cadastro</h2>
+<h2>Nova Conta a Pagar</h2>
 	@if (count($errors) > 0)
 		<div class="alert alert-danger">
 		<ul>
@@ -21,7 +21,7 @@ name="_token" value="{{{ csrf_token() }}}" />
 		  <div class="col-md-6">
 		     <div class="form-group">
 		       <label>Credor:</label><br />
-		      <input type="text" name="nome" />  
+		      <input type="text" name="credor" />  
 		    </div>
                   </div>
    	
@@ -66,12 +66,6 @@ name="_token" value="{{{ csrf_token() }}}" />
      </div>
         
    <div class="row">
-     <div class="col-md-6">
-             <div class="form-group">
-             <label>Data Vencimento:</label><br />
-		    <input type="date" name="datalancamento" />
-	 	    </div>
-          </div>
         
           <div class="col-md-6">
              <div class="form-group">
@@ -79,6 +73,14 @@ name="_token" value="{{{ csrf_token() }}}" />
 		    <input type="date" name="dataemissao" />
 	 	    </div>
           </div>
+
+     <div class="col-md-6">
+             <div class="form-group">
+             <label>Data Vencimento:</label><br />
+		    <input type="date" name="datavencimento" />
+	 	    </div>
+          </div>
+
         
      </div> 
      

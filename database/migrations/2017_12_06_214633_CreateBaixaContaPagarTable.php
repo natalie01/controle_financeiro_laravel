@@ -19,7 +19,7 @@ class CreateBaixaContaPagarTable extends Migration
 				 $table->float('valor_pago');	    
 				 $table->float('valor_residual');	
 				 $table->integer('fk_conta_pagar')->unsigned();
-
+	 $table->integer('user_id');
     //$table->foreign('user_id')->references('id')->on('users');
         }); //
     }

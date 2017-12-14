@@ -9,10 +9,10 @@ use projeto_laravel\Http\Requests\ClientesRequest;
 
 class ClienteController extends Controller
 {
-	public function __construct()
-	{
-		  $this->middleware('auth');
-	}
+		public function __construct()
+		{
+				$this->middleware('auth');
+		}
     /**
      * Display a listing of the resource.
      *
@@ -21,8 +21,10 @@ class ClienteController extends Controller
     public function index()
     {
         //
-		$clientes = Cliente::all();
-		return view('cliente.clientes_index')->with('clientes',$clientes);
+			$user_id = $this->getUserId();
+
+			$clientes = Cliente::where('user_id',$user_id)->get();
+			return view('cliente.clientes_index')->with('clientes',$clientes);
     }
 
     /**
@@ -33,7 +35,7 @@ class ClienteController extends Controller
     public function create()
     {
         //
-	return view('cliente.novo_cliente');
+			return view('cliente.novo_cliente');
     }
 
 
@@ -45,13 +47,16 @@ class ClienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(ClientesRequest $request){
+			
 			$params = request::all();
-			Cliente::create($params);
-		
-				/*	return redirect()
-					->action('ClienteController@lista')
-					->withInput(Request::only('nome'));
-	*/
+			 //$user = Auth::user();
+			$user_id = $this->getUserId();
+			$usuario = array('user_id'=>$user_id);
+
+			$params2 = array_merge($params,$usuario);
+
+			Cliente::create($params2);
+
 			return redirect()
 					->route('cliente.index')
 					->withInput(Request::only('nome'));
@@ -82,11 +87,20 @@ class ClienteController extends Controller
 
 
 
-    public function show(Cliente $cliente)
+    public function show($id)
     {
-        //
+    
+    //
+		//$user = Auth::user();
+		$cliente = Cliente::find($id);
+
+		$user_id = $this->getUserId();
+		if($cliente->user_id != $user_id){
+			return  view('erro_de_acesso');
+		}else{
 			return view('cliente.cliente_mostra')->with('cliente',$cliente);
     }
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -96,12 +110,17 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        //
-		$cliente = Cliente::find($id);
-		echo "editar produto".$id;
-		return view('cliente.cliente_editar')->with('c', $cliente);
-	
-		  }
+
+			$cliente = Cliente::find($id);
+			$user_id = $this->getUserId();
+
+			if($cliente->user_id != $user_id){
+				return  view('erro_de_acesso');
+			}else{
+				return view('cliente.cliente_editar')->with('c', $cliente);
+			}
+
+		}
 
     /**
      * Update the specified resource in storage.
@@ -112,12 +131,18 @@ class ClienteController extends Controller
      */
     public function update(ClientesRequest $request, $id)
     {
-        //
 
-	  Cliente::find($id)->update($request->all());
-		return redirect()
+		$user_id = $this->getUserId();
+		$cliente = Cliente::find($id);
+	
+		if($cliente->user_id != $user_id){
+			return  view('erro_de_acesso');
+		}else{
+			Cliente::find($id)->update($request->all());
+				return redirect()
 					->route('cliente.index')
 					->withInput(Request::only('nome'));
+		}
 
     }
 
@@ -130,11 +155,21 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         //
+	
+			$user_id = $this->getUserId();
+
 			$cliente = Cliente::find($id);
 			$c_nome = $cliente->nome;
+		
+		if($cliente->user_id != $user_id){
+			return  view('erro_de_acesso');
+		}else{
 			$cliente->delete();
 			return redirect()
 					->route('cliente.index')->with('cliente_nome', $c_nome);
 					
     }
+	}
+
+
 }

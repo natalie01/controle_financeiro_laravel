@@ -19,12 +19,10 @@ public function __construct()
 }
 	public function baixa_receber($id)
 {
-	/*  $hoje= Carbon::now();
-		$datahoje= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
-*/
+
 		$datahoje = $this->dataHoje();
 		$conta = ContaReceber::find($id);
-		$valor = $conta->valor;
+		$valor = $conta->valor_residual;
 		$ref = $id;
 
     return view('contareceber.baixa_receber',compact('datahoje','valor','ref'));
@@ -32,7 +30,7 @@ public function __construct()
 
 	public function baixa_receber_salvar(BaixaContaReceberRequest $request)
 {
-
+			$user_id = $this->getUserId();
 			$params = Request::all();
 
 			$valor_recebido = $params['valor_recebido'];
@@ -71,7 +69,8 @@ public function __construct()
 			BaixaContaReceber::create(['data'=>$data,
 																'valor_recebido'=>$valor_recebido_float,
 																'valor_residual'=>$valor_residual_float,
-																'fk_conta_receber'=>$ref_conta_receber,																
+																'fk_conta_receber'=>$ref_conta_receber,
+																'user_id' =>$user_id																
 																]);
 
  //Ainda precisa atualizar a lista das contas a receber

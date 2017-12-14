@@ -7,7 +7,7 @@
 		<b>tipoPessoa:</b> {{$fornecedor->tipoPessoa}}
 		</li>
 		<li>
-		<b>telefone:</b> {{$fonrecedor->telefone}}
+		<b>telefone:</b> {{$fornecedor->telefone}}
 		</li>
 	</ul>
 @endsection

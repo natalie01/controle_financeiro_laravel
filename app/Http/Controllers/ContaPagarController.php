@@ -1,12 +1,18 @@
 <?php
 
 namespace projeto_laravel\Http\Controllers;
+use Carbon\Carbon;
+use Request;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use projeto_laravel\Fornecedor;
+use projeto_laravel\ContaPagar;
+use projeto_laravel\Http\Requests\ContaPagarRequest;
 
 class ContaPagarController extends Controller
 {
-public function __construct()
+
+	public function __construct()
 	{
 		  $this->middleware('auth');
 	}
@@ -18,6 +24,10 @@ public function __construct()
     public function index()
     {
         //
+			$user_id = $this->getUserId();
+
+					$contas_pagar= ContaPagar::where('user_id',$user_id)->get();
+					return view('contapagar.contas_pagar_index')->with('contas_pagar',$contas_pagar);
     }
 
     /**
@@ -28,7 +38,12 @@ public function __construct()
     public function create()
     {
         //
-		return view('contapagar.nova_contapagar');
+				//$clientes = Cliente::all();
+
+				$hoje= Carbon::now();
+				$datahoje= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
+				return view('contapagar.nova_contapagar')->with('datahoje',$datahoje);
+
     }
 
     /**
@@ -37,10 +52,53 @@ public function __construct()
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(ContaPagarRequest $request){
+			 $n_pagtos = $request->n_pagtos;
+			$user_id = $this->getUserId();
+			if(!$n_pagtos){
+					$n_pagtos =1;
+			}
+
+			$intervalo_pagtos = $request->intervalo_pagtos;
+
+			if(!$intervalo_pagtos){
+					$intervalo_pagtos=30;
+			}
+
+			$dataemissao = $request->dataemissao;
+
+			if(!$dataemissao){
+				$hoje= Carbon::now();
+				$dataemissao= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
+			}
+
+      $data = gettype($request->datavencimento);
+
+			$dv = Carbon::parse($request->datavencimento);
+
+
+			$valor = $request->valor;
+
+				//converte a string para float com a funcao strToFloat()  herdada da classe Controller
+				$valorFloat= $this->strToFloat($valor);
+
+				for($i = 0; $i < $n_pagtos;++$i ){
+					$dataVenc =  $dv->addDays($intervalo_pagtos*$i);
+					$dataVencFormat = $dataVenc->year.'-'.$dataVenc->month.'-'.$dataVenc->day;
+					ContaPagar::create(['credor' => $request->credor,
+																'datavencimento'=>$dataVencFormat,
+																'dataemissao'=>$dataemissao,
+																'valor'=>$valorFloat,
+																'user_id'=>$user_id,
+																'valor_residual'=>$valorFloat,
+																]);
+				}
+
+
+			$mensagem = 'nova conta adicionada';
+			$contas_pagar = ContaPagar::where('user_id',$user_id)->get();
+			return view('contapagar.contas_pagar_index',compact('mensagem', 'contas_pagar'));
+		}
 
     /**
      * Display the specified resource.
@@ -84,6 +142,42 @@ public function __construct()
      */
     public function destroy($id)
     {
-        //
+
+				$user_id = $this->getUserId();	
+			$conta_pagar = ContaPagar::find($id);
+	
+			if(isset($conta_pagar)){
+				if($conta_pagar->user_id != $user_id){
+					return  view('erro_de_acesso');
+				}else{
+				$conta_pagar->delete();
+				}
+				$c_removida= $id;
+				$contas_pagar = ContaPagar::where('user_id',$user_id)->get();
+			
+			return view('contapagar.contas_pagar_index',compact('c_removida','contas_pagar'));
     }
+}
+
+ public function autocomplete($term)
+{
+
+	if($term && $term!== ''){
+	$queries = DB::table('fornecedores') //Your table name
+		      ->where('nome', 'like', '%'.$term.'%') //Your selected row
+		      ->take(6)->get();
+
+		  foreach ($queries as $query)
+		  {
+		      $results[] = ['id' => $query->id, 'value' => $query->nome]; //you can take custom values as you want
+		  }
+
+	}else{
+		$queries = [];
+	}
+	 return response()->json(array(
+											'results' => $queries
+		              ));
+
+	}
 }

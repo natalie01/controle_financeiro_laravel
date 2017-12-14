@@ -21,7 +21,8 @@ class FornecedorController extends Controller
     public function index()
     {
         //
-		$fornecedores = Fornecedor::all();
+		$user_id = $this->getUserId();
+		$fornecedores = Fornecedor::where('user_id',$user_id)->get();
 		return view('fornecedor.fornecedores_index')->with('fornecedores',$fornecedores);
     }
 
@@ -46,12 +47,14 @@ class FornecedorController extends Controller
      */
     public function store(FornecedoresRequest $request){
 			$params = request::all();
-			Fornecedor::create($params);
-		
-				/*	return redirect()
-					->action('FornecedorController@lista')
-					->withInput(Request::only('nome'));
-	*/
+
+			$user_id = $this->getUserId();
+
+			$usuario = array('user_id'=>$user_id);
+
+			$params2 = array_merge($params,$usuario);
+
+			Fornecedor::create($params2);
 			return redirect()
 					->route('fornecedor.index')
 					->withInput(Request::only('nome'));
@@ -80,12 +83,19 @@ class FornecedorController extends Controller
 	}
 	
 
-
-
-    public function show(Fornecedor $fornecedor)
+    public function show($id)
     {
-        //
-			return view('fornecedor.fornecedor_mostra')->with('fornecedor',$fornecedor);
+  	
+		$fornecedor = Fornecedor::find($id);
+
+		$user_id = $this->getUserId();
+
+			if($fornecedor->user_id != $user_id){
+				return  view('erro_de_acesso');
+			}else{
+				return view('fornecedor.fornecedor_mostra')->with('fornecedor',$fornecedor);
+		  }
+			
     }
 
     /**
@@ -98,11 +108,15 @@ class FornecedorController extends Controller
     {
         //
 		$fornecedor = Fornecedor::find($id);
-		echo "editar produto".$id;
-		return view('fornecedor.fornecedor_editar')->with('f', $fornecedor);
-	
+		$user_id = $this->getUserId();
+			
+				if($fornecedor->user_id != $user_id){
+					return  view('erro_de_acesso');
+				}else{
+					return view('fornecedor.fornecedor_editar')->with('f', $fornecedor);
+		
 		  }
-
+	}
     /**
      * Update the specified resource in storage.
      *
@@ -113,11 +127,18 @@ class FornecedorController extends Controller
     public function update(FornecedoresRequest $request, $id)
     {
         //
+		$user_id = $this->getUserId();
+		$fornecedor = Fornecedor::find($id);
+	
+			if($fornecedor->user_id != $user_id){
+				return  view('erro_de_acesso');
+			}else{
+				Fornecedor::find($id)->update($request->all());
+					return redirect()
+						->route('fornecedor.index')
+						->withInput(Request::only('nome'));
+			}
 
-	  Fornecedor::find($id)->update($request->all());
-		return redirect()
-					->route('fornecedor.index')
-					->withInput(Request::only('nome'));
 
     }
 
@@ -129,11 +150,20 @@ class FornecedorController extends Controller
      */
     public function destroy($id)
     {
-        //
+  
+			$user_id = $this->getUserId();
+
 			$fornecedor = Fornecedor::find($id);
+			$f_nome = $fornecedor->nome;
+		
+		if($fornecedor->user_id != $user_id){
+			return  view('erro_de_acesso');
+		}else{
 			$fornecedor->delete();
 			return redirect()
-					->route('fornecedor.index');
+					->route('fornecedor.index')->with('fornecedor_nome', $f_nome);
 					
     }
+	}      //
+
 }

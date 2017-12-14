@@ -25,6 +25,7 @@ class CreateFornecedorTable extends Migration
 					 $table->string('cidade');
 					 $table->string('uf');
 					 $table->string('cep')->nullable();
+	 				$table->integer('user_id');
         });
     }
 

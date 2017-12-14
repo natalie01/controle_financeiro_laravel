@@ -19,6 +19,7 @@ class CreateBaixaContaReceberTable extends Migration
 				 $table->float('valor_recebido');	    
 				 $table->float('valor_residual');	
 				 $table->integer('fk_conta_receber')->unsigned();
+	 $table->integer('user_id');
 
    // $table->foreign('fk_conta_receber')->references('id')->on('conta_receber');
         }); //

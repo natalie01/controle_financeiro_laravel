@@ -9,8 +9,6 @@ use projeto_laravel\Cliente;
 use projeto_laravel\ContaReceber;
 use projeto_laravel\Http\Requests\ContaReceberRequest;
 
-//use projeto_laravel\Http\Controllers\StrToFloat;
-
 class ContaReceberController extends Controller
 {
 
@@ -26,7 +24,9 @@ class ContaReceberController extends Controller
     public function index()
     {
         //
-					$contas_receber= ContaReceber::all();
+			$user_id = $this->getUserId();
+
+					$contas_receber= ContaReceber::where('user_id',$user_id)->get();
 					return view('contareceber.contas_receber_index')->with('contas_receber',$contas_receber);
     }
 
@@ -54,7 +54,7 @@ class ContaReceberController extends Controller
      */
     public function store(ContaReceberRequest $request){
 			 $n_pagtos = $request->n_pagtos;
-
+			$user_id = $this->getUserId();
 			if(!$n_pagtos){
 					$n_pagtos =1;
 			}
@@ -88,7 +88,9 @@ class ContaReceberController extends Controller
 					ContaReceber::create(['devedor' => $request->devedor,
 																'datavencimento'=>$dataVencFormat,
 																'dataemissao'=>$dataemissao,
-																'valor'=>$valorFloat
+																'valor'=>$valorFloat,
+																'user_id'=>$user_id,
+																'valor_residual'=>$valorFloat,
 																]);
 				}
 
@@ -107,7 +109,7 @@ class ContaReceberController extends Controller
 														));
 		*/
 			$mensagem = 'nova conta adicionada';
-			$contas_receber = ContaReceber::all();
+			$contas_receber = ContaReceber::where('user_id',$user_id)->get();
 			return view('contareceber.contas_receber_index',compact('mensagem', 'contas_receber'));
 		}
 
@@ -153,17 +155,22 @@ class ContaReceberController extends Controller
      */
     public function destroy($id)
     {
-		
-			$contareceber = ContaReceber::find($id);
-			if(isset($contareceber)){
-				$contareceber->delete();
+
+				$user_id = $this->getUserId();	
+			$conta_receber = ContaReceber::find($id);
+	
+			if(isset($conta_receber)){
+				if($conta_receber->user_id != $user_id){
+					return  view('erro_de_acesso');
+				}else{
+				$conta_receber->delete();
 				}
 				$c_removida= $id;
-				$contas_receber = ContaReceber::all();
+				$contas_receber = ContaReceber::where('user_id',$user_id)->get();
 			
 			return view('contareceber.contas_receber_index',compact('c_removida','contas_receber'));
     }
-
+}
 
  public function autocomplete($term)
 {

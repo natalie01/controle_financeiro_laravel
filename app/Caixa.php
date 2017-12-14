@@ -8,5 +8,10 @@ class Caixa extends Model
 {
   protected $table = 'caixa';
 	public $timestamps = false;
-	protected $fillable = array('data','valor','descricao','tipo','ref_titulo');
+	protected $fillable = array('data','valor','descricao','tipo','ref_titulo','user_id');
+
+    public function user()
+    {
+        return $this->belongsTo('projeto_laravel\User');
+    }
 }

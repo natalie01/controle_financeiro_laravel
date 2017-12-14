@@ -2,7 +2,7 @@
 
 namespace projeto_laravel\Http\Controllers;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -29,5 +29,10 @@ class Controller extends BaseController
 	  $hoje= Carbon::now();
 		$datahoje= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
 		return $datahoje;
+	}
+	
+	public function getUserId(){
+		$user = Auth::user();
+		return $user->id;
 	}
 }

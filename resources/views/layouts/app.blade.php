@@ -36,7 +36,7 @@
                     </li>
 
                     <li>
-                        <a href="#clientesSubmenu" data-toggle="collapse" aria-expanded="false"  href="{{ route('cliente.index') }}">
+                        <a href="#clientesSubmenu" data-toggle="collapse" aria-expanded="false" ">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             Clientes
                         </a>
@@ -47,7 +47,7 @@
 	  
                     </li>
                     <li>
-                        <a href="#fornecedoresSubmenu" data-toggle="collapse" aria-expanded="false"  href="{{ route('fornecedor.index') }}">
+                        <a href="#fornecedoresSubmenu" data-toggle="collapse" aria-expanded="false"  >
                           <i class="fa fa-truck" aria-hidden="true"></i>
                             Fornecedores
                         </a>
@@ -62,7 +62,7 @@
 										<li>
                         <a href="#movimentacoesSubmenu" data-toggle="collapse" aria-expanded="false">
                              <i class="fa fa-usd" aria-hidden="true"></i>
-                            Movimentac<span>&otilde;</span>es
+                            Movimenta<span>&ccedil;</span><span>&otilde;</span>es
                         </a>
 												 <ul class="collapse list-unstyled" id="movimentacoesSubmenu">
                             <li><a href="{{route('contapagar.create')}}" >Novo Lancamentos a Pagar</a></li>
@@ -74,14 +74,14 @@
                     </li>
 
 											<li>
-                        <a href="#relatoriosSubmenu" data-toggle="collapse" aria-expanded="false"  href="{{ route('cliente.index') }}">
+                        <a href="#relatoriosSubmenu" data-toggle="collapse" aria-expanded="false"  >
                              <i class="fa fa-bar-chart" aria-hidden="true"></i>
                             Relatórios
                         </a>
 												 <ul class="collapse list-unstyled" id="relatoriosSubmenu">
                             <li><a href="/relatorio_caixa" >Fluxo de Caixa</a></li>
                             <li><a href="{{route('contareceber.index')}}" >Contas Receber</a></li>
-                            <li><a href="#" >Contas Pagar</a></li>
+                            <li><a href="{{route('contapagar.index')}}" >Contas Pagar</a></li>
                         </ul>
 	  
                     </li>

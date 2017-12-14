@@ -9,7 +9,7 @@
 		Você não cadastrou nenhum cliente.
 		</div>
 	@else
-  @foreach ($fornecedors as $f)
+  @foreach ($fornecedores as $f)
 		<tr>
 		<td>{{ $f->nome }}
 		<br>
@@ -17,19 +17,19 @@
 	 </td>
 
 		<td id = "mostra">
-		<a href="{{route('fornecedor.show',$c->id)}}" aria-label="ver detalhes">
+		<a href="{{route('fornecedor.show',$f->id)}}" aria-label="ver detalhes">
 		<span><i class="fa fa-search" aria-hidden="true" tittle="ver detalhes"></i></span>
 		</a>
 		</td>
 
 		<td>
-		<a href="{{route('fornecedor.edit',$c->id)}}" aria-label="editar">
+		<a href="{{route('fornecedor.edit',$f->id)}}" aria-label="editar">
 		<span><i class="fa fa-pencil" aria-hidden="true" title="editar"></i></span>
 		</a>
 		</td>
 
 		<td>
-<form action="{{route('fornecedor.destroy',$c->id)}}" method="POST">
+<form action="{{route('fornecedor.destroy',$f->id)}}" method="POST">
     {{ method_field('DELETE') }}
     {{ csrf_field() }}
 		<button type ="submit" class= "btn-delete" onclick="return confirm('tem certeza que deseja excluir?')" >
