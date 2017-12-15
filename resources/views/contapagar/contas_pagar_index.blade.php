@@ -15,6 +15,13 @@
 		</div>
 	@endif
 
+@if(old('msg'))
+	<div class="alert alert-success">
+		<strong>Sucesso!</strong>
+	   {{ old('msg') }}.
+	</div>
+@endif
+
 @if (session('status'))
     <div class="alert alert-success">
         {{ session('status') }}
@@ -33,9 +40,10 @@
 					<tr>
 					<th>N<span>&deg;</span>documento</th>
 					<th>Credor</th>
-					<th>data Emiss<span>&atilde;</span>o</th>
-					<th>data Vencimento</th>
+					<th>Data Emiss<span>&atilde;</span>o</th>
+					<th>Data Vencimento</th>
 					<th>Valor Total</th>
+					<th>Status</th>
 					<th colspan='3'></th>
 					</tr>
 			</thead>
@@ -43,14 +51,15 @@
 			@foreach ($contas_pagar as $c)
 				<tr>
 				<td>{{ $c->id}}</td>
-				<td>{{ $c->credor }}
+				<td id="credor">{{ $c->credor }}
 				<br>
 				tel - 123456789
 			 </td>
 
 				<td>{{ $c->dataemissao}}</td>
 				<td>{{ $c->datavencimento}}</td>
-				<td>{{ $c->valor}}</td>
+				<td>{{ $c->valor_inicial}}</td>
+				<td>{{ $c->status}}</td>
 
         <td>  
          <ul class ="list-icones list-icones-tabela list-unstyled">

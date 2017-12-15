@@ -88,16 +88,16 @@ class ContaPagarController extends Controller
 					ContaPagar::create(['credor' => $request->credor,
 																'datavencimento'=>$dataVencFormat,
 																'dataemissao'=>$dataemissao,
-																'valor'=>$valorFloat,
+																'valor_inicial'=>$valorFloat,
 																'user_id'=>$user_id,
+																'valor_residual'=>0,
 																'valor_residual'=>$valorFloat,
 																]);
 				}
 
 
-			$mensagem = 'nova conta adicionada';
-			$contas_pagar = ContaPagar::where('user_id',$user_id)->get();
-			return view('contapagar.contas_pagar_index',compact('mensagem', 'contas_pagar'));
+					return redirect()->action('ContaPagarController@index')
+					->withInput(Request::only('msg'));
 		}
 
     /**

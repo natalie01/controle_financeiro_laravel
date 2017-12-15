@@ -19,6 +19,8 @@ class CreateEmpresaTable extends Migration
 					 $table->string('cidade');
 					 $table->string('estado');
 					 $table->float('saldo_inicial')->nullable();
+					 $table->float('saldo_atual')->nullable();
+					 $table->date('data_inicial')->nullable();
         });
     }
 

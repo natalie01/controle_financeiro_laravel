@@ -10,6 +10,13 @@
 		</div>
 		@endif
 
+@if(old('mensagem'))
+	<div class="alert alert-success">
+		<strong>Sucesso!</strong>
+		{{ old('mensagem') }} 
+	</div>
+@endif
+
 		@if(isset($mensagem_sem_data))
 		<div class="alert alert-danger">
 		<p >{{$mensagem_sem_data}}</p>
@@ -92,10 +99,10 @@
 <a href = "/relatorio_caixa_pdf/{{$data}}">
   <button type="submit" name="submit_registros" aria-label="gerar arquivo pdf">
 		<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" title="gerar arquivo pdf"  style="color:#a51c0b;"></i>
-		</button>
+	</button>
 </a>
 	</div>
-
+<br>
 			<table class= "table1">
 				<thead>
 				<tr>

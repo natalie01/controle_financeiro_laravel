@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 //use projeto_laravel\Cliente;
 use projeto_laravel\ContaReceber;
 use projeto_laravel\BaixaContaReceber;
+use projeto_laravel\Caixa;
 use projeto_laravel\Http\Requests\BaixaContaReceberRequest;
 
 class BaixaContaReceberController extends Controller
@@ -17,12 +18,17 @@ public function __construct()
 {
     $this->middleware('auth');
 }
+
+//mostra o formulario para ser preenchido com o valor pago
 	public function baixa_receber($id)
 {
 
 		$datahoje = $this->dataHoje();
 		$conta = ContaReceber::find($id);
+
+	// o valor devido aparece como padrao no formulário
 		$valor = $conta->valor_residual;
+	//referencia da conta a receber
 		$ref = $id;
 
     return view('contareceber.baixa_receber',compact('datahoje','valor','ref'));
@@ -40,7 +46,8 @@ public function __construct()
 			$ref_conta_receber = $params['ref_conta_receber'];
 
 			$conta = ContaReceber::find($ref);
-			$valor_devido = $conta->valor;
+
+			$valor_devido = $conta->valor_residual;
 
 	/*	if($valor_recebido > $valor_devido){
 		echo 'O valor recebido é maior que o valor devido';
@@ -62,8 +69,17 @@ public function __construct()
 
 		if($valor_recebido_float <  $valor_devido){
 			$conta->status = "recebimento parcial";
-			$conta->save();
+
+			$valor_devido -= $valor_recebido_float;
+		}else{
+			$conta->status = "recebido";
+
+			$valor_devido = 0;
 		}
+			
+			$conta->valor_residual = $valor_devido;
+			$conta->save();
+	
 
 
 			BaixaContaReceber::create(['data'=>$data,
@@ -73,7 +89,16 @@ public function __construct()
 																'user_id' =>$user_id																
 																]);
 
- //Ainda precisa atualizar a lista das contas a receber
-   return redirect('contareceber')->with('status', 'Pagamento registrado!');
+			Caixa::create(['data'=>$data,
+														'valor'=>$valor_recebido_float,
+														'descricao' => 'baixa de conta a receber',
+														'tipo'=>'receita',
+														'user_id'=>$user_id
+														]);
+
+		//atualiza a lista das contas a receber
+				return redirect()->action('ContaReceberController@index')
+					->withInput(Request::only('msg'));
+
 }
 }

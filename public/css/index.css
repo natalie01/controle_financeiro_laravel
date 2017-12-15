@@ -388,10 +388,12 @@ only screen and (max-width: 760px),
     .table2 td:nth-of-type(1):before { 
     content: "N° documento";  font-weight: bold;}
 	.table2 td:nth-of-type(2):before { content: "Devedor"; font-weight: bold;}
-	.table2 td:nth-of-type(3):before { content: "data Emissão"; font-weight: bold; }
-	.table2 td:nth-of-type(4):before { content: "data Vencimento"; font-weight: bold; }
+	.table2 td:nth-of-type(3):before { content: "Data Emissão"; font-weight: bold; }
+	.table2 td:nth-of-type(4):before { content: "Data Vencimento"; font-weight: bold; }
 	.table2 td:nth-of-type(5):before { content: "Valor";  font-weight: bold;}
+	.table2 td:nth-of-type(6):before { content: "Status";  font-weight: bold;}
 
+#credor:before { content: "Devido a"; font-weight: bold;}
 
 .list-icones{
     display: -ms-flexbox;
@@ -441,4 +443,8 @@ max-width:80%;
     margin-left: -15px;
 }
 
+
+.data-prevista{
+display:none;
+}
 

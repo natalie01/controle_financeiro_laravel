@@ -13,9 +13,8 @@
 
   <div class="container" id ="panel">
      <form action="{{route('contapagar.store')}}" id="form1" class="form-horizontal"  method="post">
-	<input type="hidden"
-name="_token" value="{{{ csrf_token() }}}" />
-      
+	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+          <input type="hidden" name="msg" value="conta a pagar adicionada" />  
 	<div class="row">
 
 		  <div class="col-md-6">
@@ -88,14 +87,25 @@ name="_token" value="{{{ csrf_token() }}}" />
        <div class="col-md-6">
              <div class="form-group">
               <label>Valor:</label><br />
-		    <input type="text" name="valor" />
-	 	    </div>
-          </div>
-        
-     
+		    			<input type="text" name="valor" />
+	 	    			</div>
+      </div>
+			 <div class="col-md-3">
+             <div class="form-group">
+              <label>N<span>&deg;</span> de pagamentos</label><br />
+		    			<input type="number" min="1" name="n_pagtos" id="n_pagtos" 
+							placeholder="1" value="{{ old('n_pagtos') }}"/>
+	 	    		</div>
+       <div class="col-md-3" id="intervalo_pagtos"  style="display:none;">
+             <div class="form-group">
+              <label>A cada </label><br />
+		    			 <input type="text" name="intervalo_pagtos" 
+									placeholder="30" value="{{ old('intervalo_pagtos') }}"><span>dias</span>
+	 	    		</div>
+      </div>
+   
    </div> 
-       <input  type="submit" class="btn
-	btn-primary btn-block" value="salvar">
+       <input  type="submit" class="btn btn-primary btn-block" value="salvar">
    </form>  
   
     <br>

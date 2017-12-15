@@ -9,7 +9,8 @@ class ContaReceber extends Model
       protected $table = 'conta_receber';
 	public $timestamps = false;
 	protected $fillable = array('devedor',
-	'datavencimento','dataemissao','valor','user_id','valor_residual');
+	'datavencimento','dataemissao','valor_inicial','user_id','valor_pago',
+	'valor_residual');
 
     public function user()
     {

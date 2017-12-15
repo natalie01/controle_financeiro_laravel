@@ -7,6 +7,7 @@ use Request;
 use Illuminate\Support\Facades\DB;
 //use projeto_laravel\Cliente;
 use projeto_laravel\ContaPagar;
+use projeto_laravel\Caixa;
 use projeto_laravel\BaixaContaPagar;
 use projeto_laravel\Http\Requests\BaixaContaPagarRequest;
 
@@ -40,14 +41,8 @@ public function __construct()
 			$ref_conta_pagar = $params['ref_conta_pagar'];
 
 			$conta = ContaPagar::find($ref);
-			$valor_devido = $conta->valor;
+			$valor_devido = $conta->valor_residual;
 
-	/*	if($valor_pago > $valor_devido){
-		echo 'O valor pago é maior que o valor devido';
-		}else{
-			echo 'Ainda precisa salvar os dados';
-		}
-*/
 
 		if($data == null){
 			$data = $this->dataHoje();
@@ -62,9 +57,16 @@ public function __construct()
 
 		if($valor_pago_float <  $valor_devido){
 			$conta->status = "pagamento parcial";
-			$conta->save();
-		}
 
+			$valor_devido -= $valor_pago_float;
+		}else{
+			$conta->status = "pago";
+
+			$valor_devido = 0;
+		}
+			$conta->valor_residual = $valor_devido;
+			$conta->save();
+		
 
 			BaixaContaPagar::create(['data'=>$data,
 																'valor_pago'=>$valor_pago_float,
@@ -73,7 +75,14 @@ public function __construct()
 																'user_id' =>$user_id																
 																]);
 
- //Ainda precisa atualizar a lista das contas a pagar
-   return redirect('contapagar')->with('status', 'Pagamento registrado!');
+			Caixa::create(['data'=>$data,
+														'valor'=>$valor_pago_float,
+														'descricao' => 'baixa de conta a pagar',
+														'tipo'=>'despesa',
+														'user_id'=>$user_id
+														]);
+
+		return redirect()->action('ContaPagarController@index')
+					->withInput(Request::only('msg'));
 }
 }

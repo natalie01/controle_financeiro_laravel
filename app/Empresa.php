@@ -9,7 +9,7 @@ class Empresa extends Model
     //
      protected $table = 'empresa';
 	public $timestamps = false;
-	protected $fillable = array('nome_empresa','cidade','estado','saldo_inicial','data_inicial','user_id');
+	protected $fillable = array('nome_empresa','cidade','estado','saldo_inicial','saldo atual','data_inicial','user_id');
     
 	public function user()
     {

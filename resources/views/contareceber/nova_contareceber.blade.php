@@ -13,9 +13,8 @@
 
   <div class="container" id ="panel">
      <form action="{{route('contareceber.store')}}" id="form1" class="form-horizontal"  method="post">
-	<input type="hidden"
-name="_token" value="{{{ csrf_token() }}}" />
-      
+	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+                <input type="hidden" name="msg" value="conta a receber adicionada" /> 
 	<div class="row">
 
 		  <div class="col-md-6">

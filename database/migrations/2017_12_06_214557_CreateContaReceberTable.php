@@ -18,9 +18,10 @@ class CreateContaReceberTable extends Migration
 					$table->string('devedor');
 				 $table->date('datavencimento');
 				 $table->date('dataemissao');
-				 $table->float('valor');	    
-				 $table->string('recebido')->nullable();
+				 $table->float('valor_inicial');	    
+				 $table->string('status')->nullable();
 	 			$table->integer('user_id');
+				 $table->float('valor_recebido');	
 				 $table->float('valor_residual');	 
         }); //
     }

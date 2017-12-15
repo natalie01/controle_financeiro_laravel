@@ -104,13 +104,13 @@ $(document).ready(function () {
 
 //calcula o valor residual das baixas de conta a receber automaticamente
 
-	var v_recebido_inicial = $("#valor_recebido").val();
+	var v_total_inicial = $("#valor_total").val();
 //para nao ficar aparecendo a mensagem de que a variavel nao existe se estiver em outra view
-	if(!v_recebido_inicial){
-  	 v_recebido_inicial= '';
+	if(!v_total_inicial){
+  	 v_total_inicial= '';
 	}
 
-	var v_recebido_inicial_num = Number((v_recebido_inicial.replace(/\,/,'.')).trim());
+	var v_total_inicial_num = Number((v_total_inicial.replace(/\,/,'.')).trim());
 
    var v_residual_inicial = $("#valor_residual").val();
 		if(!v_residual_inicial){
@@ -120,23 +120,24 @@ $(document).ready(function () {
    var v_residual_inicial_num = Number((v_residual_inicial.replace(/\,/,'.')).trim());
   console.log('valor inicial: ' +v_residual_inicial_num); 
   
-    $("#valor_recebido").keyup(function(){
-    	var v_receb = $("#valor_recebido").val();
-      console.log(v_receb);
+    $("#valor_total").keyup(function(){
+    	var v_total = $("#valor_total").val();
+      console.log(v_total);
 
 			//caso o usuario coloque um ponto para separar os centavos,trocar por virgula
-			var v_receb2 = v_receb.replace(/\./,','); 
-       $("#valor_recebido").val(v_receb2);
+			var v_total2 = v_total.replace(/\./,','); 
+       $("#valor_total").val(v_total2);
         //var v_receb_number = Number(v_receb.replace(/\,/,'.'));
-        var v_receb_num = Number((v_receb.replace(/\,/,'.')).trim());
-      console.log(v_receb_num);
+        var v_total_num = Number((v_total.replace(/\,/,'.')).trim());
+      console.log(v_total_num);
       
-      var diff = (v_recebido_inicial_num - v_receb_num).toFixed(2);
+      var diff = (v_total_inicial_num - v_total_num).toFixed(2);
       console.log(diff);
       console.log(typeof(diff));
  
        $("#valor_residual").val(diff.replace(/\./,','));
       console.log(typeof($("#valor_residual").val()));
+
     });
 
 
@@ -147,17 +148,18 @@ $(document).ready(function () {
 			//caso o usuario coloque um ponto para separar os centavos,trocar por virgula
 			var v_res2 = v_res.replace(/\./,','); 
        $("#valor_residual").val(v_res2);
-       
+
+
         var v_res_num = Number((v_res.replace(/\,/,'.')).trim());
       console.log(v_res_num);
       
-      var diff2 = (v_recebido_inicial_num - v_res_num).toFixed(2);
+      var diff2 = (v_total_inicial_num - v_res_num).toFixed(2);
       console.log(diff2);
       console.log(typeof(diff2));
  
-       $("#valor_recebido").val(diff2.replace(/\./,','));
-      console.log(typeof($("#valor_recebido").val()));
-    });
+       $("#valor_total").val(diff2.replace(/\./,','));
+      console.log(typeof($("#valor_total").val()));
 
+    });
 
  });

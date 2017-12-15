@@ -77,7 +77,7 @@ class ContaReceberController extends Controller
 			$dv = Carbon::parse($request->datavencimento);
 
 
-			$valor = $request->valor;
+			$valor= $request->valor;
 
 				//converte a string para float com a funcao strToFloat()  herdada da classe Controller
 				$valorFloat= $this->strToFloat($valor);
@@ -88,30 +88,17 @@ class ContaReceberController extends Controller
 					ContaReceber::create(['devedor' => $request->devedor,
 																'datavencimento'=>$dataVencFormat,
 																'dataemissao'=>$dataemissao,
-																'valor'=>$valorFloat,
+																'valor_inicial'=>$valorFloat,
+																'status'=>'pendente',
 																'user_id'=>$user_id,
+																'valor_residual'=>0,
 																'valor_residual'=>$valorFloat,
 																]);
 				}
 
-				
 
-		
-				//return response()->json(array('a'=>$n_pagtos,'b' => $data));	
-				/*return response()->json(array('intervalo_pagtos' => $intervalo_pagtos,
-													'n_pagtos ' => $n_pagtos ,
-													'$dataVString' => $dataVString,
-													'dataemissao' => $dataemissao,
-														'$valor' => $valor,
-														'$valorT' => $valorT,
-														'valorFloat ' =>$valorFloat ,
-														'$valorFloatType '	=>$valorFloatType									
-														));
-		*/
-			$mensagem = 'nova conta adicionada';
-			$contas_receber = ContaReceber::where('user_id',$user_id)->get();
-			return view('contareceber.contas_receber_index',compact('mensagem', 'contas_receber'));
-		}
+			return redirect()->action('ContaReceberController@index')
+					->withInput(Request::only('msg'));		}
 
     /**
      * Display the specified resource.

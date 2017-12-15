@@ -20,7 +20,7 @@
   <div class="container" id ="panel">
      <form action="/baixa_pagar_salvar" id="form1" class="form-horizontal"  method="post">
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-      
+      <input type="hidden" name="msg" value="pagamento salvo" />    
 	<div class="row">
 
 		  <div class="col-md-6">
@@ -38,10 +38,10 @@
 		     <div class="form-group">
 		       <label>Valor Pago:</label><br />
 					@if(isset($valor))
-		      <input type="text" name="valor_pago" required id="valor_pago" 
+		      <input type="text" name="valor_pago" required id="valor_total" 
 							 placeholder = "{{$valor}}" value = "{{$valor}}" pattern="^\d*(,?\d{1,2})?$"/>
 					@else  
-		      	<input type="text" name="valor_pago" required id="valor_pago"
+		      	<input type="text" name="valor_total" required id="valor_pago"
 						 pattern="^(\d)*(\,\d{2}){0,1}$" />
 					@endif  
 		    </div>
@@ -64,12 +64,13 @@
 					@if(isset($ref))
 		      	<input type="text" name="ref_conta_pagar" readonly id="ref_conta_pagar" value="{{$ref}}"/>
 					@else  
-		      	<input type="text" name="ref_conta_pagar" required id="ref_conta_pagar" />
+		      	<input type="text" name="ref_conta_pagar" id="ref_conta_pagar" />
 					@endif
 		    </div>
       </div>
 
    </div> <!--row-->
+
 
        <input  type="submit" class="btn btn-primary btn-block" value="salvar">
    </form>  

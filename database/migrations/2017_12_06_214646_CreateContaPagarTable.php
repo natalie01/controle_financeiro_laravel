@@ -18,10 +18,11 @@ class CreateContaPagarTable extends Migration
 					$table->string('credor');
 				 $table->date('datavencimento');
 				 $table->date('dataemissao');
-				 $table->float('valor');	    
-				 $table->string('recebido')->nullable();
+				 $table->float('valor_inicial');	    
+				 $table->string('status')->nullable();
 	 			$table->integer('user_id');
-				 $table->float('valor_residual');	
+				 $table->float('valor_pago');		
+				 $table->date('data_pgto_res');
         }); //
     }
 

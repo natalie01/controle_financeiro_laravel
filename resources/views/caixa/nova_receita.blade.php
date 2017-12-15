@@ -13,9 +13,8 @@
 
   <div class="container" id ="panel">
      <form action="/incluir_novo_movim_caixa" id="form1" class="form-horizontal"  method="post">
-	<input type="hidden"
-name="_token" value="{{{ csrf_token() }}}" />
-      
+	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+  <input type="hidden" name="mensagem" value="nova receita adicionada" />    
 	<div class="row">
 	<input type="hidden" name="tipo" value="receita" />
 		  <div class="col-md-6">

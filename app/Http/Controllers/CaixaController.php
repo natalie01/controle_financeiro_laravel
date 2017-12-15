@@ -7,6 +7,7 @@ use PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use projeto_laravel\Caixa;
+use projeto_laravel\Empresa;
 use projeto_laravel\Http\Requests\CaixaRequest;
 
 class CaixaController extends Controller
@@ -20,13 +21,13 @@ public function __construct()
 			
 		$user_id = $this->getUserId();
 
-	  $hoje = Carbon::now();
+	  	$hoje = Carbon::now();
 			$data_hoje = Carbon::today();
 			$inicio = $data_hoje->subDays(30);
 
 			$dt1 = $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
 			$dt2 = $inicio->year.'-'.$inicio->month.'-'.$inicio ->day;
-			$data = 'entre '.$dt1.' e '.$dt2;
+			$data = 'entre '.$dt2.' e '.$dt1;
 			//$registros= Caixa::all();
 
 		$registros= Caixa::whereBetween('data',[$dt2 ,$dt1])->where('user_id',$user_id)->orderBy('data', 'desc')->get();
@@ -38,8 +39,8 @@ public function __construct()
 
       public function novareceita()
     {
-				$hoje= Carbon::now();
-				$datahoje= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
+			
+				$datahoje= $this->dataHoje();
 				return view('caixa.nova_receita')->with('datahoje',$datahoje);
 		}
 
@@ -50,9 +51,8 @@ public function __construct()
 */
       public function novadespesa()
     {
-				$hoje= Carbon::now();
-				$datahoje= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
-				return response()->json('ok');
+				$datahoje= $this->dataHoje();
+				return view('caixa.nova_despesa')->with('datahoje',$datahoje);
 		}
 
 /*
@@ -75,10 +75,12 @@ public function __construct()
 
 			$dataemissao = $request->dataemissao;
 
+			// se o usuário nao colocar a data de emissao,usar a data atual
 			if(!$dataemissao){
 				$hoje= Carbon::now();
 				$dataemissao= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
 			}
+
 
 			Caixa::create(['data'=>$dataemissao,
 														'valor'=>$valor,
@@ -86,27 +88,42 @@ public function __construct()
 														'tipo'=>$request->tipo,
 														'user_id'=>$user_id
 														]);
+			
 
-			return redirect()->action('CaixaController@index');
+			//soma a nova movimentacao com o saldo atual
+
+				$empresa= Empresa::where('user_id','=',$user_id)->first();
+				
+				$saldo = $empresa->saldo_atual;	 
+
+				if( $request->tipo == 'receita'){
+				$saldo += $valor;
+				}
+				if( $request->tipo == 'despesa'){
+				$saldo -= $valor;
+				}
+
+				//atualiza o saldo
+				$empresa->saldo_atual = $saldo;
+				$empresa->save();	
+				$mensagem = 'adicionado!';
+			
+			//return redirect()->action('CaixaController@index')->with('mensagem',$mensagem);
+			return redirect('relatorio_caixa')
+					->withInput(Request::only('mensagem'));
+					
+    //return redirect('relatorio_caixa')->with('mensagem', 'adicionado!');
 		}
 
 
 	public function selecionar_datas_post(Request $request)
 	{
 
-	/*$teste = $request->teste;
-	return view('caixa.relatorio_caixa',compact(''));
-	*/
 	$params = Request::all();
-	//$params = $request;	
-//	dd($params);
-	//dd($params['data']);
+
 
 	$periodo= $params['periodo'];
 
-// $teste = $this->getData($params);
-
-//	dd($teste);
 
 	if($periodo == 'umadata'){
 

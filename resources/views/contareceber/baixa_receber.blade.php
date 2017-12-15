@@ -20,7 +20,7 @@
   <div class="container" id ="panel">
      <form action="/baixa_receber_salvar" id="form1" class="form-horizontal"  method="post">
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-      
+              <input type="hidden" name="msg" value="recebimento salvo" />   
 	<div class="row">
 
 		  <div class="col-md-6">
@@ -38,10 +38,10 @@
 		     <div class="form-group">
 		       <label>Valor Recebido:</label><br />
 					@if(isset($valor))
-		      <input type="text" name="valor_recebido" required id="valor_recebido" 
+		      <input type="text" name="valor_recebido" required id="valor_total" 
 							 placeholder = "{{$valor}}" value = "{{$valor}}" pattern="^\d*(,?\d{1,2})?$"/>
 					@else  
-		      	<input type="text" name="valor_recebido" required id="valor_recebido"
+		      	<input type="text" name="valor_recebido" required id="valor_total"
 						 pattern="^(\d)*(\,\d{2}){0,1}$" />
 					@endif  
 		    </div>
