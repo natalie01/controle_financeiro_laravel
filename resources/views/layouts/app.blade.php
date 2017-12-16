@@ -23,15 +23,15 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <h3>Bootstrap Sidebar</h3>
-                    <strong>BS</strong>
+                    <h3>$$$$</h3>
+                    <strong>$$</strong>
                 </div>
 
                 <ul class="list-unstyled components">
                     <li class="active">
                         <a href="/home">
                             <i class="fa fa-dashboard" aria-hidden="true"></i>
-                            Home
+                            <span>Home</span>
                         </a>
                     </li>
 
@@ -49,7 +49,7 @@
                     <li>
                         <a href="#fornecedoresSubmenu" data-toggle="collapse" aria-expanded="false"  >
                           <i class="fa fa-truck" aria-hidden="true"></i>
-                            Fornecedores
+                            <span>Fornece-</span><br/><span>dores</span>
                         </a>
 												 <ul class="collapse list-unstyled" id="fornecedoresSubmenu">
                             <li><a href="{{route('fornecedor.create')}}" >Novo</a></li>
@@ -62,7 +62,7 @@
 										<li>
                         <a href="#movimentacoesSubmenu" data-toggle="collapse" aria-expanded="false">
                              <i class="fa fa-usd" aria-hidden="true"></i>
-                            Movimenta<span>&ccedil;</span><span>&otilde;</span>es
+                            <span>Movimen-</span><span>ta</span><span>&ccedil;</span><span>&otilde;</span>es
                         </a>
 												 <ul class="collapse list-unstyled" id="movimentacoesSubmenu">
                             <li><a href="{{route('contapagar.create')}}" >Novo Lancamentos a Pagar</a></li>
@@ -141,9 +141,6 @@
     <!-- Scripts -->
 
 
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
- 
-  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	 
 <script src="{{ asset('js/index.js') }}"></script>

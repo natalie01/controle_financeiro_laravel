@@ -26,7 +26,9 @@ class ContaPagarController extends Controller
         //
 			$user_id = $this->getUserId();
 
-					$contas_pagar= ContaPagar::where('user_id',$user_id)->get();
+					$contas_pagar= ContaPagar::where('user_id',$user_id)
+													->where('status','not like','recebido')->get();
+
 					return view('contapagar.contas_pagar_index')->with('contas_pagar',$contas_pagar);
     }
 
@@ -40,8 +42,7 @@ class ContaPagarController extends Controller
         //
 				//$clientes = Cliente::all();
 
-				$hoje= Carbon::now();
-				$datahoje= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
+				$datahoje= $this->dataHoje();
 				return view('contapagar.nova_contapagar')->with('datahoje',$datahoje);
 
     }
@@ -68,8 +69,7 @@ class ContaPagarController extends Controller
 			$dataemissao = $request->dataemissao;
 
 			if(!$dataemissao){
-				$hoje= Carbon::now();
-				$dataemissao= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
+				$hoje= $this->dataHoje();
 			}
 
       $data = gettype($request->datavencimento);
@@ -89,8 +89,9 @@ class ContaPagarController extends Controller
 																'datavencimento'=>$dataVencFormat,
 																'dataemissao'=>$dataemissao,
 																'valor_inicial'=>$valorFloat,
+																'status'=>'nao pago',
 																'user_id'=>$user_id,
-																'valor_residual'=>0,
+																'valor_pago'=>0,
 																'valor_residual'=>$valorFloat,
 																]);
 				}
@@ -150,17 +151,18 @@ class ContaPagarController extends Controller
 				if($conta_pagar->user_id != $user_id){
 					return  view('erro_de_acesso');
 				}else{
-				$conta_pagar->delete();
+					$conta_pagar->delete();
 				}
+
 				$c_removida= $id;
 				$contas_pagar = ContaPagar::where('user_id',$user_id)->get();
 			
 			return view('contapagar.contas_pagar_index',compact('c_removida','contas_pagar'));
     }
-}
+	}
 
- public function autocomplete($term)
-{
+	 public function autocomplete($term)
+	{
 
 	if($term && $term!== ''){
 	$queries = DB::table('fornecedores') //Your table name

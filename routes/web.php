@@ -49,6 +49,8 @@ Route::get('autocomplete/{term?}','ContaReceberController@autocomplete');
 Route::get('/novareceita','CaixaController@novareceita');
 //Route::get('/incluir_novareceita','CaixaController@incluir_novareceita');
 Route::get('/novadespesa','CaixaController@novadespesa');
+
+Route::get('/novo_mov_caixa','CaixaController@novo_mov_caixa');
 //Route::get('/incluir_novadespesa','CaixaController@incluir_novadespesa');
 
 Route::post('/incluir_novo_movim_caixa','CaixaController@incluir_novo_movim_caixa');

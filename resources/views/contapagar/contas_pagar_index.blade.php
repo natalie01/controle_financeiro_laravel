@@ -1,8 +1,13 @@
 @extends('layouts.app')
 @section('content')
 
+
 <div class="container">
-	<h1>Contas a Pagar</h1>
+	<div class = "titulo">
+		<h1>Contas a Pagar</h1>
+		<a class = "adicionar btn btn-primary" href="{{route('contapagar.create')}}" >+</a>
+	</div>
+
 	@if(isset($c_removida))
 		<div class="alert alert-info">
 			<p>O registro n<span>&deg;</span> {{ $c_removida}} foi removido</p>

@@ -41,7 +41,10 @@ public function __construct()
     {
 			
 				$datahoje= $this->dataHoje();
-				return view('caixa.nova_receita')->with('datahoje',$datahoje);
+				$tipo= 'receita';
+				$mensagem= 'nova receita adicionada';
+				$tipo_pessoa= 'Recebido de';
+				return view('caixa.novo_mov_caixa',compact('datahoje','tipo','mensagem','tipo_pessoa'));
 		}
 
 /*    public function incluir_novareceita()
@@ -52,7 +55,16 @@ public function __construct()
       public function novadespesa()
     {
 				$datahoje= $this->dataHoje();
-				return view('caixa.nova_despesa')->with('datahoje',$datahoje);
+				$tipo= 'despesa';
+				$mensagem= 'nova despesa adicionada';
+				$tipo_pessoa= 'Pago a';
+				return view('caixa.novo_mov_caixa',compact('datahoje','tipo','mensagem','tipo_pessoa'));
+		}
+
+      public function novo_mov_caixa()
+    {
+				$datahoje= $this->dataHoje();
+				return view('caixa.novo_mov_caixa')->with('datahoje',$datahoje);
 		}
 
 /*
@@ -106,13 +118,10 @@ public function __construct()
 				//atualiza o saldo
 				$empresa->saldo_atual = $saldo;
 				$empresa->save();	
-				$mensagem = 'adicionado!';
-			
-			//return redirect()->action('CaixaController@index')->with('mensagem',$mensagem);
+
 			return redirect('relatorio_caixa')
 					->withInput(Request::only('mensagem'));
-					
-    //return redirect('relatorio_caixa')->with('mensagem', 'adicionado!');
+
 		}
 
 

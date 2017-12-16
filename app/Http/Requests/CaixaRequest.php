@@ -24,7 +24,6 @@ class CaixaRequest extends FormRequest
      public function rules()
     {
         return [
-		'descricao' => 'required|max:100',
 		'valor' => 'required'
 		];
 

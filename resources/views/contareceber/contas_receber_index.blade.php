@@ -2,7 +2,15 @@
 @section('content')
 
 <div class="container">
+		@if(isset($datahoje))
+		<p id = "hoje">Data:  {{$datahoje}}</p>
+		@endif
+
+<div class = "titulo">
 	<h1>Contas a Receber</h1>
+	<a class = "adicionar btn btn-primary" href="{{route('contapagar.create')}}" >+</a>
+</div>
+
 	@if(isset($c_removida))
 		<div class="alert alert-info">
 			<p>O registro n<span>&deg;</span> {{ $c_removida}} foi removido</p>
@@ -57,9 +65,9 @@
 			 </td>
 
 				<td>{{ $c->dataemissao}}</td>
-				<td>{{ $c->datavencimento}}</td>
+				<td id = "data-vencimento">{{ $c->datavencimento}}</td>
 				<td>{{ $c->valor_inicial}}</td>
-				<td>{{ $c->status}}</td>
+				<td id = "status">{{ $c->status}} </td>
 
         <td>  
          <ul class ="list-icones list-icones-tabela list-unstyled">

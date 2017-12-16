@@ -25,9 +25,13 @@ class ContaReceberController extends Controller
     {
         //
 			$user_id = $this->getUserId();
+			$datahoje = $this->dataHoje();
+					$contas_receber= ContaReceber::where('user_id',$user_id)
+														->where('status','not like','recebido')															
+																->get();
 
-					$contas_receber= ContaReceber::where('user_id',$user_id)->get();
-					return view('contareceber.contas_receber_index')->with('contas_receber',$contas_receber);
+					//return view('contareceber.contas_receber_index')->with('contas_receber',$contas_receber);
+return view('contareceber.contas_receber_index',compact('contas_receber','datahoje'));
     }
 
     /**
@@ -39,9 +43,7 @@ class ContaReceberController extends Controller
     {
         //
 				//$clientes = Cliente::all();
-
-				$hoje= Carbon::now();
-				$datahoje= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
+				$datahoje= $this->dataHoje();
 				return view('contareceber.nova_contareceber')->with('datahoje',$datahoje);
 
     }
@@ -68,8 +70,7 @@ class ContaReceberController extends Controller
 			$dataemissao = $request->dataemissao;
 
 			if(!$dataemissao){
-				$hoje= Carbon::now();
-				$dataemissao= $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
+				$hoje=$this->dataHoje();
 			}
 
       $data = gettype($request->datavencimento);
@@ -89,9 +90,9 @@ class ContaReceberController extends Controller
 																'datavencimento'=>$dataVencFormat,
 																'dataemissao'=>$dataemissao,
 																'valor_inicial'=>$valorFloat,
-																'status'=>'pendente',
+																'status'=>'nao recebido',
 																'user_id'=>$user_id,
-																'valor_residual'=>0,
+																'valor_recebido'=>0,
 																'valor_residual'=>$valorFloat,
 																]);
 				}

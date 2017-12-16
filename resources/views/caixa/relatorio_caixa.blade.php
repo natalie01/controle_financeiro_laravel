@@ -2,8 +2,10 @@
 @section('content')
 
 <div class="container" >
-
-<h2>Fluxo de Caixa</h2>
+	<div class = "titulo">
+		<h1>Caixa</h1>
+		<a class = "adicionar btn btn-primary" href="/novo_mov_caixa" >+</a>
+	</div>
 		@if(isset($data))
 		<div class="alert alert-success">
 		<p id = "periodo">Data:  {{$data}}</p>

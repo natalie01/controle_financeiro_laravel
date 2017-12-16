@@ -18,11 +18,11 @@
 		<li>M<span>&ecirc;</span>s : {{ $pagamentos_previstos_mes }}</li>
 	</ul>
 </div>
-
+<h1>{{$teste}}</h1>
 <div>
-	<ul>Pagamentos em Atraso
-		<li>Hoje : {{ $pagamentos_previstos_hoje }}</li>
-		<li>M<span>&ecirc;</span>s : {{ $pagamentos_previstos_mes }}</li>
+	<ul>Contas Vencidas este M<span>&ecirc;</span>s
+		<li>Recebimentos : {{ $recebimentos_atraso_mes }}</li>
+		<li>Pagamentos : {{ $pagamentos_atraso_mes }}</li>
 	</ul>
 </div>
 @endsection

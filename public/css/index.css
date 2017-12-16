@@ -61,12 +61,23 @@ i, span {
 }
 
 #sidebar {
+    min-width: 95px;
+    max-width: 95px;
+    text-align: center;
+    background: #3c5bde;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+/*
+#sidebar {
     min-width: 250px;
     max-width: 250px;
     background: #3c5bde;
     color: #fff;
     transition: all 0.3s;
 }
+
 
 #sidebar.active {
     min-width: 80px;
@@ -81,11 +92,12 @@ i, span {
 #sidebar.active .sidebar-header strong {
     display: block;
 }
+*/
 
 #sidebar ul li a {
-    text-align: left;
+    text-align: center;
 }
-
+/*
 #sidebar.active ul li a {
     padding: 20px 10px;
     text-align: center;
@@ -103,6 +115,7 @@ i, span {
     padding: 10px !important;
 }
 
+
 #sidebar.active a[aria-expanded="false"]::before, #sidebar.active a[aria-expanded="true"]::before {
     top: auto;
     bottom: 5px;
@@ -111,6 +124,7 @@ i, span {
     -ms-transform: translateX(50%);
     transform: translateX(50%);
 }
+*/
 
 #sidebar .sidebar-header {
     padding: 20px;
@@ -150,6 +164,7 @@ a[data-toggle="collapse"] {
     position: relative;
 }
 
+/*
 a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     content: '\e259';
     display: block;
@@ -162,10 +177,10 @@ a[aria-expanded="true"]::before {
     content: '\e260';
 }
 
-
+*/
 ul ul a {
     font-size: 0.9em !important;
-    padding-left: 30px !important;
+   /* padding-left: 30px !important;*/
     background: #6d7fcc;
 }
 
@@ -207,6 +222,20 @@ a.article, a.article:hover {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
+
+@media (max-width: 400px) {
+    #sidebar {
+        min-width: 80px;
+        max-width: 80px;
+				display:none;
+}
+
+#sidebar ul li a {
+    padding: 8px;
+    font-size: 1em;
+}
+}
+/*
 @media (max-width: 768px) {
     #sidebar {
         min-width: 80px;
@@ -260,6 +289,7 @@ a.article, a.article:hover {
         display: none;
     }
 }
+*/
 
 /* ---------------------------------------------------
     PAGINA DOS CLIENTES
@@ -443,8 +473,52 @@ max-width:80%;
     margin-left: -15px;
 }
 
-
-.data-prevista{
-display:none;
+input#n_pagtos {
+    width: 100%;
 }
 
+/*titulo nas paginas que fazem listagens*/
+
+  .titulo{
+  padding:10px;
+  	display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    
+  }
+ 
+ .titulo:nth-child(1) {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+    }
+  .adicionar{
+  border-radius:50%;
+  width:50px;
+  height:50px;
+  border:none;
+  color:white;
+  font-size:25px;
+  font-weight:bold;
+  }

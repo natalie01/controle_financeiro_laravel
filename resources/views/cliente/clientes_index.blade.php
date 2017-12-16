@@ -2,7 +2,12 @@
 @section('content')
 
 <div class="container">
-	<h1>Clientes</h1>
+	<div class = "titulo">
+	  <h1>Clientes</h1>
+		<a class = "adicionar btn btn-primary" href="{{route('cliente.create')}}" >+</a>
+	</div>
+
+
 	<table class="table table-striped table-bordered table-hover">
 	@if(empty($clientes))
 		<div class="alert alert-danger">

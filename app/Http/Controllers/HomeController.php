@@ -27,26 +27,41 @@ class HomeController extends Controller
      */
     public function index()
     {
-				/*$hoje= Carbon::now();
-				$dt = $hoje->toFormattedDateString(); 
-				*/
+
 				$dt = $this->diaHoje();
-				//$hoje =$datahoje->date;
+
 				$user_id = $this->getUserId();
 
 	  	$hoje = Carbon::now();
 			//dd($hoje);
 			$dt1 = $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
 			
+			$ontem = Carbon::now()->subDay();
 
-		//	$ontem = Carbon::now()->subDays(1); 
+			$dt_ontem = $ontem->year.'-'.$ontem->month.'-'.$ontem->day;
 
 			$dt2 = $hoje->year.'-'.$hoje->month.'-'.'01';  //primeiro dia do mes atual
-			
-		  $dt3 = Carbon::parse($dt2); 
-			$dt4 = $dt3->subDays(1);  //último dia do mes anterior
 
-			$dt5 = $dt4->year.'-'.$dt4->month.'-'.$dt4->day; //último dia do mes anterior formato ano-mes-dia
+			$mes_atual = $hoje->month;
+
+			if($mes_atual >=1 && $mes_atual<12){
+				$mes_proximo = $mes_atual +1 ;
+			$dt3 = $hoje->year.'-'.$mes_proximo.'-'.'01';  //primeiro dia do mes seguinte
+			}else{
+				$mes_proximo = '01' ;
+			$dt3 = ($hoje->year + 1).'-'.$mes_proximo.'-'.'01';  //primeiro dia do mes seguinte
+			}
+
+		//dd($mes_proximo);
+
+		//	dd($dt3);
+		  $dt4 = Carbon::parse($dt3)->subDay(); //ultimo dia do mes atual
+
+		//dd($dt4);
+
+		$dt5 = $dt4->year.'-'.$dt4->month.'-'.$dt4->day; //último dia do mes atual formato ano-mes-dia
+
+		//dd($dt5);
 
 				$soma_receitas = Caixa::select('valor')
 													->where('tipo','like','%receita%')
@@ -79,32 +94,36 @@ class HomeController extends Controller
 
 				$recebimentos_previstos_mes =  ContaReceber::select('valor_inicial')
 													->where('user_id','=',$user_id)
-													->whereBetween('datavencimento',[$dt2 ,$dt1])
+													->whereBetween('datavencimento',[$dt1 ,$dt5])
 													->sum('valor_inicial');
 
 				$pagamentos_previstos_mes =  ContaPagar::select('valor_inicial')
 													->where('user_id','=',$user_id)
-													->whereBetween('datavencimento',[$dt2 ,$dt1])
+													->whereBetween('datavencimento',[$dt1 ,$dt5])
 													->sum('valor_inicial');
 
 
 
-				$recebimentos_atraso_mes =  ContaReceber::select('valor_inicial')
+				$recebimentos_atraso_mes =  ContaReceber::select('valor_residual')
 													->where('user_id','=',$user_id)
-													->whereBetween('datavencimento',[$dt2 ,$dt1])
-													->sum('valor_inicial');
+													->where('status','not like','recebido')
+													->whereBetween('datavencimento',[$dt2 ,$dt_ontem])
+													->sum('valor_residual');
 
-				$pagamentos_atraso_mes =  ContaPagar::select('valor_inicial')
+				$pagamentos_atraso_mes =  ContaPagar::select('valor_residual')
 													->where('user_id','=',$user_id)
-													->whereBetween('datavencimento',[$dt2 ,$dt1])
-													->sum('valor_inicial');
-				//dd($soma_receitas);
+													->where('status','not like','pago')
+													->whereBetween('datavencimento',[$dt2 ,$dt_ontem])
+													->sum('valor_residual');
+				//dd($recebimentos_atraso_mes);
         //dd($soma_despesas);
+
+			$teste = 'primeiro dia'.$dt2.'dt_ontem'.$dt_ontem;
         return view('home',
 							compact('dt','soma_receitas','soma_despesas','saldo',
 							'recebimentos_previstos_hoje','pagamentos_previstos_hoje',
 							'recebimentos_previstos_mes','pagamentos_previstos_mes',
-							'recebimentos_atraso_mes','pagamentos_atraso_mes'				
+							'recebimentos_atraso_mes','pagamentos_atraso_mes'	,'teste'			
 							));
 				//return response()->json($datahoje->month);
 				//return response()->json($dt);

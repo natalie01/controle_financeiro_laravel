@@ -1,8 +1,8 @@
 $(document).ready(function () {
-		 $('#sidebarCollapse').on('click', function () {
-		     $('#sidebar').toggleClass('active');
-		 });
 
+ $('#sidebarCollapse').on('click', function () {
+		     $('#sidebar').toggle();
+		 });
 
 		$('#searchname').keyup(function() {
 			 var term = $('#searchname').val();
@@ -162,4 +162,29 @@ $(document).ready(function () {
 
     });
 
- });
+//formulario novo movimento caixa
+
+ $("#tipo").change(function(){
+		console.log($("#tipo").val());
+		$("#mensagem").val('nova '+ $("#tipo").val() +'adicionada');
+	
+ 	});
+
+//contas a receber em atraso
+	
+/*
+$(".table2 tr").each(function() {
+    //var id = $(this).attr("id");
+		//console.log(id);
+    // compare id to what you want
+		var hoje = $("#hoje").text();
+		var data_vencimento =$("#data-vencimento").text();
+		var status = $("#status").text();
+console.log(data_vencimento);
+		if(hoje > data_vencimento){
+			console.log('atrasado');
+		}
+	
+	});
+*/
+});
