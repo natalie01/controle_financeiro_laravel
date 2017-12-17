@@ -71,10 +71,12 @@ $(document).ready(function () {
 
  $("#mostra-cal-1").click(function(){
         $("#cal-1").toggle();
+        $("#cal-2").hide();
     });
 
  $("#mostra-cal-2").click(function(){
         $("#cal-2").toggle();
+        $("#cal-1").hide();
     });
 
  $("#esconde-cal-1").click(function(){
@@ -170,21 +172,28 @@ $(document).ready(function () {
 	
  	});
 
+//botoes de filtro para a tabela do caixa
+
+    $("#mostrar-receitas").click(function(){
+        $(".tr-despesa").hide();
+		$(".tr-receita").show();
+    });
+        $("#mostrar-despesas").click(function(){
+        $(".tr-receita").hide();
+      	$(".tr-despesa").show();
+    });
+		
+        $("#mostrar-todos").click(function(){
+        $(".tr-receita").show();
+      	$(".tr-despesa").show();
+    });
+
+
+
+
 //contas a receber em atraso
 	
-/*
-$(".table2 tr").each(function() {
-    //var id = $(this).attr("id");
-		//console.log(id);
-    // compare id to what you want
-		var hoje = $("#hoje").text();
-		var data_vencimento =$("#data-vencimento").text();
-		var status = $("#status").text();
-console.log(data_vencimento);
-		if(hoje > data_vencimento){
-			console.log('atrasado');
-		}
-	
-	});
-*/
+
+$(".atrasado").css( "color", "#d9534f" ); //cor vermelha
+
 });

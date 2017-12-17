@@ -2,13 +2,15 @@
 @section('content')
 
 <div class="container">
-		@if(isset($datahoje))
-		<p id = "hoje">Data:  {{$datahoje}}</p>
-		@endif
+
+@if(isset($datahoje))
+<p>Data Hoje:<span>&nbsp;</span><span  id = "hoje">{{$datahoje}}</span></p>
+@endif
 
 <div class = "titulo">
 	<h1>Contas a Receber</h1>
-	<a class = "adicionar btn btn-primary" href="{{route('contapagar.create')}}" >+</a>
+	<a class = "adicionar btn btn-primary" href="{{route('contareceber.create')}}" 
+			title="adicionar novo" aria-label="adicionar-novo">+</a>
 </div>
 
 	@if(isset($c_removida))
@@ -23,6 +25,18 @@
 		</div>
 	@endif
 
+		@if(isset($mensagem_sem_data))
+		<div class="alert alert-danger">
+		<p >{{$mensagem_sem_data}}</p>
+		</div>
+		@endif
+
+		@if(isset($mensagem_uma_data))
+		<div class="alert alert-warning">
+		<p >{{$mensagem_uma_data}}</p>
+		</div>
+		@endif
+
 @if(old('msg'))
 	<div class="alert alert-success">
 		<strong>Sucesso!</strong>
@@ -36,17 +50,74 @@
     </div>
 @endif
 
-	@if(empty($contas_receber))
-		<div class="alert alert-danger">
-			nenhum registro encontrado
-		</div>
-	@else
+  <div class="btn-group btn-group-justified">
+		 <a href="#" class ="btn btn-info" id="mostra-cal-1">
+			   Selecione o período:
+		 </a>
+		<a href="#" class ="btn btn-primary" id="mostra-cal-2">Selecione o dia:
+		 </a>
+	</div>
 
-		<p>{{ count($contas_receber)}}<span>&nbsp;</span>registros encontrados</p>
+		<div id ="cal-1">
+				<form  action="/selecionar_datas_contas_receber" id="form-datas-1" class="form-horizontal"  method="post">
+					<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+					<input type="hidden" name="periodo" value="duasdatas" />
+					<div class="form-group col-md-6">
+					 	<label>Data Início:</label><br />
+						<input type="date" id="data-inicio" name="data1" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
+					</div>	
+					<div class="form-group col-md-6">
+						<label>Data Fim:</label><br />
+						<input type="date" id="data-fim" name="data2" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}">
+						<br>
+					</div>
+				<div class="form-group col-md-12">
+						<button type="submit" class ="btn btn-primary">OK</button>
+				</div>
+				</form>
+
+			<div class="form-group col-md-12">
+				<button class ="btn btn-danger" id="esconde-cal-1">cancelar</button>
+			</div>
+		</div>
+		<br>
+
+
+
+		<div id ="cal-2">
+			<form  action="/selecionar_datas_contas_receber" id="form-datas-2" class="form-horizontal"  method="post">
+				<div class="form-group col-md-12">
+					<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+						<input type="hidden" name="periodo" value="umadata" />
+					 <label>Data Início:</label><br />
+						<input type="date" id="data-unica"  name ="data" pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}"/>
+							<br />
+					</div>
+				<div class="form-group col-md-12">
+					<button type="submit" class ="btn btn-primary">OK</button>
+				</div>
+				</form>
+
+				<div class="form-group col-md-12">
+					<button class ="btn btn-danger" id="esconde-cal-2">cancelar</button>	<br/>
+				</div>
+			</div>
+		<br>
+
+
+
+	@if(empty($resultados)|| count($resultados)==0)
+	<div class="alert alert-danger col-md-12">
+		<p>Nenhum registro encontrado</p>
+	</div>
+	@else
+	<div class="alert alert-default col-md-12">
+	<p>{{ count($resultados)}}<span>&nbsp;</span>resultados</p>
+		<p>mais recentes</p>
 			<table class="table2">
 			<thead>
 					<tr>
-					<th>N<span>&deg;</span>documento</th>
+					<th>N<span>&deg;</span><span>&nbsp;</span>documento</th>
 					<th>Devedor</th>
 					<th>Data Emiss<span>&atilde;</span>o</th>
 					<th>Data Vencimento</th>
@@ -56,8 +127,8 @@
 					</tr>
 			</thead>
 			<tbody>
-			@foreach ($contas_receber as $c)
-				<tr>
+			@foreach ($resultados as $c)
+				<tr class="{{ $c->status}}">
 				<td>{{ $c->id}}</td>
 				<td>{{ $c->devedor }}
 				<br>
@@ -65,9 +136,9 @@
 			 </td>
 
 				<td>{{ $c->dataemissao}}</td>
-				<td id = "data-vencimento">{{ $c->datavencimento}}</td>
+				<td>{{ $c->datavencimento}}</td>
 				<td>{{ $c->valor_inicial}}</td>
-				<td id = "status">{{ $c->status}} </td>
+				<td>{{ $c->status}} </td>
 
         <td>  
          <ul class ="list-icones list-icones-tabela list-unstyled">

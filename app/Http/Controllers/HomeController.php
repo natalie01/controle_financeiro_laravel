@@ -107,23 +107,24 @@ class HomeController extends Controller
 				$recebimentos_atraso_mes =  ContaReceber::select('valor_residual')
 													->where('user_id','=',$user_id)
 													->where('status','not like','recebido')
+													->where('status','like','atrasado')
 													->whereBetween('datavencimento',[$dt2 ,$dt_ontem])
 													->sum('valor_residual');
 
 				$pagamentos_atraso_mes =  ContaPagar::select('valor_residual')
 													->where('user_id','=',$user_id)
 													->where('status','not like','pago')
+													->where('status','like','atrasado')
 													->whereBetween('datavencimento',[$dt2 ,$dt_ontem])
 													->sum('valor_residual');
 				//dd($recebimentos_atraso_mes);
         //dd($soma_despesas);
 
-			$teste = 'primeiro dia'.$dt2.'dt_ontem'.$dt_ontem;
         return view('home',
 							compact('dt','soma_receitas','soma_despesas','saldo',
 							'recebimentos_previstos_hoje','pagamentos_previstos_hoje',
 							'recebimentos_previstos_mes','pagamentos_previstos_mes',
-							'recebimentos_atraso_mes','pagamentos_atraso_mes'	,'teste'			
+							'recebimentos_atraso_mes','pagamentos_atraso_mes'				
 							));
 				//return response()->json($datahoje->month);
 				//return response()->json($dt);

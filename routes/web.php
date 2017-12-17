@@ -29,6 +29,9 @@ Route::resource('fornecedor','FornecedorController');
 Route::resource('contapagar','ContaPagarController');
 Route::resource('contareceber','ContaReceberController');
 
+Route::post('/selecionar_datas_contas_receber','ContaReceberController@selecionar_datas_contas_receber');
+Route::post('/selecionar_datas_contas_pagar','ContaPagarController@selecionar_datas_contas_pagar');
+
 Route::get('/baixa_conta_receber/{id?}','BaixaContaReceberController@baixa_receber');
 Route::post('/baixa_receber_salvar/{id?}','BaixaContaReceberController@baixa_receber_salvar');
 
@@ -57,7 +60,11 @@ Route::post('/incluir_novo_movim_caixa','CaixaController@incluir_novo_movim_caix
 
 Route::get('/relatorio_caixa','CaixaController@index');
 
-Route::get('/relatorio_caixa_pdf/{dt?}','CaixaController@mostrarPdf');
+Route::post('/caixa_excluir/{id?}','CaixaController@excluir');
+
+Route::get('/caixa_excluir/{id?}', function () {
+    return redirect()->action('CaixaController@index');
+});
 
 
 Route::get('selecionar_datas/{dt?}','CaixaController@selecionar_datas');//selecionar datas para filtar resultados

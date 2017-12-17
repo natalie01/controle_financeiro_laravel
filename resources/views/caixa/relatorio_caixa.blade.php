@@ -4,13 +4,20 @@
 <div class="container" >
 	<div class = "titulo">
 		<h1>Caixa</h1>
-		<a class = "adicionar btn btn-primary" href="/novo_mov_caixa" >+</a>
+		<a class = "adicionar btn btn-primary" href="/novo_mov_caixa"
+			title="adicionar novo" aria-label="adicionar-novo">+</a>
 	</div>
 		@if(isset($data))
-		<div class="alert alert-success">
-		<p id = "periodo">Data:  {{$data}}</p>
+		<div class="alert alert-info">
+		<p id = "periodo">Data Hoje:  {{$data}} </p>
 		</div>
 		@endif
+
+	@if(isset($c_removida))
+		<div class="alert alert-info">
+			<p>O registro n<span>&deg;</span> {{ $c_removida}} foi removido</p>
+		</div>
+	@endif
 
 @if(old('mensagem'))
 	<div class="alert alert-success">
@@ -31,10 +38,13 @@
 		</div>
 		@endif
 
-		<button class ="btn btn-primary" id="mostra-cal-1">
-					<p>Selecione outro período:</p>
-					
-		</button><br>
+  <div class="btn-group btn-group-justified">
+		 <a href="#" class ="btn btn-info" id="mostra-cal-1">
+			   Veja outro período:
+		 </a>
+		<a href="#" class ="btn btn-primary" id="mostra-cal-2">Veja outro dia:
+		 </a>
+	</div>
 
 		<div id ="cal-1">
 				<form  action="/selecionar_datas_post" id="form-datas-1" class="form-horizontal"  method="post">
@@ -53,17 +63,14 @@
 						<button type="submit" class ="btn btn-primary">OK</button>
 				</div>
 				</form>
-				<br>
+
 			<div class="form-group col-md-12">
 				<button class ="btn btn-danger" id="esconde-cal-1">cancelar</button>
 			</div>
 		</div>
 		<br>
 
-		<button class ="btn btn-primary" id="mostra-cal-2">
-			<p>Selecione uma data específica </p>
-			<p>para ver o resultado diário:</p>
-		</button><br>
+
 
 		<div id ="cal-2">
 			<form  action="/selecionar_datas_post" id="form-datas-2" class="form-horizontal"  method="post">
@@ -78,7 +85,7 @@
 					<button type="submit" class ="btn btn-primary">OK</button>
 				</div>
 				</form>
-				<br/>
+
 				<div class="form-group col-md-12">
 					<button class ="btn btn-danger" id="esconde-cal-2">cancelar</button>	<br/>
 				</div>
@@ -86,25 +93,24 @@
 		<br>
 
 <div>
-@if(empty($registros)|| count($registros)==0)
+@if(empty($resultados)|| count($resultados)==0)
 	<div class="alert alert-danger col-md-12">
 	<p>Nenhum registro encontrado</p>
 	</div>
 
 @else
 <div class="alert alert-default col-md-12">
-	<p>{{count($registros)}} registros encontrados</p>
+	<p>{{count($resultados)}} resultados encontrados</p>
 </div>
 
-	<div>
+  <div class="btn-group btn-group-justified">
+    <a href="#" class="btn btn-primary" id="mostrar-receitas">Receitas</a>
+    <a href="#" class="btn btn-danger" id="mostrar-despesas">Despesas</a>
+    <a href="#" class="btn btn-info" id="mostrar-todos">Todos</a>
+  </div>
 
-<a href = "/relatorio_caixa_pdf/{{$data}}">
-  <button type="submit" name="submit_registros" aria-label="gerar arquivo pdf">
-		<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true" title="gerar arquivo pdf"  style="color:#a51c0b;"></i>
-	</button>
-</a>
-	</div>
 <br>
+
 			<table class= "table1">
 				<thead>
 				<tr>
@@ -114,17 +120,26 @@
 						  <th>Descri<span>&ccedil;</span><span>&atilde;</span>o</th>
 						  <th>Tipo</th>
 						  <th>ref_titulo</th>
+ 							<th></th>
 				</tr>
 					</thead>
 				<tbody>
-			 @foreach ($registros as $r)
-				<tr class = "td-{{$r->tipo}}">
+			 @foreach ($resultados as $r)
+				<tr class = "tr-{{$r->tipo}}">
 					<td>{{$r->id}}</td>
 					<td>{{$r->data}}</td>
 					<td>{{$r->valor}}</td>
 					<td>{{$r->descricao}}</td>
 					<td>{{$r->tipo}}</td>
 					<td>{{$r->ref_titulo}}</td>
+					<td>
+								<form action="/caixa_excluir/{{$r->id}}" method="POST">
+									<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+								<button type ="submit" class="btn-excluir"  onclick="return confirm('deletar o registro?')">
+								<span><i class="fa fa-trash-o fa-2x" aria-hidden="true" title="excluir"></i></span></button>
+								 <span class="sr-only">excluir</span>
+								</form>
+					</td>
 				</tr>
 				@endforeach
 				</tbody>

@@ -445,12 +445,12 @@ only screen and (max-width: 760px),
 
 
 /*diferenciar as cores de receitas e despesas na tabela do relatorio de caixa*/
-.td-receita{
-color:blue;
+.tr-receita{
+color:#337ab7; /*primary*/
 }
 
-.td-despesa{
-color:red;
+.tr-despesa{
+color:#d9534f; /*danger*/
 }
 
 
@@ -458,6 +458,7 @@ color:red;
 
 #cal-1, #cal-2{
 display:none;
+padding: 10px;
 }
 
 #mostra-cal-1, #mostra-cal-2{

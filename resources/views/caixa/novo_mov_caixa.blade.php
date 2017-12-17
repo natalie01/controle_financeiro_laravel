@@ -82,13 +82,19 @@
 								<option value="baixa de conta a receber">
 							 <option value="outro">
 								 <option value="despesas">
+								<option value="aluguel">
 								<option value="conta de água">
 							 <option value="conta de luz">
 							 <option value="limpeza">
 							 <option value="material de escritório">
 							 <option value="impostos">
 							 <option value="pessoas">
-							 <option value="combustível">
+								<option value="baixa de conta a pagar">
+								<option value="alimentação">
+								<option value="telefone">
+								<option value="internet">
+								<option value="combustível">
+								<option value="transporte">
 								<option value="baixa de conta a pagar">
 							<option value="outro">
 							</datalist>

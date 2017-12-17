@@ -26,12 +26,17 @@ class ContaReceberController extends Controller
         //
 			$user_id = $this->getUserId();
 			$datahoje = $this->dataHoje();
-					$contas_receber= ContaReceber::where('user_id',$user_id)
-														->where('status','not like','recebido')															
+
+				ContaReceber::where('user_id',$user_id)
+         								 ->where('datavencimento','<' ,$datahoje)
+         								 ->where('status','like' ,'nao recebido')
+                    		  ->update(['status' => 'atrasado']);
+
+					$resultados= ContaReceber::where('user_id',$user_id)
+														->where('status','not like','recebido')													
 																->get();
 
-					//return view('contareceber.contas_receber_index')->with('contas_receber',$contas_receber);
-return view('contareceber.contas_receber_index',compact('contas_receber','datahoje'));
+		return view('contareceber.contas_receber_index',compact('resultados','datahoje'));
     }
 
     /**
@@ -154,9 +159,9 @@ return view('contareceber.contas_receber_index',compact('contas_receber','dataho
 				$conta_receber->delete();
 				}
 				$c_removida= $id;
-				$contas_receber = ContaReceber::where('user_id',$user_id)->get();
+				$resultados = ContaReceber::where('user_id',$user_id)->get();
 			
-			return view('contareceber.contas_receber_index',compact('c_removida','contas_receber'));
+			return view('contareceber.contas_receber_index',compact('c_removida','resultados'));
     }
 }
 
@@ -181,4 +186,15 @@ return view('contareceber.contas_receber_index',compact('contas_receber','dataho
 		              ));
 
 	}
+
+public function selecionar_datas_contas_receber(Request $request){
+	$params = Request::all();
+
+	//$data= $params['d'];
+	$modelo = 'conta_receber';
+	$view = 'contareceber.contas_receber_index';
+	$query = 'datavencimento';
+	$resultado = 'resultados';
+	return $this->getView($params,$modelo,$view,$query);
+}
 }

@@ -21,17 +21,13 @@ public function __construct()
 			
 		$user_id = $this->getUserId();
 
-	  	$hoje = Carbon::now();
-			$data_hoje = Carbon::today();
-			$inicio = $data_hoje->subDays(30);
-
-			$dt1 = $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
-			$dt2 = $inicio->year.'-'.$inicio->month.'-'.$inicio ->day;
-			$data = 'entre '.$dt2.' e '.$dt1;
+	  	$data = $this->dataHoje();
+	
 			//$registros= Caixa::all();
 
-		$registros= Caixa::whereBetween('data',[$dt2 ,$dt1])->where('user_id',$user_id)->orderBy('data', 'desc')->get();
-		return view('caixa.relatorio_caixa',compact('registros','data'));
+		$resultados= Caixa::where('user_id',$user_id)->orderBy('data', 'desc')
+								->get();
+		return view('caixa.relatorio_caixa',compact('resultados','data'));
 
 
 		}
@@ -127,132 +123,44 @@ public function __construct()
 
 	public function selecionar_datas_post(Request $request)
 	{
-
 	$params = Request::all();
 
-
-	$periodo= $params['periodo'];
-
-
-	if($periodo == 'umadata'){
-
-		$data = $params['data'];
-		//dd($data);
-		if($data && $data!== ''){
-
-			 $registros= Caixa::whereDate('data',$data)->orderBy('id', 'desc')->get();
-
-			return view('caixa.relatorio_caixa',compact('data','registros'));
-
-		}else{
-			$mensagem_sem_data= 'você não selecionou nenhuma data.';
-			return view('caixa.relatorio_caixa')->with('mensagem_sem_data', $mensagem_sem_data);
-		}
-
-	}elseif($periodo == 'duasdatas'){
-			$dt1 = $params['data1'];
-			$dt2= $params['data2'];
-
-				
-      	if($dt1 == '' && $dt2 == ''){
-		         $mensagem_sem_data= 'você não selecionou nenhuma data.';
-							return view('caixa.relatorio_caixa')->with('mensagem_sem_data',$mensagem_sem_data);
-		    }
-
- 				if(($dt1 == '' && $dt2 != '') || ($dt1 != '' && $dt2 == '') ){
-					$data = ($dt1 != '') ? $dt1 : $dt2;
-					$registros= Caixa::whereDate('data',$data)->orderBy('id', 'desc')->get();
-					 $mensagem_uma_data  = 'você selecionou apenas uma data.O resultado mostrado é o resultado para essa data.';
-						return view('caixa.relatorio_caixa',compact('data','mensagem_uma_data','registros'));
-        
-				}
-
-				if($dt1  != '' && $dt2 != ''){
-						if($dt1 ==  $dt2){
-						$data = $dt1;
-		        $mensagem_uma_data  = 'você selecionou datas iguais.O resultado mostrado é o resultado para essa data.';
-						$registros= Caixa::whereDate('data',$dt1)->orderBy('id', 'desc')->get();
-						return view('caixa.relatorio_caixa',compact('data','mensagem_uma_data','registros'));
-						}elseif($dt2 > $dt1){
-						$registros= Caixa::whereBetween('data',[$dt1 ,$dt2])->orderBy('data', 'desc')->get();
-						$data = 'entre '.$dt1.' e '.$dt2;
-						return view('caixa.relatorio_caixa',compact('registros','data'));
-						}else{
-						$registros= Caixa::whereBetween('data',[$dt2 ,$dt1])->orderBy('data', 'desc')->get();
-						$data = 'entre '.$dt2.' e '.$dt1;
-						return view('caixa.relatorio_caixa',compact('registros','data'));
-						}
-        }
-			   
-			
-		}else{
-			return response()->json('outro');
-		}
+	$modelo = 'caixa';
+	$view = 'caixa.relatorio_caixa';
+	$query = 'data';
+	$resultado = 'resultados';
+	return $this->getView($params,$modelo,$view,$query);
 
 
 	}
 
+    public function excluir($id)
+    {
 
-	public function mostrarPdf($dt){
+		if( isset($id) && $id != ''){
+			$user_id = $this->getUserId();	
+			$caixa = Caixa::find($id);
+	
+			if(isset($caixa)){
 
-		//o parametro $dt é uma string que pode conter uma ou duas datas
-	if(strlen($dt)>0 && strlen($dt) <= 10 && $dt!=''  ){
-			$data = $dt;
-			$registros= Caixa::whereDate('data',$data)->orderBy('id', 'desc')->get();
-			//dd($registros);
-	}elseif(strlen($dt)>10 && strlen($dt) <= 29 && $dt!=''  ){
-			$datas = explode(" ", $dt);
-			$dt1 = $datas[1];
-			$dt2 =  $datas[3];
-			$registros= Caixa::whereBetween('data',[$dt1 ,$dt2])->orderBy('data', 'desc')->get();
-			//dd($datas);
-			//dd($registros[);
+				if($caixa->user_id != $user_id){
+					return  view('erro_de_acesso');
+				}else{
+				$caixa->delete();
+
+				$c_removida= $id;
+				$resultados = Caixa::where('user_id',$user_id)->get();
+			
+			return view('caixa.relatorio_caixa',compact('c_removida','resultados'));
+			}										
+    }else{
+			return redirect()->action('CaixaController@index');
+		}
 	}else{
-			echo 'nenhuma data informada';
-	};
-    
-	PDF::SetTitle('Relatório');
-	PDF::AddPage();
-
-
-	$html ='<h2>Relatório de Caixa</h2>';
-		$html .='<h3>'.$dt.'</h3>';
-	$html .= '<table style ="color:blue;">';
-	$html .= '<thead style="background-color:#FFFF00;">';
-	$html .= '<tr>';
-	$html .= '<th>N°</th>';
-	$html .= '<th>Data</th>';
-	$html .= '<th>Valor</th>';
-	$html .= '<th>Descri<span>&ccedil;</span><span>&atilde;</span>o</th>';
-	$html .= '<th>Tipo</th>';
-	$html .= '<th>ref_titulo</th>';
-	$html .= '</tr>';
-foreach ($registros as $r)
-     {
-
-         $html.='<tr>';
-         $html.='<td  >'.$r->id.'</td>';
- 					$html.='<td  >'.$r->data.'</td>';
-         $html.='<td  >'.$r->valor.'</td>';
-
-         $html.='<td  >'.$r->descricao.'</td>';
- 					$html.='<td  >'.$r->tipo.'</td>';
-         $html.='<td  >'.$r->ref_titulo.'</td>';
-         $html.='</tr>';
-			
-     }
-
-	$html .= '</thead>';
-	$html .= '<tbody>';
-
-  
-	$html .= '</tbody>';
-	$html.='</table>';
-
-	PDF::writeHTML($html, false, false, true, false, '');
-	PDF::Output('Relatorio.pdf');
-
-
-          
+		return view('caixa');
 	}
+}
+
+
+
 }

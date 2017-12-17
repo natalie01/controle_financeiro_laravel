@@ -25,11 +25,17 @@ class ContaPagarController extends Controller
     {
         //
 			$user_id = $this->getUserId();
+			$datahoje = $this->dataHoje();
+
+				ContaPagar::where('user_id',$user_id)
+         								 ->where('datavencimento','<' ,$datahoje)
+         								 ->where('status','like' ,'nao pago')
+                    		  ->update(['status' => 'atrasado']);
 
 					$contas_pagar= ContaPagar::where('user_id',$user_id)
-													->where('status','not like','recebido')->get();
+													->where('status','not like','pago')->get();
 
-					return view('contapagar.contas_pagar_index')->with('contas_pagar',$contas_pagar);
+					return view('contapagar.contas_pagar_index',compact('contas_pagar','datahoje'));
     }
 
     /**
@@ -182,4 +188,16 @@ class ContaPagarController extends Controller
 		              ));
 
 	}
+
+public function selecionar_datas_contas_pagar(Request $request){
+	$params = Request::all();
+
+	//$data= $params['d'];
+	$modelo = 'conta_pagar';
+	$view = 'contapagar.contas_pagar_index';
+	$query = 'datavencimento';
+	$resultado = 'resultados';
+	return $this->getView($params,$modelo,$view,$query);
 }
+}
+
