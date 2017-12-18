@@ -17,14 +17,17 @@ Route::get('/', function () {
 
 Route::get('home', 'HomeController@index');
 
-Route::get('empresa', 'HomeController@empresa');
-Route::post('empresa_salvar', 'HomeController@empresa_salvar');
+Route::get('/empresa', 'EmpresaController@empresa');
+Route::post('/empresa_salvar', 'EmpresaController@empresa_salvar');
+Route::get('/empresa_editar/{id?}', 'EmpresaController@empresa_editar');
+Route::put('/empresa_update/{id?}', 'EmpresaController@empresa_update');
 
 Auth::routes();
 
-
 Route::resource('cliente','ClienteController');
 Route::resource('fornecedor','FornecedorController');
+
+Route::resource('despesas_fixas','DespesasFixasController');
 
 Route::resource('contapagar','ContaPagarController');
 Route::resource('contareceber','ContaReceberController');

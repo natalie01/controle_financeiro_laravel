@@ -523,3 +523,15 @@ input#n_pagtos {
   font-size:25px;
   font-weight:bold;
   }
+
+/*despesas fixas*/
+
+#nova-despesa-fixa{
+display:none;
+padding: 10px;
+}
+
+#nova-despesa-fixa input[type="text"] {
+    height: 34px;
+}
+

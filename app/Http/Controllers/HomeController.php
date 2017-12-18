@@ -28,12 +28,12 @@ class HomeController extends Controller
     public function index()
     {
 
-				$dt = $this->diaHoje();
+			$dt = $this->diaHoje();
 
-				$user_id = $this->getUserId();
+			$user_id = $this->getUserId();
 
 	  	$hoje = Carbon::now();
-			//dd($hoje);
+
 			$dt1 = $hoje->year.'-'.$hoje->month.'-'.$hoje->day;
 			
 			$ontem = Carbon::now()->subDay();
@@ -131,47 +131,6 @@ class HomeController extends Controller
 
     }
 
-    public function empresa()
-    {
-				$dt = $this->diaHoje();
-				//$hoje =$datahoje->date;
-        return view('empresa')->with('hoje',$dt);
-    }
-
-    public function empresa_salvar(Request $request)
-  {
-			
-			$params = Request::all();
-			$user_id = $this->getUserId();
-
-			$nome_empresa = $params['nome_empresa'];
-			$cidade = $params['cidade'];
-			$estado = $params['estado'];
-		
-			$dt = $this->dataHoje();
-	
-			$saldo_inicial = $this->strToFloat($params['saldo_inicial']);
-			$nao_informado = '';
-
-			if(isset($params['nao_informado'])){
-				$saldo_inicial = 0;
-				//$nao_informado =$params['nao_informado'];
-			}
-				
-			//dd($params);
-	
-				Empresa::create(['nome_empresa'=>$nome_empresa,
-														'cidade'=>$cidade,
-														'estado' => $estado,
-														'saldo_inicial'=>$saldo_inicial,
-														'saldo_atual'=>$saldo_inicial,
-														'data_inicial'=>$dt,
-														'user_id'=>$user_id
-														]);
-
-        return view('home')->with('hoje',$dt);
-	
-    }
 
     public function diaHoje()
     {

@@ -189,11 +189,19 @@ $(document).ready(function () {
     });
 
 
-
-
 //contas a receber em atraso
 	
 
 $(".atrasado").css( "color", "#d9534f" ); //cor vermelha
+
+//despesas fixas 
+ $("#despesa-fixa").click(function(){
+        $("#nova-despesa-fixa").toggle();
+  
+    });
+ $("#despesa-fixa-esconde").click(function(){
+        $("#nova-despesa-fixa").hide();
+  
+    });
 
 });

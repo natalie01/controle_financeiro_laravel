@@ -33,7 +33,7 @@ class ContaReceberController extends Controller
                     		  ->update(['status' => 'atrasado']);
 
 					$resultados= ContaReceber::where('user_id',$user_id)
-														->where('status','not like','recebido')													
+														->where('status','!=','recebido')													
 																->get();
 
 		return view('contareceber.contas_receber_index',compact('resultados','datahoje'));
@@ -66,6 +66,12 @@ class ContaReceberController extends Controller
 					$n_pagtos =1;
 			}
 
+			if($n_pagtos ==1){
+					$parcelado=0;
+			}else{
+					$parcelado=1;
+			}
+
 			$intervalo_pagtos = $request->intervalo_pagtos;
 
 			if(!$intervalo_pagtos){
@@ -85,13 +91,16 @@ class ContaReceberController extends Controller
 
 			$valor= $request->valor;
 
+			$count = ContaReceber::where('user_id',$user_id)->count();
+
 				//converte a string para float com a funcao strToFloat()  herdada da classe Controller
 				$valorFloat= $this->strToFloat($valor);
 
 				for($i = 0; $i < $n_pagtos;++$i ){
 					$dataVenc =  $dv->addDays($intervalo_pagtos*$i);
 					$dataVencFormat = $dataVenc->year.'-'.$dataVenc->month.'-'.$dataVenc->day;
-					ContaReceber::create(['devedor' => $request->devedor,
+					ContaReceber::create(['num_titulo' => ($count + 1),
+																'devedor' => $request->devedor,
 																'datavencimento'=>$dataVencFormat,
 																'dataemissao'=>$dataemissao,
 																'valor_inicial'=>$valorFloat,
@@ -99,6 +108,8 @@ class ContaReceberController extends Controller
 																'user_id'=>$user_id,
 																'valor_recebido'=>0,
 																'valor_residual'=>$valorFloat,
+																'parcelado'=>$parcelado,
+																'num_parcela'=>($i+1)
 																]);
 				}
 
@@ -112,21 +123,19 @@ class ContaReceberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
-    }
+
+			$conta = ContaReceber::find($id);
+			$user_id = $this->getUserId();
+
+			if($conta->user_id != $user_id){
+				return  view('erro_de_acesso');
+			}else{
+				return view('contareceber.conta_receber_editar')->with('c', $conta);
+			}
+
+		}
 
     /**
      * Update the specified resource in storage.
@@ -135,10 +144,24 @@ class ContaReceberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContaReceberRequest $request, $id)
     {
-        //
+
+			$conta = ContaReceber::find($id);
+			$user_id = $this->getUserId();
+
+			if($conta->user_id != $user_id){
+				return  view('erro_de_acesso');
+			}else{
+			ContaReceber::find($id)->update($request->all());
+				return redirect()
+					->route('contareceber.index')
+					->withInput(Request::only('mensagem'));
+		}
+
     }
+
+  
 
     /**
      * Remove the specified resource from storage.

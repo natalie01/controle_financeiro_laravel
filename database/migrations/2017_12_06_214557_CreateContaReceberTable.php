@@ -15,6 +15,7 @@ class CreateContaReceberTable extends Migration
     {
         Schema::create('conta_receber', function (Blueprint $table) {
 					$table->increments('id');
+					$table->int('num_titulo');
 					$table->string('devedor');
 				 $table->date('datavencimento');
 				 $table->date('dataemissao');
@@ -23,6 +24,8 @@ class CreateContaReceberTable extends Migration
 	 			$table->integer('user_id');
 				 $table->float('valor_recebido');	
 				 $table->float('valor_residual');	 
+					$table->boolean('parcelado');
+				$table->int('num_parcela');
         }); //
     }
 

@@ -121,7 +121,8 @@
 					<th>Devedor</th>
 					<th>Data Emiss<span>&atilde;</span>o</th>
 					<th>Data Vencimento</th>
-					<th>Valor Total</th>
+					<th>Valor</th>
+					<th>Parcela</th>
 					<th>Status</th>
 					<th colspan='3'></th>
 					</tr>
@@ -129,7 +130,10 @@
 			<tbody>
 			@foreach ($resultados as $c)
 				<tr class="{{ $c->status}}">
-				<td>{{ $c->id}}</td>
+				<td>{{ $c->num_titulo}}
+				<br>
+				{{ $c->parcelado != 0 ? 'Parcelado' :  'Pag. único'}}
+				</td>
 				<td>{{ $c->devedor }}
 				<br>
 				tel - 123456789
@@ -138,6 +142,7 @@
 				<td>{{ $c->dataemissao}}</td>
 				<td>{{ $c->datavencimento}}</td>
 				<td>{{ $c->valor_inicial}}</td>
+				<td>{{ $c->parcelado != 0 ? $c->num_parcela : '-'}}</td>
 				<td>{{ $c->status}} </td>
 
         <td>  

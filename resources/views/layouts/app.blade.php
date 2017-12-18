@@ -36,6 +36,13 @@
                     </li>
 
                     <li>
+                        <a href="{{route('despesas_fixas.index')}}">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                            <span>Despesas Fixas</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="#clientesSubmenu" data-toggle="collapse" aria-expanded="false" ">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             Clientes

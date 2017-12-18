@@ -15,6 +15,7 @@ class CreateContaPagarTable extends Migration
     {
         Schema::create('conta_pagar', function (Blueprint $table) {
 					$table->increments('id');
+					$table->int('num_titulo');
 					$table->string('credor');
 				 $table->date('datavencimento');
 				 $table->date('dataemissao');
@@ -23,6 +24,8 @@ class CreateContaPagarTable extends Migration
 	 			$table->integer('user_id');
 				 $table->float('valor_pago');		
 				 $table->date('data_pgto_res');
+					$table->boolean('parcelado');
+				$table->int('num_parcela');
         }); //
     }
 

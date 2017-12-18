@@ -32,10 +32,10 @@ class ContaPagarController extends Controller
          								 ->where('status','like' ,'nao pago')
                     		  ->update(['status' => 'atrasado']);
 
-					$contas_pagar= ContaPagar::where('user_id',$user_id)
-													->where('status','not like','pago')->get();
+					$resultados= ContaPagar::where('user_id',$user_id)
+													->where('status','!=','pago')->get();
 
-					return view('contapagar.contas_pagar_index',compact('contas_pagar','datahoje'));
+					return view('contapagar.contas_pagar_index',compact('resultados','datahoje'));
     }
 
     /**
@@ -66,6 +66,12 @@ class ContaPagarController extends Controller
 					$n_pagtos =1;
 			}
 
+			if($n_pagtos ==1){
+					$parcelado=0;
+			}else{
+					$parcelado=1;
+			}
+
 			$intervalo_pagtos = $request->intervalo_pagtos;
 
 			if(!$intervalo_pagtos){
@@ -84,6 +90,8 @@ class ContaPagarController extends Controller
 
 
 			$valor = $request->valor;
+		
+			$count = ContaPagar::where('user_id',$user_id)->count();
 
 				//converte a string para float com a funcao strToFloat()  herdada da classe Controller
 				$valorFloat= $this->strToFloat($valor);
@@ -91,7 +99,8 @@ class ContaPagarController extends Controller
 				for($i = 0; $i < $n_pagtos;++$i ){
 					$dataVenc =  $dv->addDays($intervalo_pagtos*$i);
 					$dataVencFormat = $dataVenc->year.'-'.$dataVenc->month.'-'.$dataVenc->day;
-					ContaPagar::create(['credor' => $request->credor,
+					ContaPagar::create(['num_titulo' => ($count + 1),
+																'credor' => $request->credor,
 																'datavencimento'=>$dataVencFormat,
 																'dataemissao'=>$dataemissao,
 																'valor_inicial'=>$valorFloat,
@@ -99,6 +108,8 @@ class ContaPagarController extends Controller
 																'user_id'=>$user_id,
 																'valor_pago'=>0,
 																'valor_residual'=>$valorFloat,
+																'parcelado'=>$parcelado,
+																'num_parcela'=>($i+1)
 																]);
 				}
 
@@ -126,8 +137,17 @@ class ContaPagarController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
+
+			$conta = ContaPagar::find($id);
+			$user_id = $this->getUserId();
+
+			if($conta->user_id != $user_id){
+				return  view('erro_de_acesso');
+			}else{
+				return view('contapagar.conta_pagar_editar')->with('c', $conta);
+			}
+
+		}
 
     /**
      * Update the specified resource in storage.
@@ -136,9 +156,21 @@ class ContaPagarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContaPagarRequest $request, $id)
     {
-        //
+
+			$conta = ContaPagar::find($id);
+			$user_id = $this->getUserId();
+
+			if($conta->user_id != $user_id){
+				return  view('erro_de_acesso');
+			}else{
+			ContaPagar::find($id)->update($request->all());
+				return redirect()
+					->route('contapagar.index')
+					->withInput(Request::only('mensagem'));
+		}
+
     }
 
     /**
