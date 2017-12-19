@@ -89,17 +89,19 @@ $(document).ready(function () {
 
 	$("#form-datas-1").submit(function(){
 					
-					var dt1 = $("#data1").val();
+					/*var dt1 = $("#data1").val();
 					var dt2 = $("#data2").val();
 
 					console.log(dt1 + ',' +dt2);
+*/
 					$("#cal-1").hide();
 		});
 
 	$("#form-datas-2").submit(function(){
-					
+				/*	
 					var dtu = $("#data-unica").val();
 					console.log(dtu);
+			*/
 					$("#cal-2").hide();
 		});
 
@@ -194,14 +196,60 @@ $(document).ready(function () {
 
 $(".atrasado").css( "color", "#d9534f" ); //cor vermelha
 
-//despesas fixas 
+//incluir despesas fixas
  $("#despesa-fixa").click(function(){
         $("#nova-despesa-fixa").toggle();
   
     });
- $("#despesa-fixa-esconde").click(function(){
+ $(".despesa-fixa-fechar").click(function(){
         $("#nova-despesa-fixa").hide();
   
     });
 
+/* $(".df-editar").click(function(){
+        $("#despesa-fixa-editar").toggle();
+  
+    });
+
+ $(".df-editar-fechar").click(function(){
+        $("#despesa-fixa-editar").hide();
+  
+    });
+*/
+
+
+var modal = document.getElementById('myModal');
+
+// abre o modal
+$("button[class^='myBtn']").click(function() {
+
+ var num = this.className;
+var n = num.substr(num.indexOf('-') + 1);
+
+console.log(n);
+
+var valor = $(this).parent().prev().text();
+var cat = $(this).parent().prev().prev().text();
+var desc = $(this).parent().prev().prev().prev().text();
+
+
+$("#modal-desc").val("" +desc +"");
+$("#modal-cat").val("" +cat +"");
+$("#modal-valor").val("" +valor +"");
+
+ $("#myModal").show();
+});
+
+//fecha o modal
+$(".close").click(function() {
+	//modal.hide();
+ $("#myModal").hide();
+});
+
+//fecha o modal quando o usuário clicar fora
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 });

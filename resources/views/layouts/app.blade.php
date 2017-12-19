@@ -23,8 +23,8 @@
 
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <h3>$$$$</h3>
-                    <strong>$$</strong>
+                    <div  class= "logo"></div>
+                    
                 </div>
 
                 <ul class="list-unstyled components">
@@ -104,10 +104,13 @@
                     <div class="container-fluid">
 
                         <div class="navbar-header">
+
                             <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
                                <i class="fa fa-bars" aria-hidden="true"></i>
                              
                             </button>
+   
+
                         </div>
 
                         <div>
@@ -118,7 +121,7 @@
                         @else
                            <li>
 		                        <a id = "username">
-		                            Hello ,{{ Auth::user()->name }}
+		                            Olá ,{{ Auth::user()->name }}
 		                        </a>
 													</li>
 
@@ -129,7 +132,8 @@
                                   Logout
                               </a>
 
-                              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                              <form id="logout-form" action="{{ route('logout') }}" method="POST" 
+																	onclick="return confirm('tem certeza que deseja sair?')" style="display: none;">
                                   {{ csrf_field() }}
                               </form>
                           </li>

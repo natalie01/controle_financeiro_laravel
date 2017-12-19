@@ -2,7 +2,9 @@
 
 namespace projeto_laravel\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\DB;
+use projeto_laravel\DespesasFixas;
 
 class DespesasFixasController extends Controller
 {
@@ -13,7 +15,10 @@ class DespesasFixasController extends Controller
      */
     public function index()
     {
-        return view('despesas_fixas.despesas_fixas_index');
+			$user_id = $this->getUserId();
+
+			$resultados = DespesasFixas::where('user_id',$user_id)->get();
+        return view('despesas_fixas.despesas_fixas_index')->with('resultados',$resultados);
     }
 
     /**
@@ -34,9 +39,21 @@ class DespesasFixasController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+			$user_id = $this->getUserId();
+        $params = $request::except(["_method","_token"]);
+				$str= $params['valor'];
+				$valor = $this->strToFloat($str);
+				//dd($params);
 
+				DespesasFixas::create(['descricao'=>$params['descricao'],
+														'categoria'=>$params['categoria'],
+														'valor' => $valor,
+														'user_id' => $user_id,
+														]);
+			return redirect()
+					->route('despesas_fixas.index')
+					->withInput(Request::only('nome'));
+    }
     /**
      * Display the specified resource.
      *
@@ -68,7 +85,24 @@ class DespesasFixasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+			$user_id = $this->getUserId();
+        $params = $request::except(["_method","_token"]);
+				$str= $params['valor'];
+				$valor = $this->strToFloat($str);
+				//dd($params);
+
+			$df = DespesasFixas::find($id);
+
+			$df->descricao = $params['descricao'];
+			$df->categoria= $params['categoria'];
+			$df->valor = $valor;
+			$df->user_id = $user_id;
+
+			$df->save();
+
+			return redirect()
+					->route('despesas_fixas.index')
+					->withInput(Request::only('mensagem'));
     }
 
     /**
@@ -79,6 +113,19 @@ class DespesasFixasController extends Controller
      */
     public function destroy($id)
     {
-        //
+			$user_id = $this->getUserId();
+
+			$df = DespesasFixas::find($id);
+			$df_desc = $df->descricao;
+		
+		$mensagem = 'Despesa Fixa '.$df_desc.'removida';
+		if($df->user_id != $user_id){
+			return  view('erro_de_acesso');
+		}else{
+			$df->delete();
+			return redirect()
+					->route('despesas_fixas.index')->with('mensagem', $mensagem);
+					
+    }
     }
 }
