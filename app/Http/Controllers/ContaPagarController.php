@@ -32,10 +32,14 @@ class ContaPagarController extends Controller
          								 ->where('status','like' ,'nao pago')
                     		  ->update(['status' => 'atrasado']);
 
+				$total = ContaPagar::select('valor_residual')
+													->where('user_id','=',$user_id)
+													->sum('valor_residual');
+
 					$resultados= ContaPagar::where('user_id',$user_id)
 													->where('status','!=','pago')->get();
 
-					return view('contapagar.contas_pagar_index',compact('resultados','datahoje'));
+					return view('contapagar.contas_pagar_index',compact('resultados','datahoje','total'));
     }
 
     /**
@@ -80,8 +84,10 @@ class ContaPagarController extends Controller
 
 			$dataemissao = $request->dataemissao;
 
-			if(!$dataemissao){
+			if(!$dataemissao || $dataemissao == ''){
 				$hoje= $this->dataHoje();
+
+				$dataemissao= $datahoje;
 			}
 
       $data = gettype($request->datavencimento);

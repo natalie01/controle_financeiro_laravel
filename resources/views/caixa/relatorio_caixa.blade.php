@@ -142,7 +142,17 @@
 					</td>
 				</tr>
 				@endforeach
+			<tr colspan ="2" style="font-weight:bold" class="total">
+				<td>TOTAL</td><td></td>	<td>{{$total}}<span>&nbsp;</span>R<span>&dollar;</span></td>
+			</tr>
+			<tr colspan ="2" style="font-weight:bold;" class="total-receitas">
+				<td>Total Receitas</td><td></td>	<td>{{$soma_receitas}}<span>&nbsp;</span>R<span>&dollar;</span></td>
+			</tr>
+			<tr colspan ="2" style="font-weight:bold;" class="total-despesas">
+				<td>Total Despesas</td><td></td>	<td>{{$soma_despesas}}<span>&nbsp;</span>R<span>&dollar;</span></td>
+			</tr>
 				</tbody>
+
 			</table>
 	</div>
 	

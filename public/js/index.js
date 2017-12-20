@@ -179,15 +179,51 @@ $(document).ready(function () {
     $("#mostrar-receitas").click(function(){
         $(".tr-despesa").hide();
 		$(".tr-receita").show();
+
     });
         $("#mostrar-despesas").click(function(){
         $(".tr-receita").hide();
       	$(".tr-despesa").show();
+
     });
 		
         $("#mostrar-todos").click(function(){
         $(".tr-receita").show();
       	$(".tr-despesa").show();
+	
+    });
+
+//botoes de filtro para a tabela contas
+
+    $("#mostrar-atrasados").click(function(){
+      $("tr :not(.atrasado)").hide();
+			$(".total").hide();
+ //$("tr :not(.atrasado)").css('background','yellow');
+				$(".atrasado").show();
+			
+    });
+
+        $("#mostrar-no-prazo").click(function(){
+        $(".atrasado").hide();
+				$(".total").hide();
+				$("tr :not(.atrasado)").show();
+    });
+		
+    $("#mostrar-rec-parcial").click(function(){
+        $(".recebimento parcial").show();
+			$(".total").hide();
+				$("tr[class!='recebimento parcial']").hide();
+    });
+
+    $("#mostrar-todos").click(function(){
+        $("tr").show();
+			$(".total").show();
+    });
+
+    $("#mostrar-pag-parcial").click(function(){
+        $(".pagamento parcial").show();
+			$(".total").hide();
+				$("tr[class!='pagamento parcial']").hide();
     });
 
 
@@ -252,4 +288,39 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+ var r3m = $("#r3m").text();
+ var r3d = $("#r3d").text();
+
+
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Receitas", "Despesas"],
+        datasets: [{
+            label: 'últimos 3 meses',
+            data: [r3m, r3d],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255,99,132,1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
 });

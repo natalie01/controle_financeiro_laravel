@@ -27,7 +27,19 @@ public function __construct()
 
 		$resultados= Caixa::where('user_id',$user_id)->orderBy('data', 'desc')
 								->get();
-		return view('caixa.relatorio_caixa',compact('resultados','data'));
+
+				$soma_receitas = Caixa::select('valor')
+													->where('tipo','like','%receita%')
+													->where('user_id','=',$user_id)
+													->sum('valor');
+
+				$soma_despesas = Caixa::select('valor')
+													->where('tipo','like','%despesa%')
+													->where('user_id','=',$user_id)
+													->sum('valor');
+
+				$total = $soma_receitas - $soma_despesas;
+		return view('caixa.relatorio_caixa',compact('resultados','data','total','soma_receitas','soma_despesas'));
 
 
 		}

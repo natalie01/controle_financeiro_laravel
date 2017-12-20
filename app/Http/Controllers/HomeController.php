@@ -38,6 +38,9 @@ class HomeController extends Controller
 			
 			$ontem = Carbon::now()->subDay();
 
+			$tres_meses_antes =Carbon::now()->subDays(90);
+			$tres_ma = $tres_meses_antes->year.'-'.$tres_meses_antes->month.'-'.'01'; 
+
 			$dt_ontem = $ontem->year.'-'.$ontem->month.'-'.$ontem->day;
 
 			$dt2 = $hoje->year.'-'.$hoje->month.'-'.'01';  //primeiro dia do mes atual
@@ -63,23 +66,33 @@ class HomeController extends Controller
 
 		//dd($dt5);
 
-				$soma_receitas = Caixa::select('valor')
+				$soma_receitas_mes = Caixa::select('valor')
 													->where('tipo','like','%receita%')
 													->where('user_id','=',$user_id)
 													->whereBetween('data',[$dt2 ,$dt1])
 													->sum('valor');
 
-				$soma_despesas = Caixa::select('valor')
+				$soma_despesas_mes = Caixa::select('valor')
 													->where('tipo','like','%despesa%')
 													->where('user_id','=',$user_id)
 													->whereBetween('data',[$dt2 ,$dt1])
 													->sum('valor');
 
+				$soma_receitas_3m = Caixa::select('valor')
+													->where('tipo','like','%receita%')
+													->where('user_id','=',$user_id)
+													->whereBetween('data',[$tres_ma ,$dt1])
+													->sum('valor');
+
+				$soma_despesas_3m = Caixa::select('valor')
+													->where('tipo','like','%despesa%')
+													->where('user_id','=',$user_id)
+													->whereBetween('data',[$tres_ma ,$dt1])
+													->sum('valor');
+
 				$saldo_atual = Empresa::where('user_id','=',$user_id)
 													->pluck('saldo_atual')->first();
 
-
-				$saldo = $soma_receitas - $soma_despesas + $saldo_atual;
 
 				$recebimentos_previstos_hoje = ContaReceber::select('valor_inicial')
 													->where('user_id','=',$user_id)
@@ -102,7 +115,41 @@ class HomeController extends Controller
 													->whereBetween('datavencimento',[$dt1 ,$dt5])
 													->sum('valor_inicial');
 
+				$recebimentos_feitos_mes =  ContaReceber::select('valor_recebido')
+													->where('user_id','=',$user_id)
+													->where('status','like','recebido')
+													->orWhere('status','like','%parcial')
+													->whereBetween('datavencimento',[$dt2 ,$dt5])
+													->sum('valor_recebido');
 
+				$pagamentos_feitos_mes =  ContaPagar::select('valor_pago')
+													->where('user_id','=',$user_id)
+													->where('status','like','pago')
+													->orWhere('status','like','%parcial')
+													->whereBetween('datavencimento',[$dt2 ,$dt5])
+													->sum('valor_pago');
+
+				$recebimentos_falta_mes = $recebimentos_previstos_mes - $recebimentos_feitos_mes;
+				$pagamentos_falta_mes = $pagamentos_previstos_mes - $pagamentos_feitos_mes;
+
+				$dif_receb_mes =($recebimentos_feitos_mes / $recebimentos_previstos_mes)*100 ;
+				$porcent_receb_mes = number_format($dif_receb_mes,2);
+
+				$dif_pag_mes =($pagamentos_feitos_mes / $pagamentos_previstos_mes)*100 ;
+				$porcent_pag_mes = number_format($dif_pag_mes,2);
+
+			/*	$recebimentos_feitos_mes =  ContaReceber::select('valor_inicial')
+													->where('user_id','=',$user_id)
+													->where('status','like','recebido')
+													->whereBetween('datavencimento',[$dt1 ,$dt5])
+													->sum('valor_inicial');
+
+				$pagamentos_feitos_mes =  ContaPagar::select('valor_inicial')
+													->where('user_id','=',$user_id)
+													->where('status','like','pago')
+													->whereBetween('datavencimento',[$dt1 ,$dt5])
+													->sum('valor_inicial');
+			*/
 
 				$recebimentos_atraso_mes =  ContaReceber::select('valor_residual')
 													->where('user_id','=',$user_id)
@@ -117,14 +164,31 @@ class HomeController extends Controller
 													->where('status','like','atrasado')
 													->whereBetween('datavencimento',[$dt2 ,$dt_ontem])
 													->sum('valor_residual');
+
+				$recebimentos_atraso_todos =  ContaReceber::select('valor_residual')
+													->where('user_id','=',$user_id)
+													->where('status','not like','recebido')
+													->where('status','like','atrasado')
+													->sum('valor_residual');
+
+				$pagamentos_atraso_todos =  ContaPagar::select('valor_residual')
+													->where('user_id','=',$user_id)
+													->where('status','not like','pago')
+													->where('status','like','atrasado')
+													->sum('valor_residual');
 				//dd($recebimentos_atraso_mes);
         //dd($soma_despesas);
 
         return view('home',
-							compact('dt','soma_receitas','soma_despesas','saldo',
+							compact('dt','soma_receitas_mes','soma_despesas_mes','saldo_atual',
 							'recebimentos_previstos_hoje','pagamentos_previstos_hoje',
 							'recebimentos_previstos_mes','pagamentos_previstos_mes',
-							'recebimentos_atraso_mes','pagamentos_atraso_mes'				
+							'recebimentos_feitos_mes','pagamentos_feitos_mes',
+							'recebimentos_falta_mes','pagamentos_falta_mes',
+							'recebimentos_atraso_mes','pagamentos_atraso_mes',
+							'recebimentos_atraso_todos','pagamentos_atraso_todos',
+							'porcent_receb_mes','porcent_pag_mes',
+							'soma_receitas_3m','soma_despesas_3m'				
 							));
 				//return response()->json($datahoje->month);
 				//return response()->json($dt);

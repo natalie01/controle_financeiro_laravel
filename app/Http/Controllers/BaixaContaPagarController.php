@@ -65,6 +65,7 @@ public function __construct()
 			$valor_devido = 0;
 		}
 			$conta->valor_residual = $valor_devido;
+			$conta->valor_pago = $valor_pago;
 			$conta->save();
 		
 

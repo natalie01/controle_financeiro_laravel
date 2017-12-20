@@ -49,13 +49,6 @@ public function __construct()
 
 			$valor_devido = $conta->valor_residual;
 
-	/*	if($valor_recebido > $valor_devido){
-		echo 'O valor recebido é maior que o valor devido';
-		}else{
-			echo 'Ainda precisa salvar os dados';
-		}
-*/
-
 		if($data == null){
 			$data = $this->dataHoje();
 		}
@@ -78,6 +71,7 @@ public function __construct()
 		}
 			
 			$conta->valor_residual = $valor_devido;
+			$conta->valor_recebido = $valor_recebido;
 			$conta->save();
 	
 

@@ -32,11 +32,15 @@ class ContaReceberController extends Controller
          								 ->where('status','like' ,'nao recebido')
                     		  ->update(['status' => 'atrasado']);
 
+				$total = ContaReceber::select('valor_residual')
+													->where('user_id','=',$user_id)
+													->sum('valor_residual');
+
 					$resultados= ContaReceber::where('user_id',$user_id)
 														->where('status','!=','recebido')													
 																->get();
 
-		return view('contareceber.contas_receber_index',compact('resultados','datahoje'));
+		return view('contareceber.contas_receber_index',compact('resultados','datahoje','total'));
     }
 
     /**
@@ -80,8 +84,10 @@ class ContaReceberController extends Controller
 
 			$dataemissao = $request->dataemissao;
 
-			if(!$dataemissao){
+			if(!$dataemissao || $dataemissao=='' ){
 				$hoje=$this->dataHoje();
+
+				$dataemissao= $datahoje;
 			}
 
       $data = gettype($request->datavencimento);

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script 
+    src=" https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js">
+    </script>
+  <style>
+  
+.box{
+border:1px solid black;
+width:400px;
+height:300px;
+}
+
+
+.box-item{
+border:1px solid black;
+width:100%;
+height:calc(100%-16px)/2;
+font-size:16px;
+}
+
+.box-item:first-child{
+text-align:center;
+height:20px;
+font-weight:bold;
+padding:0 5px ;
+}
+
+.list-flex{
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    
+    padding:20px;
+    }
+
+.list-flex-item {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="box">
+  	  <div class="box-item">
+  		<p>Previsto / Realizado</p>
+ 	 </div>
+	 <div class="box-item">
+      <ul class = "list-unstyled list-inline list-flex">
+        <li class ="list-flex-item">Recebimentos</li>
+        <li class ="list-flex-item">
+            <ul class = "list-unstyled ">
+             <li>Previsto : 105  <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li>Realizado :30 <span>&nbsp;</span>R<span>&dollar;</span></li>
+            <li>Falta : 75 <span>&nbsp;</span>R<span>&dollar;</span></li>
+            </ul>
+        </li>
+        <li class ="list-flex-item">28.57 % </li>
+      </ul>
+ 	 </div>
+	 <div class="box-item">
+        <ul class = "list-unstyled list-inline list-flex">
+        <li class ="list-flex-item">Pagamentos</li>
+        <li class ="list-flex-item">
+            <ul class = "list-unstyled ">
+             <li>Previsto : 30 <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li>Realizado : 0 <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li>Falta : 30 <span>&nbsp;</span>R<span>&dollar;</span></li>
+            </ul>
+        </li>
+        <li class ="list-flex-item">0.00 % </li>
+      </ul>
+ 	 </div>     
+  </div>
+	
+  <div class="box">
+  	  <div class="box-item">
+  		
+ 	 </div>
+	 <div class="box-item">
+      <ul class = "list-unstyled list-inline list-flex">
+        <li class ="list-flex-item" style="font-size:24px;width:20%;">Saldo Conta Principal</li>
+        <li class ="list-flex-item"  style="font-size:40px;">3000 <span>&nbsp;</span>R<span>&dollar;</span> </li>
+	 </ul>
+ 	 </div>
+	 <div class="box-item">
+        <ul class = "list-unstyled list-inline list-flex">
+        <li class ="list-flex-item">Este M<span>&ecirc;</span>s</li>
+        <li class ="list-flex-item" style="font-size:22px;">
+            <ul class = "list-unstyled ">
+             <li>Receitas : 30 <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li>Despesas : 0 <span>&nbsp;</span>R<span>&dollar;</span></li>
+
+            </ul>
+        </li>
+
+      </ul>
+ 	 </div>     
+  </div>
+
+  <div class="box">
+  	  <div class="box-1-item">
+  		<p style ="text-align:center;">Contas em Atraso </p>
+ 	 </div>
+	 <div class="box-item">
+    
+          <ul class = "list-unstyled" style="padding:15px;">
+          <li style="font-size:22px;">Vencidas este M<span>&ecirc;</span>s</li>
+             <li style="font-size:16px;">Recebimentos : 30 <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li style="font-size:16px;">Pagamentos : 0 <span>&nbsp;</span>R<span>&dollar;</span></li>
+<a href = "#">Ver detalhes</a>
+            </ul>
+  	 </div>
+     
+ <div class="box-item">        
+          <ul class = "list-unstyled" style="padding:15px;">
+          <li style="font-size:22px;">Todas</li>
+             <li style="font-size:16px;">Recebimentos : 30 <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li style="font-size:16px;">Pagamentos : 0 <span>&nbsp;</span>R<span>&dollar;</span></li>
+<a href = "#" style="font-size:16px;">Ver detalhes</a>
+            </ul>
+ 	 </div>     
+  </div>
+  
+    <div class="box">
+  	  <div class="box-item">
+  		Hoje
+ 	 </div>
+	 <div class="box-item">
+    
+          <ul class = "list-unstyled" style="padding:15px;">
+          <li style="font-size:22px;">Vencimentos</li>
+             <li style="font-size:16px;">Recebimentos : 30 <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li style="font-size:16px;">Pagamentos : 0 <span>&nbsp;</span>R<span>&dollar;</span></li>
+<a href = "#">Ver detalhes</a>
+            </ul>
+  	 </div>
+ <div class="box-item">        
+ 	 </div>     
+  </div>
+     
+   <div class="box">  
+    <div class="box-item">        
+     Receitas x Despesas últimos 6 meses:
+ 	 </div> 
+      <div class="box-item">        
+    <canvas  style="border:2px solid red;" id="myChart" width="200" height="150"></canvas>  
+     </div>
+ 	 </div> 
+  
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Rec", "Des"],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+</body>
+</html>

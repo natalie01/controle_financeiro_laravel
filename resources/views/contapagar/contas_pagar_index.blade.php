@@ -111,6 +111,14 @@
 	@else
 	<div class="alert alert-default col-md-12">
 	<p>{{ count($resultados)}}<span>&nbsp;</span>registros encontrados</p>
+
+  <div class="btn-group btn-group-justified">
+    <a href="#" class="btn btn-primary" id="mostrar-no-prazo">No prazo</a>
+    <a href="#" class="btn btn-danger" id="mostrar-atrasados">Atrasados</a>
+		<a href="#" class="btn btn-warning" id="mostrar-rec-parcial">Pag. Parcial</a>
+    <a href="#" class="btn btn-info" id="mostrar-todos">Todos</a>
+  </div>
+<br>
 			<table class="table2">
 			<thead>
 					<tr>
@@ -172,6 +180,9 @@
 
 				</tr>
 					@endforeach
+			<tr colspan ="2" style="font-weight:bold" class="total">
+				<td>TOTAL</td><td></td><td></td><td></td>	<td>{{$total}}<span>&nbsp;</span>R<span>&dollar;</span></td>
+			</tr>
 					</tbody>
 				</table>
 @endif

@@ -1,0 +1,56 @@
+
+<p>Receitas : {{$soma_receitas_mes}}</p>
+<p>Despesas : {{$soma_despesas_mes}}</p>
+<p>Saldo: {{$saldo_atual}}</p>
+<div>
+	<ul class = "list-unstyled">Recebimentos Previstos
+		<li>Hoje : {{ $recebimentos_previstos_hoje }}</li>
+		<li>M<span>&ecirc;</span>s : {{ $recebimentos_previstos_mes }}</li>
+	</ul>
+</div>
+<div>
+	<ul class = "list-unstyled">Pagamentos Previstos
+		<li>Hoje : {{ $pagamentos_previstos_hoje }}</li>
+		<li>M<span>&ecirc;</span>s : {{ $pagamentos_previstos_mes }}</li>
+	</ul>
+</div>
+<div>
+	<ul class = "list-unstyled">Contas Vencidas este M<span>&ecirc;</span>s
+		<li>Recebimentos : {{ $recebimentos_atraso_mes }}</li>
+		<li>Pagamentos : {{ $pagamentos_atraso_mes }}</li>
+	</ul>
+</div>
+
+
+
+  <div class="box">
+  	  <div class="box-item">
+  		<p>Previsto / Realizado</p>
+ 	 </div>
+	 <div class="box-item">
+      <ul class = "list-unstyled list-inline list-flex">
+        <li class ="list-flex-item">Recebimentos</li>
+        <li class ="list-flex-item">
+            <ul class = "list-unstyled ">
+             <li>Previsto : {{ $recebimentos_previstos_mes }}  <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li>Realizado : {{ $recebimentos_feitos_mes }} <span>&nbsp;</span>R<span>&dollar;</span></li>
+            <li>Falta : {{ $recebimentos_falta_mes }} <span>&nbsp;</span>R<span>&dollar;</span></li>
+            </ul>
+        </li>
+        <li class ="list-flex-item">{{ $porcent_receb_mes }} % </li>
+      </ul>
+ 	 </div>
+	 <div class="box-item">
+        <ul class = "list-unstyled list-inline list-flex">
+        <li class ="list-flex-item">Pagamentos</li>
+        <li class ="list-flex-item">
+            <ul class = "list-unstyled ">
+             <li>Previsto : {{ $pagamentos_previstos_mes }} <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li>Realizado : {{ $pagamentos_feitos_mes }} <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li>Falta : {{ $pagamentos_falta_mes }} <span>&nbsp;</span>R<span>&dollar;</span></li>
+            </ul>
+        </li>
+        <li class ="list-flex-item">{{ $porcent_pag_mes}} % </li>
+      </ul>
+ 	 </div>     
+  </div>
