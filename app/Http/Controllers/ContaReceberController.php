@@ -37,7 +37,7 @@ class ContaReceberController extends Controller
 													->sum('valor_residual');
 
 					$resultados= ContaReceber::where('user_id',$user_id)
-														->where('status','!=','recebido')													
+														->where('status','!=','recebido')->orderBy('datavencimento', 'asc')													
 																->get();
 
 		return view('contareceber.contas_receber_index',compact('resultados','datahoje','total'));
@@ -226,4 +226,11 @@ public function selecionar_datas_contas_receber(Request $request){
 	$resultado = 'resultados';
 	return $this->getView($params,$modelo,$view,$query);
 }
+
+/*
+public function selecionar_mes(Request $request){
+	$params = Request::only('mes');
+	dd($params);
+}
+*/
 }

@@ -19,7 +19,7 @@
 	<input type="hidden" name="tipo" value="receita" />
 		  <div class="col-md-6">
 		     <div class="form-group">
-		       <label>Descri<span> &ccedil; </span><span>&atilde;</span>o:</label><br />
+		       <label>Categoria</label><br />
 		      <input type="text" name="descricao" required list="sugestoes"/>  
 					<datalist id="sugestoes">
 						<option value="vendas/serviços prestados">

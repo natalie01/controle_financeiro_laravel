@@ -87,7 +87,7 @@ public function __construct()
 		$params = Request::all();
 			
 		$user_id = $this->getUserId();
-			$descricao = $request->descricao;
+			$categoria = $request->categoria;
 			$str= $request->valor;
 			$tipo = $request->tipo;
 
@@ -104,7 +104,7 @@ public function __construct()
 
 			Caixa::create(['data'=>$dataemissao,
 														'valor'=>$valor,
-														'descricao' => $request->descricao,
+														'categoria' => $request->categoria,
 														'tipo'=>$request->tipo,
 														'user_id'=>$user_id
 														]);
@@ -142,8 +142,6 @@ public function __construct()
 	$query = 'data';
 	$resultado = 'resultados';
 	return $this->getView($params,$modelo,$view,$query);
-
-
 	}
 
     public function excluir($id)

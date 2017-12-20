@@ -15,7 +15,6 @@ class CreateDespesasFixasTable extends Migration
     {
         Schema::create('despesas_fixas', function (Blueprint $table) {
 					$table->increments('id');
-				 $table->string('descricao');
 				 $table->string('categoria');
 				 $table->float('valor');	    
 				 $table->int('user_id');

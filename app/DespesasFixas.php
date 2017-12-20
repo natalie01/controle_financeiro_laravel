@@ -8,7 +8,7 @@ class DespesasFixas extends Model
 {
       protected $table = 'despesas_fixas';
 	public $timestamps = false;
-	protected $fillable = array('descricao','categoria','valor','user_id');
+	protected $fillable = array('categoria','valor','user_id');
 
     public function user()
     {

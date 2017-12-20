@@ -45,8 +45,8 @@ class DespesasFixasController extends Controller
 				$valor = $this->strToFloat($str);
 				//dd($params);
 
-				DespesasFixas::create(['descricao'=>$params['descricao'],
-														'categoria'=>$params['categoria'],
+				DespesasFixas::create(
+														['categoria'=>$params['categoria'],
 														'valor' => $valor,
 														'user_id' => $user_id,
 														]);
@@ -93,7 +93,6 @@ class DespesasFixasController extends Controller
 
 			$df = DespesasFixas::find($id);
 
-			$df->descricao = $params['descricao'];
 			$df->categoria= $params['categoria'];
 			$df->valor = $valor;
 			$df->user_id = $user_id;

@@ -43,8 +43,8 @@
 
 				<div class="col-md-4">
 				   <div class="form-group">
-				     <label>Descri<span> &ccedil; </span><span>&atilde;</span>o:</label><br />
-				    <input type="text" name="descricao" list="sugestoes"/>  
+				     <label>Categoria</label><br />
+				    <input type="text" name="categoria" list="sugestoes"/>  
 							<datalist id="sugestoes">
 							<option value="receitas">
 								<option value="vendas/serviços prestados">
@@ -71,22 +71,6 @@
 				  </div>
 		    </div>
  
-     <div class="col-md-4">
-		     <div class="form-group">
-		       <label>Categoria</label><br />
-		      <input type="text" name="categoria" list="categorias"/>  
-					<datalist id="categorias">
-						<option value="Aluguel">
-						<option value="Eletricidade">
-						<option value="Água">
-						<option value="Telefone e Internet">
-						<option value="Impostos">
-						<option value="Contador">
-						<option value="Material">
-						<option value="outror">
-					</datalist>
-		    </div>
-      </div>
 
 		<div class="col-md-2">
 			 <div class="form-group">
@@ -119,7 +103,6 @@
 			<table class= "table3">
 				<thead>
 				<tr>
-						  <th>Descri<span>&ccedil;</span><span>&atilde;</span>o</th>
 						  <th>Categoria</th>
 						  <th>valor</th>
  							<th colspan = "2"></th>
@@ -128,7 +111,6 @@
 				<tbody>
 			 @foreach ($resultados as $r)
 		<tr class ="{{$r->id}}">
-					<td >{{$r->descricao}}</td>
 					<td>{{$r->categoria}}</td>
 					<td>{{$r->valor}}</td>
 		<td>

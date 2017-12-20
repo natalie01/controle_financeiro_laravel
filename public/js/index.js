@@ -196,9 +196,9 @@ $(document).ready(function () {
 //botoes de filtro para a tabela contas
 
     $("#mostrar-atrasados").click(function(){
-      $("tr :not(.atrasado)").hide();
+    $("tr[class!='atrasado']").hide();
 			$(".total").hide();
- //$("tr :not(.atrasado)").css('background','yellow');
+//$("tr[class!='atrasado']").css('background','yellow');
 				$(".atrasado").show();
 			
     });
@@ -206,7 +206,7 @@ $(document).ready(function () {
         $("#mostrar-no-prazo").click(function(){
         $(".atrasado").hide();
 				$(".total").hide();
-				$("tr :not(.atrasado)").show();
+				$("tr[class!='atrasado']").show();
     });
 		
     $("#mostrar-rec-parcial").click(function(){
@@ -216,7 +216,10 @@ $(document).ready(function () {
     });
 
     $("#mostrar-todos").click(function(){
-        $("tr").show();
+      $("tr[class!='recebimento parcial']").show(); 
+			$("tr[class!='atrasado']").show();
+			 $(".atrasado").show();
+			$(".recebimento parcial").show();
 			$(".total").show();
     });
 

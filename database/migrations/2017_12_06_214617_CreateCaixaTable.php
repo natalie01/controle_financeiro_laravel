@@ -17,7 +17,6 @@ class CreateCaixaTable extends Migration
 					$table->increments('id');
 				 $table->date('data');
 				 $table->float('valor');	    
-				 $table->string('descricao');	
 				 $table->string('tipo');	
 				 $table->integer('ref_titulo')->unsigned();
 

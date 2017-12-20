@@ -22,7 +22,7 @@
 @if(isset($mensagem))
   <input type="hidden" name="mensagem" value={{$mensagem}} />    
 @else
-	<input type="hidden" name="mensagem"  id = "mensagem"/>  
+	<input type="hidden" name="mensagem"  value="novo mov. caixa adicionado" id = "mensagem"/>  
 @endif
 
     <div class="row">
@@ -74,8 +74,8 @@
   	<div class="row">
 				<div class="col-md-6">
 				   <div class="form-group">
-				     <label>Descri<span> &ccedil; </span><span>&atilde;</span>o:</label><br />
-				    <input type="text" name="descricao" list="sugestoes"/>  
+				     <label>Categoria</label><br />
+				    <input type="text" name="categoria" list="sugestoes"/>  
 							<datalist id="sugestoes">
 							<option value="receitas">
 								<option value="vendas/serviços prestados">
@@ -100,23 +100,15 @@
 							</datalist>
 				  </div>
 		    </div>
- 
-     <div class="col-md-6">
-		     <div class="form-group">
-		       <label>Categoria</label><br />
-		      <input type="text" name="categoria" list="categorias"/>  
-					<datalist id="categorias">
-						<option value="vendas/serviços prestados">
-						<option value="baixa de conta a receber">
-						<option value="outro">
-					</datalist>
-		    </div>
-      </div>
-     </div><!--row-->
+  </div>
 
-	 <div class="form-group">
-       <input  type="submit" class="btn btn-primary btn-block" value="salvar">
+  	<div class="row">
+				<div class="col-md-6">
+	 			<div class="form-group">
+       		<input  type="submit" class="btn btn-primary btn-block" value="salvar">
    </div> 
+  </div>
+  </div>
    </form>  
   
     <br>

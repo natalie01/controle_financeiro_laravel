@@ -117,7 +117,7 @@
 					<th>N°</th>
 					<th>Data</th>
 					<th>Valor</th>
-						  <th>Descri<span>&ccedil;</span><span>&atilde;</span>o</th>
+						  <th>Categoria</th>
 						  <th>Tipo</th>
 						  <th>ref_titulo</th>
  							<th></th>
@@ -129,7 +129,7 @@
 					<td>{{$r->id}}</td>
 					<td>{{$r->data}}</td>
 					<td>{{$r->valor}}</td>
-					<td>{{$r->descricao}}</td>
+					<td>{{$r->categoria}}</td>
 					<td>{{$r->tipo}}</td>
 					<td>{{$r->ref_titulo}}</td>
 					<td>

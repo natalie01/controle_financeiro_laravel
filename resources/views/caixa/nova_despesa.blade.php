@@ -19,8 +19,8 @@
 	<input type="hidden" name="tipo" value="despesa" />
 		  <div class="col-md-6">
 		     <div class="form-group">
-		       <label>Descri<span> &ccedil; </span><span>&atilde;</span>o:</label><br />
-		      <input type="text" name="descricao" required list="sugestoes"/>  
+		       <label>Categoria<br />
+		      <input type="text" name="categoria" required list="sugestoes"/>  
 					<datalist id="sugestoes">
 						<option value="baixa de conta a pagar">
 						<option value="conta de água">

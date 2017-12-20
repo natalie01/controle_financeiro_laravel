@@ -36,7 +36,7 @@ class ContaPagarController extends Controller
 													->where('user_id','=',$user_id)
 													->sum('valor_residual');
 
-					$resultados= ContaPagar::where('user_id',$user_id)
+					$resultados= ContaPagar::where('user_id',$user_id)->orderBy('datavencimento', 'asc')													
 													->where('status','!=','pago')->get();
 
 					return view('contapagar.contas_pagar_index',compact('resultados','datahoje','total'));

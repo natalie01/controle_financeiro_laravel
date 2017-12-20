@@ -8,7 +8,7 @@ class Caixa extends Model
 {
   protected $table = 'caixa';
 	public $timestamps = false;
-	protected $fillable = array('data','valor','descricao','tipo','ref_titulo','user_id');
+	protected $fillable = array('data','valor','categoria','tipo','ref_titulo','user_id');
 
     public function user()
     {
