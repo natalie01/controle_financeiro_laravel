@@ -63,7 +63,7 @@
 		       <label>Tipo</label><br />
 					<input type="text" name="tipo" list="tipos" id="tipo"/>  
 						<datalist id="tipos">
-							<option value="receita">
+							<option value="receita ">
 							<option value="despesa">
 						</datalist>
 				  </div>

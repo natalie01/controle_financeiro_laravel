@@ -296,6 +296,26 @@ window.onclick = function(event) {
  var r3d = $("#r3d").text();
 
 
+//saldo do mes na página inicial
+
+var saldo_mes = $("#saldo-mes").text();
+console.log('saldo domes ' +saldo_mes);
+if(saldo_mes > 0){
+	$("#saldo-mes").parent().css('color','#337ab7')	;
+}
+
+if(saldo_mes < 0){
+	$("#saldo-mes").parent().css('color','#d9534f')	;
+}
+
+if(saldo_mes == 0){
+	$("#saldo-mes").parent().css('color','#333')	;
+}
+
+
+
+
+//grafico de barras receitas x despesas dos últimos 3 meses na página inicial
 var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',

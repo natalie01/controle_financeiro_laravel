@@ -78,6 +78,8 @@ class HomeController extends Controller
 													->whereBetween('data',[$dt2 ,$dt1])
 													->sum('valor');
 
+				$saldo_mes = $soma_receitas_mes - $soma_despesas_mes;
+
 				$soma_receitas_3m = Caixa::select('valor')
 													->where('tipo','like','%receita%')
 													->where('user_id','=',$user_id)
@@ -90,9 +92,19 @@ class HomeController extends Controller
 													->whereBetween('data',[$tres_ma ,$dt1])
 													->sum('valor');
 
+				$empresa = Empresa::where('user_id','=',$user_id)->get();
+													
 				$saldo_atual = Empresa::where('user_id','=',$user_id)
 													->pluck('saldo_atual')->first();
-
+				
+				if(empty($empresa)){
+					echo 'nao criou a empresa ainda';
+				}
+				
+			
+				if($saldo_atual == null){
+				$saldo_atual = 0;
+				}
 
 				$recebimentos_previstos_hoje = ContaReceber::select('valor_inicial')
 													->where('user_id','=',$user_id)
@@ -129,13 +141,24 @@ class HomeController extends Controller
 													->whereBetween('datavencimento',[$dt2 ,$dt5])
 													->sum('valor_pago');
 
-				$recebimentos_falta_mes = $recebimentos_previstos_mes - $recebimentos_feitos_mes;
-				$pagamentos_falta_mes = $pagamentos_previstos_mes - $pagamentos_feitos_mes;
-
+				$recebimentos_falta_mes = abs($recebimentos_previstos_mes - $recebimentos_feitos_mes);
+				$pagamentos_falta_mes = abs($pagamentos_previstos_mes - $pagamentos_feitos_mes);
+			
+				if($recebimentos_previstos_mes > 0){
 				$dif_receb_mes =($recebimentos_feitos_mes / $recebimentos_previstos_mes)*100 ;
+				}else{
+				$dif_receb_mes = 0;
+				}
+
 				$porcent_receb_mes = number_format($dif_receb_mes,2);
 
+
+				if($pagamentos_previstos_mes > 0){
 				$dif_pag_mes =($pagamentos_feitos_mes / $pagamentos_previstos_mes)*100 ;
+				}else{
+				$dif_pag_mes = 0;
+				}
+
 				$porcent_pag_mes = number_format($dif_pag_mes,2);
 
 			/*	$recebimentos_feitos_mes =  ContaReceber::select('valor_inicial')
@@ -180,7 +203,7 @@ class HomeController extends Controller
         //dd($soma_despesas);
 
         return view('home',
-							compact('dt','soma_receitas_mes','soma_despesas_mes','saldo_atual',
+							compact('dt','soma_receitas_mes','soma_despesas_mes','saldo_mes','saldo_atual',
 							'recebimentos_previstos_hoje','pagamentos_previstos_hoje',
 							'recebimentos_previstos_mes','pagamentos_previstos_mes',
 							'recebimentos_feitos_mes','pagamentos_feitos_mes',

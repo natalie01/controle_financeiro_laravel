@@ -50,9 +50,12 @@
         <li class ="list-flex-item">Este M<span>&ecirc;</span>s</li>
         <li class ="list-flex-item" style="font-size:22px;">
             <ul class = "list-unstyled ">
-             <li>Receitas :  {{$soma_receitas_mes}} <span>&nbsp;</span>R<span>&dollar;</span></li>
-             <li>Despesas :  {{$soma_despesas_mes}} <span>&nbsp;</span>R<span>&dollar;</span></li>
-
+             <li style="color:#337ab7">Receitas :  {{$soma_receitas_mes}} <span>&nbsp;</span>R<span>&dollar;</span></li>
+             <li style="color:#d9534f;">Despesas :  {{$soma_despesas_mes}} <span>&nbsp;</span>R<span>&dollar;</span></li>
+						<li>-------------------</li>
+						<li style="font-weight:bold;">Total : 
+								<span  id = "saldo-mes">{{$saldo_mes}}</span> 
+								<span>&nbsp;</span>R<span>&dollar;</span></li>
             </ul>
         </li>
 

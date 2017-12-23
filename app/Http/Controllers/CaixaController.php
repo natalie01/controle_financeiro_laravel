@@ -156,18 +156,18 @@ public function __construct()
 				if($caixa->user_id != $user_id){
 					return  view('erro_de_acesso');
 				}else{
-				$caixa->delete();
+					$caixa->delete();
 
-				$c_removida= $id;
-				$resultados = Caixa::where('user_id',$user_id)->get();
+					$c_removida= $id;
+					$resultados = Caixa::where('user_id',$user_id)->get();
 			
-			return view('caixa.relatorio_caixa',compact('c_removida','resultados'));
+				return redirect()->action('CaixaController@index');
 			}										
     }else{
 			return redirect()->action('CaixaController@index');
 		}
 	}else{
-		return view('caixa');
+			return redirect()->action('CaixaController@index');
 	}
 }
 

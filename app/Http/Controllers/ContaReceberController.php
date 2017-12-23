@@ -87,7 +87,7 @@ class ContaReceberController extends Controller
 			if(!$dataemissao || $dataemissao=='' ){
 				$hoje=$this->dataHoje();
 
-				$dataemissao= $datahoje;
+				$dataemissao= $hoje;
 			}
 
       $data = gettype($request->datavencimento);
